@@ -11,7 +11,7 @@
 <!-- <footer class="w3-container w3-theme-d5">
 <p>Powered by Floral Builder</p>
 </footer> -->
-
+<script src="/js/app.js"></script>
 <script>
 // Accordion
 function myFunction(id) {

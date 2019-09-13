@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!-- <meta name="csrf-token" content="curfBcurfB csrf_token() curfBcurfB"> -->
 <head>
 
 

@@ -1,14 +1,14 @@
 @include('includes.base-dom/1-title-links')
-<link href="{{ asset('css/key-value-list.css') }}" rel="stylesheet">
 
+<link href="{{ asset('css/key-value-list.css') }}" rel="stylesheet">
 
 @include('includes.menu_report')
 @include('includes.base-dom/2-wrap-div')
 
 
-<div class="w3-col m4">
+<div class="w3-col m6">
 
-  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+  <!-- <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
     <h2>Reports</h2>
     <form  enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_report_store'] }}" method="post">
       <input class="g-bor-gre"  style="display: none;" type="text" name="form" value="reports">
@@ -19,7 +19,11 @@
 
     </form>
 
-  </div>
+  </div> -->
+  <div id='data'></div>
+  <!-- <div class="w3-container w3-card w3-white w3-round w3-margin">
+    <br>
+  </div> -->
   <!-- Alert Box -->
   <br>
 
@@ -27,7 +31,7 @@
 </div>
 
 
-<div class="w3-col m8">
+<div class="w3-col m6">
 
   <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
     <h2>Data</h2>
