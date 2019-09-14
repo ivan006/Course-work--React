@@ -25,7 +25,7 @@ class NetworkAPIC extends Controller
     $DataShowMultiForEdit = Data::ShowMultiForEdit($routeParameters);
     // return $DataShowMultiForEdit;
     // return responce()->json($DataShowMultiForEdit);
-
+    //
     $thing = '
     {
       {
