@@ -8,6 +8,7 @@ export default class Data extends Component {
     data: []
   }
   componentDidMount () {
+
     axios.get('/api/show/Group_1')
     .then(response => {
       this.setState({
@@ -18,15 +19,12 @@ export default class Data extends Component {
 
   render() {
     return (
-      <div className="w3-container w3-card w3-white w3-round w3-margin">
+
+      <div className="">
       <h1>
       Hi i'm a unicorn!s
       </h1>
       </div>
     );
   }
-}
-
-if (document.getElementById('data')) {
-  ReactDOM.render(<Data />, document.getElementById('data'));
 }
