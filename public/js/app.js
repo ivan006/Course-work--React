@@ -66195,6 +66195,10 @@ function (_Component) {
         // this.setState({
         //   data: data_selected
         // });
+        //
+        // this.setState({
+        //   data: response.data['content']
+        // });
         _this2.setState({
           data: response.data
         });
@@ -66259,8 +66263,8 @@ var OptionsList = function OptionsList(_ref) {
       onChange: function onChange() {
         handleCheckboxClicked(option.id);
       }
-    }), option.subOptions.length > 0 && selectedOptions[option.id] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-      options: option.subOptions,
+    }), option.content.length > 0 && selectedOptions[option.id] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
+      options: option.content,
       selectedOptions: selectedOptions[option.id],
       onChange: function onChange(subSelections) {
         return handleSubOptionsListChange(option.id, subSelections);

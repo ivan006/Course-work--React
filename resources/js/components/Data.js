@@ -24,6 +24,11 @@ export default class Data extends Component {
       //   data: data_selected
       // });
 
+      //
+      // this.setState({
+      //   data: response.data['content']
+      // });
+
 
       this.setState({
         data: response.data
@@ -92,9 +97,9 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
             onChange={() => {handleCheckboxClicked(option.id)}}
            />
           {/* Base Case */}
-          {(option.subOptions.length > 0 && selectedOptions[option.id]) &&
+          {(option.content.length > 0 && selectedOptions[option.id]) &&
             <OptionsList
-              options={option.subOptions}
+              options={option.content}
               selectedOptions={selectedOptions[option.id]}
               onChange={(subSelections) => handleSubOptionsListChange(option.id, subSelections)}
              />
