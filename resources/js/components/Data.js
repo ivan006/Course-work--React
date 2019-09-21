@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -7,22 +8,7 @@ export default class Data extends Component {
   state = {
     data: [],
 
-    selectedOptions: {
-      "pepperoni-id":{
-        "spicy-id":{},
-        "regular-id":{}
-      },
-      "chicken-id":{
-        "buffalo-id":{
-          "mild-id":{},
-          "hot-id":{
-            "jalapeno-id":{},
-            "cayenne-id":{}
-          },
-        },
-        "bbq-id":{}
-      }
-    }
+
   };
   componentDidMount () {
     axios.get('/api/show/Group_1')
@@ -66,7 +52,6 @@ export default class Data extends Component {
         <h1>Toppings</h1>
         <OptionsList
           options={this.state.data}
-          selectedOptions={this.state.selectedOptions}
         />
       </div>
     );
@@ -79,7 +64,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const OptionsList = ({ options, selectedOptions }) => {
+const OptionsList = ({ options}) => {
 
 
 
@@ -89,10 +74,9 @@ const OptionsList = ({ options, selectedOptions }) => {
         <ul>
           <div className="label">{option.name}</div>
           {/* Base Case */}
-          {(option.content.length > 0 && selectedOptions[option.id]) &&
+          {option.content.length > 0 &&
             <OptionsList
               options={option.content}
-              selectedOptions={selectedOptions[option.id]}
              />
           }
         </ul>
