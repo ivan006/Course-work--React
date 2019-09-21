@@ -23,30 +23,26 @@ class NetworkAPIC extends Controller
   {
     $routeParameters = func_get_args();
     $DataShowMultiForEdit = Data::ShowMultiForEdit($routeParameters);
-    // return $DataShowMultiForEdit;
-    // return responce()->json($DataShowMultiForEdit);
-    //
-    $thing = '
-    {
-      {
-        "id": 1,
-        "name": "blabla",
-        "body": "blabla",
-        "created": "blabla",
-        "updated": "blabla"
-      },
-      {
-        "id": 2,
-        "name": "blabla",
-        "body": "blabla",
-        "created": "blabla",
-        "updated": "blabla"
-      }
+    return $DataShowMultiForEdit;
 
-    }
+    // $thing = array (
+    //   array(
+    //     "id" => 1,
+    //     "name" => "blabla",
+    //     "body" => "blabla",
+    //     "created" => "blabla",
+    //     "updated" => "blabla"
+    //   ),
+    //   array(
+    //     "id" => 2,
+    //     "name" => "blabla",
+    //     "body" => "blabla",
+    //     "created" => "blabla",
+    //     "updated" => "blabla"
+    //   ),
+    // );
+    // return json_encode($thing);
 
-    ';
-    return $thing;
 
 
   }
