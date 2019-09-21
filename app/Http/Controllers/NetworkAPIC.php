@@ -43,6 +43,91 @@ class NetworkAPIC extends Controller
     // );
     // return json_encode($thing);
 
+    // $thing = array (
+    //   0 =>
+    //   array (
+    //     'name' => 'Pepperoni',
+    //     'id' => 'pepperoni-id',
+    //     'subOptions' =>
+    //     array (
+    //       0 =>
+    //       array (
+    //         'name' => 'Spicy',
+    //         'id' => 'spicy-id',
+    //         'subOptions' =>
+    //         array (
+    //         ),
+    //       ),
+    //       1 =>
+    //       array (
+    //         'name' => 'Regular',
+    //         'id' => 'regular-id',
+    //         'subOptions' =>
+    //         array (
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    //   1 =>
+    //   array (
+    //     'name' => 'Chicken',
+    //     'id' => 'chicken-id',
+    //     'subOptions' =>
+    //     array (
+    //       0 =>
+    //       array (
+    //         'name' => 'Buffalo',
+    //         'id' => 'buffalo-id',
+    //         'subOptions' =>
+    //         array (
+    //           0 =>
+    //           array (
+    //             'name' => 'Mild',
+    //             'id' => 'mild-id',
+    //             'subOptions' =>
+    //             array (
+    //             ),
+    //           ),
+    //           1 =>
+    //           array (
+    //             'name' => 'Hot',
+    //             'id' => 'hot-id',
+    //             'subOptions' =>
+    //             array (
+    //               0 =>
+    //               array (
+    //                 'name' => 'Jalapeño',
+    //                 'id' => 'jalapeno-id',
+    //                 'subOptions' =>
+    //                 array (
+    //                 ),
+    //               ),
+    //               1 =>
+    //               array (
+    //                 'name' => 'Cayenne',
+    //                 'id' => 'cayenne-id',
+    //                 'subOptions' =>
+    //                 array (
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //       1 =>
+    //       array (
+    //         'name' => 'BBQ',
+    //         'id' => 'bbq-id',
+    //         'subOptions' =>
+    //         array (
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    //
+    // return json_encode($thing);
+
 
 
   }
