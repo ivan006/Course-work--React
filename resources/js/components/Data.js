@@ -7,7 +7,22 @@ export default class Data extends Component {
   state = {
     data: [],
 
-      selectedOptions: {}
+    selectedOptions: {
+      "pepperoni-id":{
+        "spicy-id":{},
+        "regular-id":{}
+      },
+      "chicken-id":{
+        "buffalo-id":{
+          "mild-id":{},
+          "hot-id":{
+            "jalapeno-id":{},
+            "cayenne-id":{}
+          },
+        },
+        "bbq-id":{}
+      }
+    }
   };
   componentDidMount () {
     axios.get('/api/show/Group_1')
@@ -77,7 +92,10 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
       selectedOptions[selectedOptionId] = {}
     }
     // call onChange function given by parent
-    onChange(selectedOptions)
+    onChange(selectedOptions);
+
+
+
   }
 
   const handleSubOptionsListChange = (optionId, subSelections) => {
