@@ -66,7 +66,6 @@ export default class Data extends Component {
         <h1>Toppings</h1>
         <OptionsList
           options={this.state.data}
-          onChange={(selectedOptions) => this.setState({selectedOptions})}
           selectedOptions={this.state.selectedOptions}
         />
       </div>
@@ -80,64 +79,24 @@ export default class Data extends Component {
 
 
 // Recursive component
-const OptionsList = ({ options, selectedOptions, onChange }) => {
-
-  const handleCheckboxClicked = (selectedOptionId) => {
-    // is currently selected
-    if(selectedOptions[selectedOptionId]){
-      // remove selected key from options list
-      delete selectedOptions[selectedOptionId];
-    } else { // is not currently selected
-      // Add selected key to optionsList
-      selectedOptions[selectedOptionId] = {}
-    }
-    // call onChange function given by parent
-    onChange(selectedOptions);
+const OptionsList = ({ options, selectedOptions }) => {
 
 
-
-  }
-
-  const handleSubOptionsListChange = (optionId, subSelections) => {
-    // add sub selections to current optionId
-    selectedOptions[optionId] = subSelections;
-    // call onChange function given by parent
-    onChange(selectedOptions);
-  }
 
   return (
     <div>
       {options.map(option => (
         <ul>
-          <Checkbox
-            selected={selectedOptions[option.id]}
-            label={option.name}
-            onChange={() => {handleCheckboxClicked(option.id)}}
-           />
+          <div className="label">{option.name}</div>
           {/* Base Case */}
           {(option.content.length > 0 && selectedOptions[option.id]) &&
             <OptionsList
               options={option.content}
               selectedOptions={selectedOptions[option.id]}
-              onChange={(subSelections) => handleSubOptionsListChange(option.id, subSelections)}
              />
           }
         </ul>
       ))}
-    </div>
-  )
-}
-
-// Dumb checkbox component, completly controlled by parent
-const Checkbox = ({ selected, label, onChange }) => {
-  return (
-    <div>
-      <div
-        className="checkbox"
-        onClick={() => onChange(!selected)}
-      >click
-      </div>
-      <div className="label">{label}</div>
     </div>
   )
 }
