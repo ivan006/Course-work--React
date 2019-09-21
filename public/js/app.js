@@ -66194,13 +66194,10 @@ function (_Component) {
         // this.setState({
         //   data: data_selected
         // });
-        // this.setState({
-        //   data: response.data
-        // });
-        var data_selected = response.data['content'];
+        var data_selecteda = response.data; // var data_selecteda = data_selected['content'];
 
         _this2.setState({
-          data: data_selected
+          data: data_selecteda
         });
 
         console.log(_this2.state.data);
@@ -66224,8 +66221,9 @@ function (_Component) {
 var OptionsList = function OptionsList(_ref) {
   var options = _ref.options;
   var data_selected = options;
-  var data_selected = Object.values(data_selected);
-  alert(data_selected);
+  var data_selected = Object.values(data_selected); // alert(JSON.stringify(data_selected));
+  // {JSON.stringify(option.content)}
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, data_selected.map(function (option) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "label"
