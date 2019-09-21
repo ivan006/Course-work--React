@@ -20,20 +20,23 @@ export default class Data extends Component {
       // var data_selected = data_selected[firstKey]['content'];
       //
       // var data_selected = Object.values(data_selected);
-      //sss
+      // sss
       // this.setState({
       //   data: data_selected
       // });
 
-      //
+
+
       // this.setState({
-      //   data: response.data['content']
+      //   data: response.data
       // });
 
 
+      var data_selected = response.data['content'];
       this.setState({
-        data: response.data
+        data: data_selected
       });
+
 
 
       console.log(this.state.data);
@@ -66,11 +69,12 @@ export default class Data extends Component {
 // Recursive component
 const OptionsList = ({ options}) => {
 
-
-
+  var data_selected = options;
+  var data_selected = Object.values(data_selected);
+  alert(data_selected);
   return (
     <div>
-      {options.map(option => (
+      {data_selected.map(option => (
         <ul>
           <div className="label">{option.name}</div>
           {/* Base Case */}

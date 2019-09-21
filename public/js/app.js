@@ -66172,8 +66172,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      data: [],
-      selectedOptions: {}
+      data: []
     });
 
     return _this;
@@ -66191,16 +66190,17 @@ function (_Component) {
         // var data_selected = data_selected[firstKey]['content'];
         //
         // var data_selected = Object.values(data_selected);
-        //sss
+        // sss
         // this.setState({
         //   data: data_selected
         // });
-        //
         // this.setState({
-        //   data: response.data['content']
+        //   data: response.data
         // });
+        var data_selected = response.data['content'];
+
         _this2.setState({
-          data: response.data
+          data: data_selected
         });
 
         console.log(_this2.state.data);
@@ -66209,16 +66209,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Toppings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-        options: this.state.data,
-        onChange: function onChange(selectedOptions) {
-          return _this3.setState({
-            selectedOptions: selectedOptions
-          });
-        },
-        selectedOptions: this.state.selectedOptions
+        options: this.state.data
       }));
     }
   }]);
@@ -66230,62 +66222,17 @@ function (_Component) {
 
 
 var OptionsList = function OptionsList(_ref) {
-  var options = _ref.options,
-      selectedOptions = _ref.selectedOptions,
-      onChange = _ref.onChange;
-
-  var handleCheckboxClicked = function handleCheckboxClicked(selectedOptionId) {
-    // is currently selected
-    if (selectedOptions[selectedOptionId]) {
-      // remove selected key from options list
-      delete selectedOptions[selectedOptionId];
-    } else {
-      // is not currently selected
-      // Add selected key to optionsList
-      selectedOptions[selectedOptionId] = {};
-    } // call onChange function given by parent
-
-
-    onChange(selectedOptions);
-  };
-
-  var handleSubOptionsListChange = function handleSubOptionsListChange(optionId, subSelections) {
-    // add sub selections to current optionId
-    selectedOptions[optionId] = subSelections; // call onChange function given by parent
-
-    onChange(selectedOptions);
-  };
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, options.map(function (option) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Checkbox, {
-      selected: selectedOptions[option.id],
-      label: option.name,
-      onChange: function onChange() {
-        handleCheckboxClicked(option.id);
-      }
-    }), option.content.length > 0 && selectedOptions[option.id] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-      options: option.content,
-      selectedOptions: selectedOptions[option.id],
-      onChange: function onChange(subSelections) {
-        return handleSubOptionsListChange(option.id, subSelections);
-      }
+  var options = _ref.options;
+  var data_selected = options;
+  var data_selected = Object.values(data_selected);
+  alert(data_selected);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, data_selected.map(function (option) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "label"
+    }, option.name), option.content.length > 0 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
+      options: option.content
     }));
   }));
-}; // Dumb checkbox component, completly controlled by parent
-
-
-var Checkbox = function Checkbox(_ref2) {
-  var selected = _ref2.selected,
-      label = _ref2.label,
-      onChange = _ref2.onChange;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "checkbox",
-    onClick: function onClick() {
-      return onChange(!selected);
-    }
-  }, "click"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "label"
-  }, label));
 };
 
 /***/ }),

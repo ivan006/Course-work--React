@@ -128,91 +128,141 @@ class NetworkAPIC extends Controller
     //
     // return json_encode($thing);
 
+    // $thing = array (
+    //   0 =>
+    //   array (
+    //     'name' => 'Pepperoni',
+    //     'id' => 'pepperoni-id',
+    //     'content' =>
+    //     array (
+    //       0 =>
+    //       array (
+    //         'name' => 'Spicy',
+    //         'id' => 'spicy-id',
+    //         'content' =>
+    //         array (
+    //         ),
+    //       ),
+    //       1 =>
+    //       array (
+    //         'name' => 'Regular',
+    //         'id' => 'regular-id',
+    //         'content' =>
+    //         array (
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    //   1 =>
+    //   array (
+    //     'name' => 'Chicken',
+    //     'id' => 'chicken-id',
+    //     'content' =>
+    //     array (
+    //       0 =>
+    //       array (
+    //         'name' => 'Buffalo',
+    //         'id' => 'buffalo-id',
+    //         'content' =>
+    //         array (
+    //           0 =>
+    //           array (
+    //             'name' => 'Mild',
+    //             'id' => 'mild-id',
+    //             'content' =>
+    //             array (
+    //             ),
+    //           ),
+    //           1 =>
+    //           array (
+    //             'name' => 'Hot',
+    //             'id' => 'hot-id',
+    //             'content' =>
+    //             array (
+    //               0 =>
+    //               array (
+    //                 'name' => 'Jalapeño',
+    //                 'id' => 'jalapeno-id',
+    //                 'content' =>
+    //                 array (
+    //                 ),
+    //               ),
+    //               1 =>
+    //               array (
+    //                 'name' => 'Cayenne',
+    //                 'id' => 'cayenne-id',
+    //                 'content' =>
+    //                 array (
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //       1 =>
+    //       array (
+    //         'name' => 'BBQ',
+    //         'id' => 'bbq-id',
+    //         'content' =>
+    //         array (
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    //
+    // return json_encode($thing);
+
     $thing = array (
-      0 =>
+      'content' =>
       array (
-        'name' => 'Pepperoni',
-        'id' => 'pepperoni-id',
-        'content' =>
+        'X2RhdGE=' =>
         array (
-          0 =>
+          'name' => '_data',
+          'type' => 'folder',
+          'content' =>
           array (
-            'name' => 'Spicy',
-            'id' => 'spicy-id',
-            'content' =>
+            'QW1lbml0aWVzLnR4dA==' =>
             array (
+              'name' => 'Amenities.txt',
+              'type' => 'file',
+              'content' => '(.*?)',
+              'id' => 2,
             ),
-          ),
-          1 =>
-          array (
-            'name' => 'Regular',
-            'id' => 'regular-id',
-            'content' =>
+            'Q29udGFjdA==' =>
             array (
-            ),
-          ),
-        ),
-      ),
-      1 =>
-      array (
-        'name' => 'Chicken',
-        'id' => 'chicken-id',
-        'content' =>
-        array (
-          0 =>
-          array (
-            'name' => 'Buffalo',
-            'id' => 'buffalo-id',
-            'content' =>
-            array (
-              0 =>
+              'name' => 'Contact',
+              'type' => 'folder',
+              'content' =>
               array (
-                'name' => 'Mild',
-                'id' => 'mild-id',
-                'content' =>
+                'QWRkcmVzcy50eHQ=' =>
                 array (
+                  'name' => 'Address.txt',
+                  'type' => 'file',
+                  'content' => 'Chicago, US',
+                  'id' => 4,
+                ),
+                'RW1haWwudHh0' =>
+                array (
+                  'name' => 'Email.txt',
+                  'type' => 'file',
+                  'content' => 'mail@mail.com',
+                  'id' => 5,
                 ),
               ),
-              1 =>
-              array (
-                'name' => 'Hot',
-                'id' => 'hot-id',
-                'content' =>
-                array (
-                  0 =>
-                  array (
-                    'name' => 'Jalapeño',
-                    'id' => 'jalapeno-id',
-                    'content' =>
-                    array (
-                    ),
-                  ),
-                  1 =>
-                  array (
-                    'name' => 'Cayenne',
-                    'id' => 'cayenne-id',
-                    'content' =>
-                    array (
-                    ),
-                  ),
-                ),
-              ),
+              'id' => 3,
+              'url' => '/_data/Contact',
+              'entity_type' => 'App\\Data',
             ),
           ),
-          1 =>
-          array (
-            'name' => 'BBQ',
-            'id' => 'bbq-id',
-            'content' =>
-            array (
-            ),
-          ),
+          'id' => 1,
+          'url' => '/_data',
+          'entity_type' => 'App\\Data',
         ),
       ),
     );
 
     return json_encode($thing);
-
 
 
   }
