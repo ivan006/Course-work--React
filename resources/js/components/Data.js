@@ -175,11 +175,12 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
 // Dumb checkbox component, completly controlled by parent
 const Checkbox = ({ selected, label, onChange }) => {
   return (
-      <div className="checkbox">
+    <div>
       <div
-        className={
-          classNames('fa', 'fa-2x', 'checkbox__icon', selected ? 'fa-check-square' : 'fa-square')} onClick={() => onChange(!selected)}></div>
-      <div className="checkbox__label">{label}</div>
+        className="checkbox"
+        onClick={() => onChange(!selected)}
+      />
+      <div className="label">{label}</div>
     </div>
   )
 }
