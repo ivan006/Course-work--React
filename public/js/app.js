@@ -66184,24 +66184,9 @@ function (_Component) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
-        // var data_selected = response.data['content'];
-        //
-        // var firstKey = Object.keys(data_selected)[0];
-        // var data_selected = data_selected[firstKey]['content'];
-        //
-        // var data_selected = Object.values(data_selected);
-        // sss
-        // this.setState({
-        //   data: data_selected
-        // });
-        // var data_selecteda = response.data;
-        var data_selecteda = response.data.content;
-
         _this2.setState({
-          data: data_selecteda
+          data: response.data.content
         });
-
-        console.log(_this2.state.data);
       });
     }
   }, {

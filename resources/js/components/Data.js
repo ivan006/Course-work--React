@@ -13,34 +13,9 @@ export default class Data extends Component {
   componentDidMount () {
     axios.get('/api/show/Group_1')
     .then(response => {
-
-      // var data_selected = response.data['content'];
-      //
-      // var firstKey = Object.keys(data_selected)[0];
-      // var data_selected = data_selected[firstKey]['content'];
-      //
-      // var data_selected = Object.values(data_selected);
-      // sss
-      // this.setState({
-      //   data: data_selected
-      // });
-
-
-
-
-      // var data_selecteda = response.data;
-      var data_selecteda = response.data.content;
       this.setState({
-        data: data_selecteda
+        data: response.data.content
       });
-
-
-
-      console.log(this.state.data);
-
-
-
-
     });
   }
 
