@@ -51,48 +51,54 @@ const OptionsList = ({ options}) => {
 
       <li>
 
-          <div className="label">{option.name}</div>
-          {/* Base Case */}
-          {typeof option.content == "object" &&
-            <OptionsList
-              options={option.content}
-             />
-          }
 
-        <div class="kv-item-container  kv-di-in ">
-          <div class="kv-di-in">📁</div>
-          <label style="">
-            <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
-            <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
-            <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">value2[$Attr[0]]</a>
-            <span class="kv-little-button ">^</span>
-          </label>
-          <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[1]]" value="value2[$Attr[1]]" />
-          <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[4]]" value="value2[$Attr[4]]" />
-          <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="update">✓</button>
-          <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="delete">×</button>
-          <label class="kv-po-re">
-            <span class="kv-little-button ">+</span>
-            <input class="kv-tog-on-bl-switch" type="checkbox" name="checkbox" value="value" />
-            <div class="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" style="">
-              <div class="" >
-                <span>📁</span>
-                <input class="kv-field-container kv-name kv-di-in "  type="text"   name="CurrentIdentifier[Attr[6]][folder]"  />
-                <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
+
+
+
+        {/* Base Case */}
+        {typeof option.content == "object" &&
+          <div>
+          <div class="kv-item-container  kv-di-in ">
+            <div class="kv-di-in">📁</div>
+            <label >
+              <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
+              <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
+              <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">({typeof option.content}) {option.name} (value2[$Attr[0]]) </a>
+              <span class="kv-little-button ">^</span>
+            </label>
+            <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[1]]" value="value2[$Attr[1]]" />
+            <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[4]]" value="value2[$Attr[4]]" />
+            <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="update">✓</button>
+            <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="delete">×</button>
+            <label class="kv-po-re">
+              <span class="kv-little-button ">+</span>
+              <input class="kv-tog-on-bl-switch" type="checkbox" name="checkbox" value="value" />
+              <div class="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
+                <div class="" >
+                  <span>📁</span>
+                  <input class="kv-field-container kv-name kv-di-in "  type="text"   name="CurrentIdentifier[Attr[6]][folder]"  />
+                  <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
+                </div>
+                <div class="kv-mar-top-3">
+                  <span>📃</span>
+                  <input class="kv-field-container kv-name kv-di-in"  type="text" name="CurrentIdentifier[Attr[6]][file]" />
+                  <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
+                </div>
               </div>
-              <div class="kv-mar-top-3">
-                <span>📃</span>
-                <input class="kv-field-container kv-name kv-di-in"  type="text" name="CurrentIdentifier[Attr[6]][file]" />
-                <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
-              </div>
-            </div>
-          </label>
-        </div>
-        <ul class="kv-list-parent">
-          <li>
+            </label>
+          </div>
+          <OptionsList
+            options={option.content}
+           />
+         </div>
+
+        }
+
+        {typeof option.content == "string" &&
+          <div>
             <div class="kv-item-container  kv-di-in  ">
               <div class="kv-di-in">📃</div>
-              <label style="">
+              <label >
                 <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
                 <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
                 <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">value2[$Attr[0]]</a>
@@ -111,8 +117,11 @@ const OptionsList = ({ options}) => {
                 </div>
               </li>
             </ul>
-          </li>
-        </ul>
+          </div>
+        }
+
+
+
       </li>
 
       ))}

@@ -1,4 +1,4 @@
-<html class="mobilesdk-console-app" style="" lang="en">
+<html class="mobilesdk-console-app"  lang="en">
 
 <head>
 
@@ -82,7 +82,7 @@
       <li>
         <div class="kv-item-container  kv-di-in ">
           <div class="kv-di-in">📁</div>
-          <label style="">
+          <label >
             <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
             <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
             <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">php<?php echo $value2[$Attr[0]]; ?></a>
@@ -95,7 +95,7 @@
           <label class="kv-po-re">
             <span class="kv-little-button ">+</span>
             <input class="kv-tog-on-bl-switch" type="checkbox" name="checkbox" value="value">
-            <div class="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" style="">
+            <div class="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
               <div class="" >
                 <span>📁</span>
                 <input class="kv-field-container kv-name kv-di-in "  type="text"   name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[6]; ?>][folder]" >
@@ -113,7 +113,7 @@
           <li>
             <div class="kv-item-container  kv-di-in  ">
               <div class="kv-di-in">📃</div>
-              <label style="">
+              <label >
                 <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
                 <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
                 <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">ddddddddddddddddddddddd<?php echo $value2[$Attr[0]]; ?></a>

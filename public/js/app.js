@@ -66215,17 +66215,11 @@ var OptionsList = function OptionsList(_ref) {
   }, data_selected.map(function (option) {
     var _React$createElement, _React$createElement2;
 
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "label"
-    }, option.name), _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-      options: option.content
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       "class": "kv-item-container  kv-di-in "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       "class": "kv-di-in"
-    }, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      style: ""
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       "class": "kv-tog-on-ib-switch kv-tog-off-ib-switch",
       type: "checkbox",
       name: "checkbox",
@@ -66238,7 +66232,7 @@ var OptionsList = function OptionsList(_ref) {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
       "class": "kv-name-unedit kv-name kv-tog-off-ib "
-    }, "value2[$Attr[0]]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, "(", _typeof(option.content), ") ", option.name, " (value2[$Attr[0]]) "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       "class": "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       "class": "kv-di-no",
@@ -66270,8 +66264,7 @@ var OptionsList = function OptionsList(_ref) {
       name: "checkbox",
       value: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-popover kv-tog-on-bl kv-item-container  kv-di-in",
-      style: ""
+      "class": "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       "class": ""
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -66294,15 +66287,13 @@ var OptionsList = function OptionsList(_ref) {
       "class": "kv-little-button",
       name: "CurrentIdentifier[Attr[3]]",
       value: "create_folder"
-    }, "+"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      "class": "kv-list-parent"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "+"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
+      options: option.content
+    })), typeof option.content == "string" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       "class": "kv-item-container  kv-di-in  "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       "class": "kv-di-in"
-    }, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      style: ""
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       "class": "kv-tog-on-ib-switch kv-tog-off-ib-switch",
       type: "checkbox",
       name: "checkbox",
@@ -66341,7 +66332,7 @@ var OptionsList = function OptionsList(_ref) {
       "class": "kv-field-container kv-content-container kv-di-in",
       name: "CurrentIdentifier[Attr[2]]",
       rows: "8"
-    }, "value2[$Attr[2]]")))))));
+    }, "value2[$Attr[2]]"))))));
   }));
 };
 
