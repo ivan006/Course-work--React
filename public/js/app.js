@@ -66184,40 +66184,31 @@ function (_Component) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
+        var data_selected = response.data['content'];
+        var firstKey = Object.keys(data_selected)[0];
+        var data_selected = data_selected[firstKey]['content'];
+        var data_selected = Object.values(data_selected);
+
         _this2.setState({
-          data: response.data.content
+          data: data_selected
         });
+
+        console.log(_this2.state.data);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Toppings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-        options: this.state.data
-      }));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.data.map(function (data_item) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, data_item.name);
+      })));
     }
   }]);
 
   return Data;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // Recursive component
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
-
-
-var OptionsList = function OptionsList(_ref) {
-  var options = _ref.options;
-  var data_selected = options;
-  var data_selected = Object.values(data_selected); // alert(JSON.stringify(data_selected));
-  // {JSON.stringify(option.content)}
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, data_selected.map(function (option) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "label"
-    }, option.name, " (", _typeof(option.content), ")"), _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-      options: option.content
-    }));
-  }));
-};
 
 /***/ }),
 

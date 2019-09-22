@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -6,16 +5,29 @@ import axios from 'axios';
 
 export default class Data extends Component {
   state = {
-    data: [],
-
-
+    data: []
   };
   componentDidMount () {
     axios.get('/api/show/Group_1')
     .then(response => {
+
+      var data_selected = response.data['content'];
+
+      var firstKey = Object.keys(data_selected)[0];
+      var data_selected = data_selected[firstKey]['content'];
+
+      var data_selected = Object.values(data_selected);
+
       this.setState({
-        data: response.data.content
+        data: data_selected
       });
+
+
+      console.log(this.state.data);
+
+
+
+
     });
   }
 
@@ -24,41 +36,10 @@ export default class Data extends Component {
     return (
 
       <div>
-        <h1>Toppings</h1>
-        <OptionsList
-          options={this.state.data}
-        />
+        <ul>
+          {this.state.data.map(data_item => <li>{data_item.name}</li>)}
+        </ul>
       </div>
     );
   }
-}
-
-
-
-
-
-
-// Recursive component
-const OptionsList = ({ options}) => {
-
-  var data_selected = options;
-  var data_selected = Object.values(data_selected);
-  // alert(JSON.stringify(data_selected));
-  // {JSON.stringify(option.content)}
-  return (
-    <div>
-      {data_selected.map(option => (
-
-        <ul>
-          <div className="label">{option.name} ({typeof option.content})</div>
-          {/* Base Case */}
-          {typeof option.content == "object" &&
-            <OptionsList
-              options={option.content}
-             />
-          }
-        </ul>
-      ))}
-    </div>
-  )
 }
