@@ -116,7 +116,7 @@
               <label style="">
                 <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
                 <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
-                <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">phpdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd<?php echo $value2[$Attr[0]]; ?></a>
+                <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">ddddddddddddddddddddddd<?php echo $value2[$Attr[0]]; ?></a>
                 <span class="kv-little-button ">^</span>
               </label>
 

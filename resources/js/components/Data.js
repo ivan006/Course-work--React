@@ -49,7 +49,7 @@ const OptionsList = ({ options}) => {
       {data_selected.map(option => (
 
         <ul>
-          <div className="label">{option.name} ({typeof option.content})</div>
+          <div className="label">{option.name}</div>
           {/* Base Case */}
           {typeof option.content == "object" &&
             <OptionsList
