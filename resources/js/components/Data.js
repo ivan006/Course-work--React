@@ -24,7 +24,6 @@ export default class Data extends Component {
     return (
 
       <div>
-        <h1>Toppings</h1>
         <OptionsList
           options={this.state.data}
         />
