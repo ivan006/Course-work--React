@@ -63,7 +63,7 @@ const OptionsList = ({ options}) => {
             <label >
               <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
               <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
-              <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">({typeof option.content}) {option.name} (value2[$Attr[0]]) </a>
+              <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">{option.name} (value2[$Attr[0]]) </a>
               <span class="kv-little-button ">^</span>
             </label>
             <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[1]]" value="value2[$Attr[1]]" />
@@ -101,7 +101,7 @@ const OptionsList = ({ options}) => {
               <label >
                 <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
                 <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
-                <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">value2[$Attr[0]]</a>
+                <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">{option.name} value2[$Attr[0]]</a>
                 <span class="kv-little-button ">^</span>
               </label>
 

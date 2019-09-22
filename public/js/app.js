@@ -66232,7 +66232,7 @@ var OptionsList = function OptionsList(_ref) {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
       "class": "kv-name-unedit kv-name kv-tog-off-ib "
-    }, "(", _typeof(option.content), ") ", option.name, " (value2[$Attr[0]]) "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, option.name, " (value2[$Attr[0]]) "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       "class": "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       "class": "kv-di-no",
@@ -66306,7 +66306,7 @@ var OptionsList = function OptionsList(_ref) {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
       "class": "kv-name-unedit kv-name kv-tog-off-ib "
-    }, "value2[$Attr[0]]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, option.name, " value2[$Attr[0]]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       "class": "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       "class": "kv-di-no",
