@@ -45,10 +45,12 @@ const OptionsList = ({ options}) => {
   // alert(JSON.stringify(data_selected));
   // {JSON.stringify(option.content)}
   return (
-    <div>
+    <ul class="kv-list-parent">
       {data_selected.map(option => (
 
-        <ul>
+
+      <li>
+
           <div className="label">{option.name}</div>
           {/* Base Case */}
           {typeof option.content == "object" &&
@@ -56,8 +58,66 @@ const OptionsList = ({ options}) => {
               options={option.content}
              />
           }
+
+        <div class="kv-item-container  kv-di-in ">
+          <div class="kv-di-in">📁</div>
+          <label style="">
+            <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
+            <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
+            <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">value2[$Attr[0]]</a>
+            <span class="kv-little-button ">^</span>
+          </label>
+          <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[1]]" value="value2[$Attr[1]]" />
+          <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[4]]" value="value2[$Attr[4]]" />
+          <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="update">✓</button>
+          <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="delete">×</button>
+          <label class="kv-po-re">
+            <span class="kv-little-button ">+</span>
+            <input class="kv-tog-on-bl-switch" type="checkbox" name="checkbox" value="value" />
+            <div class="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" style="">
+              <div class="" >
+                <span>📁</span>
+                <input class="kv-field-container kv-name kv-di-in "  type="text"   name="CurrentIdentifier[Attr[6]][folder]"  />
+                <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
+              </div>
+              <div class="kv-mar-top-3">
+                <span>📃</span>
+                <input class="kv-field-container kv-name kv-di-in"  type="text" name="CurrentIdentifier[Attr[6]][file]" />
+                <button type="submit" class="kv-little-button" name="CurrentIdentifier[Attr[3]]" value="create_folder">+</button>
+              </div>
+            </div>
+          </label>
+        </div>
+        <ul class="kv-list-parent">
+          <li>
+            <div class="kv-item-container  kv-di-in  ">
+              <div class="kv-di-in">📃</div>
+              <label style="">
+                <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value" />
+                <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[Attr[0]]" value="value2[$Attr[0]]" />
+                <a href="#" class="kv-name-unedit kv-name kv-tog-off-ib ">value2[$Attr[0]]</a>
+                <span class="kv-little-button ">^</span>
+              </label>
+
+              <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[1]]" value="value2[$Attr[1]]" />
+              <input class="kv-di-no" type="text" name="CurrentIdentifier[Attr[4]]" value="value2[$Attr[4]]" />
+              <button type="submit" class="kv-little-button" type="submit" name="CurrentIdentifier[Attr[3]]" value="update">✓</button>
+              <button type="submit" class="kv-little-button" type="submit" name="CurrentIdentifier[Attr[3]]" value="delete">×</button>
+            </div>
+            <ul class="kv-list-parent">
+              <li>
+                <div class="kv-item-container ">
+                  <textarea class="kv-field-container kv-content-container kv-di-in" name="CurrentIdentifier[Attr[2]]" rows="8" >value2[$Attr[2]]</textarea>
+                </div>
+              </li>
+            </ul>
+          </li>
         </ul>
+      </li>
+
       ))}
-    </div>
+    </ul>
+
+
   )
 }
