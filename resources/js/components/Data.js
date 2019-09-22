@@ -28,8 +28,8 @@ export default class Data extends Component {
 
 
 
-      var data_selecteda = response.data;
-      // var data_selecteda = data_selected['content'];
+      // var data_selecteda = response.data;
+      var data_selecteda = response.data.content;
       this.setState({
         data: data_selecteda
       });
@@ -75,9 +75,9 @@ const OptionsList = ({ options}) => {
       {data_selected.map(option => (
 
         <ul>
-          <div className="label">{option.name}</div>
+          <div className="label">{option.name} ({typeof option.content})</div>
           {/* Base Case */}
-          {option.content.length > 0 &&
+          {typeof option.content == "object" &&
             <OptionsList
               options={option.content}
              />

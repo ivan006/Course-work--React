@@ -66194,7 +66194,8 @@ function (_Component) {
         // this.setState({
         //   data: data_selected
         // });
-        var data_selecteda = response.data; // var data_selecteda = data_selected['content'];
+        // var data_selecteda = response.data;
+        var data_selecteda = response.data.content;
 
         _this2.setState({
           data: data_selecteda
@@ -66227,7 +66228,7 @@ var OptionsList = function OptionsList(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, data_selected.map(function (option) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "label"
-    }, option.name), option.content.length > 0 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
+    }, option.name, " (", _typeof(option.content), ")"), _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
       options: option.content
     }));
   }));
