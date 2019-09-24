@@ -66188,25 +66188,26 @@ function (_Component) {
           data: response.data.content
         });
       });
-    }
-  }, {
-    key: "handleDelete",
-    value: function handleDelete(id) {
-      var isNotId = function isNotId(task) {
-        return task.id !== id;
-      };
+    } // handleDelete (id) {
+    //   const isNotId = task => task.id !== id;
+    //   const updatedTasks = this.state.data.filter(isNotId);
+    //   this.setState({data:updatedTasks})
+    //   alert(1);
+    // }
 
-      var updatedTasks = this.state.data.filter(isNotId);
-      this.setState({
-        data: updatedTasks
-      });
-      alert(1);
-    }
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        datahelper: this.state.data
+        datahelper: this.state.data,
+        onChange: function onChange(data) {
+          return _this3.setState({
+            data: data
+          });
+        },
+        data: this.state.data
       }));
     }
   }]);
@@ -66218,9 +66219,18 @@ function (_Component) {
 
 
 var DataHelper = function DataHelper(_ref) {
-  var datahelper = _ref.datahelper;
+  var datahelper = _ref.datahelper,
+      onChange = _ref.onChange,
+      data = _ref.data;
   var datahelpervalues = Object.values(datahelper); // alert(JSON.stringify(datahelpervalues));
   // {JSON.stringify(datahelpervalues.content)}
+
+  var handleDelete = function handleDelete(id) {
+    // const isNotId = task => task.id !== id;
+    // const updatedTasks = data.filter(isNotId);
+    var updatedData = 1;
+    onChange(updatedData);
+  };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
@@ -66265,7 +66275,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick() {
-        return Data.handleDelete(datahelpervalue.id);
+        return handleDelete(datahelpervalue.id);
       },
       className: "kv-little-button",
       type: "submit",

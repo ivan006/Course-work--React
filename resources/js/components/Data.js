@@ -19,13 +19,12 @@ export default class Data extends Component {
     });
   }
 
-
-  handleDelete (id) {
-    const isNotId = task => task.id !== id;
-    const updatedTasks = this.state.data.filter(isNotId);
-    this.setState({data:updatedTasks})
-    alert(1);
-  }
+  // handleDelete (id) {
+  //   const isNotId = task => task.id !== id;
+  //   const updatedTasks = this.state.data.filter(isNotId);
+  //   this.setState({data:updatedTasks})
+  //   alert(1);
+  // }
 
   render() {
 
@@ -36,6 +35,8 @@ export default class Data extends Component {
         <h2>Data</h2>
         <DataHelper
           datahelper={this.state.data}
+          onChange={(data) => this.setState({data})}
+          data={this.state.data}
           />
       </div>
     );
@@ -49,15 +50,26 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ datahelper}) => {
+const DataHelper = ({ datahelper, onChange,data}) => {
 
   var datahelpervalues = Object.values(datahelper);
   // alert(JSON.stringify(datahelpervalues));
   // {JSON.stringify(datahelpervalues.content)}
+
+
+  const handleDelete = (id) => {
+
+      // const isNotId = task => task.id !== id;
+      // const updatedTasks = data.filter(isNotId);
+      const updatedData = 1;
+      onChange(updatedData)
+  }
   return (
     <ul className="kv-list-parent">
+
       {datahelpervalues.map(datahelpervalue => (
         <li key={datahelpervalue.id}>
+
 
           <div className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
@@ -78,7 +90,7 @@ const DataHelper = ({ datahelper}) => {
             <input className="kv-di-no" type="text" name="CurrentIdentifier[type]" defaultValue={datahelpervalue.type} />
             <input className="kv-di-no" type="text" name="CurrentIdentifier[id]" defaultValue={datahelpervalue.id} />
             <button className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="update">✓</button>
-            <button onClick={() => Data.handleDelete(datahelpervalue.id)} className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="delete">×</button>
+            <button onClick={() => handleDelete(datahelpervalue.id)} className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="delete">×</button>
 
 
 
