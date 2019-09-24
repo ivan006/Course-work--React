@@ -66190,10 +66190,23 @@ function (_Component) {
       });
     }
   }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      var isNotId = function isNotId(task) {
+        return task.id !== id;
+      };
+
+      var updatedTasks = this.state.data.filter(isNotId);
+      this.setState({
+        data: updatedTasks
+      });
+      alert(1);
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-        options: this.state.data
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+        datahelper: this.state.data
       }));
     }
   }]);
@@ -66204,22 +66217,19 @@ function (_Component) {
 
 
 
-var OptionsList = function OptionsList(_ref) {
-  var options = _ref.options;
-  var data_selected = options;
-  var data_selected = Object.values(data_selected); // alert(JSON.stringify(data_selected));
-  // {JSON.stringify(option.content)}
+var DataHelper = function DataHelper(_ref) {
+  var datahelper = _ref.datahelper;
+  var datahelpervalues = Object.values(datahelper); // alert(JSON.stringify(datahelpervalues));
+  // {JSON.stringify(datahelpervalues.content)}
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
-  }, data_selected.map(function (option) {
-    var _React$createElement, _React$createElement2;
-
+  }, datahelpervalues.map(function (datahelpervalue) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: option.id
+      key: datahelpervalue.id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, _typeof(option.content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, _typeof(datahelpervalue.content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66232,29 +66242,36 @@ var OptionsList = function OptionsList(_ref) {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
       name: "CurrentIdentifier[name]",
-      defaultValue: option.name
+      defaultValue: datahelpervalue.name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
       className: "kv-name-unedit kv-name kv-tog-off-ib "
-    }, option.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, datahelpervalue.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: "CurrentIdentifier[type]",
-      defaultValue: option.type
+      defaultValue: datahelpervalue.type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: "CurrentIdentifier[id]",
-      defaultValue: option.id
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement = {
+      defaultValue: datahelpervalue.id
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "kv-little-button",
       type: "submit",
-      className: "kv-little-button"
-    }, _defineProperty(_React$createElement, "type", "submit"), _defineProperty(_React$createElement, "name", "CurrentIdentifier[action]"), _defineProperty(_React$createElement, "defaultValue", "update"), _React$createElement), "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement2 = {
+      name: "CurrentIdentifier[action]",
+      defaultValue: "update"
+    }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick() {
+        return Data.handleDelete(datahelpervalue.id);
+      },
+      className: "kv-little-button",
       type: "submit",
-      className: "kv-little-button"
-    }, _defineProperty(_React$createElement2, "type", "submit"), _defineProperty(_React$createElement2, "name", "CurrentIdentifier[action]"), _defineProperty(_React$createElement2, "defaultValue", "delete"), _React$createElement2), "\xD7"), _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      name: "CurrentIdentifier[action]",
+      defaultValue: "delete"
+    }, "\xD7"), _typeof(datahelpervalue.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66287,8 +66304,8 @@ var OptionsList = function OptionsList(_ref) {
       className: "kv-little-button",
       name: "CurrentIdentifier[action]",
       defaultValue: "create_folder"
-    }, "+"))))), _typeof(option.content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
-      options: option.content
+    }, "+"))))), _typeof(datahelpervalue.content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      datahelper: datahelpervalue.content
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66297,7 +66314,7 @@ var OptionsList = function OptionsList(_ref) {
       className: "kv-field-container kv-content-container kv-di-in",
       name: "CurrentIdentifier[content]",
       rows: "8",
-      defaultValue: option.content
+      defaultValue: datahelpervalue.content
     })))));
   }));
 };

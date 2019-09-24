@@ -19,6 +19,14 @@ export default class Data extends Component {
     });
   }
 
+
+  handleDelete (id) {
+    const isNotId = task => task.id !== id;
+    const updatedTasks = this.state.data.filter(isNotId);
+    this.setState({data:updatedTasks})
+    alert(1);
+  }
+
   render() {
 
     return (
@@ -26,8 +34,8 @@ export default class Data extends Component {
       <div>
         <br></br>
         <h2>Data</h2>
-        <OptionsList
-          options={this.state.data}
+        <DataHelper
+          datahelper={this.state.data}
           />
       </div>
     );
@@ -39,21 +47,21 @@ export default class Data extends Component {
 
 
 
-// Recursive component
-const OptionsList = ({ options}) => {
 
-  var data_selected = options;
-  var data_selected = Object.values(data_selected);
-  // alert(JSON.stringify(data_selected));
-  // {JSON.stringify(option.content)}
+// Recursive component
+const DataHelper = ({ datahelper}) => {
+
+  var datahelpervalues = Object.values(datahelper);
+  // alert(JSON.stringify(datahelpervalues));
+  // {JSON.stringify(datahelpervalues.content)}
   return (
     <ul className="kv-list-parent">
-      {data_selected.map(option => (
-        <li key={option.id}>
+      {datahelpervalues.map(datahelpervalue => (
+        <li key={datahelpervalue.id}>
 
           <div className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
-            {typeof option.content == "object" ?
+            {typeof datahelpervalue.content == "object" ?
               <div className="kv-di-in">📁</div>
               :
               <div className="kv-di-in">📃</div>
@@ -61,20 +69,20 @@ const OptionsList = ({ options}) => {
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" />
-              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[name]" defaultValue={option.name} />
-              <a href="#" className="kv-name-unedit kv-name kv-tog-off-ib ">{option.name}</a>
+              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name="CurrentIdentifier[name]" defaultValue={datahelpervalue.name} />
+              <a href="#" className="kv-name-unedit kv-name kv-tog-off-ib ">{datahelpervalue.name}</a>
               <span className="kv-little-button ">^</span>
             </label>
 
 
-            <input className="kv-di-no" type="text" name="CurrentIdentifier[type]" defaultValue={option.type} />
-            <input className="kv-di-no" type="text" name="CurrentIdentifier[id]" defaultValue={option.id} />
-            <button type="submit" className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="update">✓</button>
-            <button type="submit" className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="delete">×</button>
+            <input className="kv-di-no" type="text" name="CurrentIdentifier[type]" defaultValue={datahelpervalue.type} />
+            <input className="kv-di-no" type="text" name="CurrentIdentifier[id]" defaultValue={datahelpervalue.id} />
+            <button className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="update">✓</button>
+            <button onClick={() => Data.handleDelete(datahelpervalue.id)} className="kv-little-button" type="submit" name="CurrentIdentifier[action]" defaultValue="delete">×</button>
 
 
 
-            {typeof option.content == "object" &&
+            {typeof datahelpervalue.content == "object" &&
               <label className="kv-po-re">
                 <span className="kv-little-button ">+</span>
                 <input className="kv-tog-on-bl-switch" type="checkbox" name="checkbox" defaultValue="value" />
@@ -95,15 +103,15 @@ const OptionsList = ({ options}) => {
 
 
           </div>
-          {typeof option.content == "object" ?
-            <OptionsList
-              options={option.content}
+          {typeof datahelpervalue.content == "object" ?
+            <DataHelper
+              datahelper={datahelpervalue.content}
               />
             :
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea className="kv-field-container kv-content-container kv-di-in" name="CurrentIdentifier[content]" rows="8" defaultValue={option.content}></textarea>
+                  <textarea className="kv-field-container kv-content-container kv-di-in" name="CurrentIdentifier[content]" rows="8" defaultValue={datahelpervalue.content}></textarea>
                 </div>
               </li>
             </ul>

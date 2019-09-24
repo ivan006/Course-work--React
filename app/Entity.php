@@ -59,7 +59,6 @@ class Entity extends Model
           }
         }
 
-
         return $result;
       }
     }
