@@ -66098,7 +66098,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "w3-container w3-card w3-white w3-round w3-margin"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FileUpload__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Data__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Data__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     }
   }]);
 
@@ -66192,7 +66192,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
         options: this.state.data
       }));
     }
@@ -66211,128 +66211,131 @@ var OptionsList = function OptionsList(_ref) {
   // {JSON.stringify(option.content)}
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    "class": "kv-list-parent"
+    className: "kv-list-parent"
   }, data_selected.map(function (option) {
     var _React$createElement, _React$createElement2;
 
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-item-container  kv-di-in "
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: option.id
+    }, _typeof(option.content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-item-container  kv-di-in "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-di-in"
+      className: "kv-di-in"
     }, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-tog-on-ib-switch kv-tog-off-ib-switch",
+      className: "kv-tog-on-ib-switch kv-tog-off-ib-switch",
       type: "checkbox",
       name: "checkbox",
-      value: "value"
+      defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-field-container kv-name kv-tog-on-ib",
+      className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
-      name: "CurrentIdentifier[Attr[0]]",
-      value: "value2[$Attr[0]]"
+      name: "CurrentIdentifier[name]",
+      defaultValue: option.name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
-      "class": "kv-name-unedit kv-name kv-tog-off-ib "
-    }, option.name, " (value2[$Attr[0]]) "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      "class": "kv-little-button "
+      className: "kv-name-unedit kv-name kv-tog-off-ib "
+    }, option.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-di-no",
+      className: "kv-di-no",
       type: "text",
-      name: "CurrentIdentifier[Attr[1]]",
-      value: "value2[$Attr[1]]"
+      name: "CurrentIdentifier[type]",
+      defaultValue: option.type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-di-no",
+      className: "kv-di-no",
       type: "text",
-      name: "CurrentIdentifier[Attr[4]]",
-      value: "value2[$Attr[4]]"
+      name: "CurrentIdentifier[id]",
+      defaultValue: option.id
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
-      "class": "kv-little-button",
-      name: "CurrentIdentifier[Attr[3]]",
-      value: "update"
+      className: "kv-little-button",
+      name: "CurrentIdentifier[action]",
+      defaultValue: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
-      "class": "kv-little-button",
-      name: "CurrentIdentifier[Attr[3]]",
-      value: "delete"
+      className: "kv-little-button",
+      name: "CurrentIdentifier[action]",
+      defaultValue: "delete"
     }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      "class": "kv-po-re"
+      className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      "class": "kv-little-button "
+      className: "kv-little-button "
     }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-tog-on-bl-switch",
+      className: "kv-tog-on-bl-switch",
       type: "checkbox",
       name: "checkbox",
-      value: "value"
+      defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
+      className: "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": ""
+      className: ""
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-field-container kv-name kv-di-in ",
+      className: "kv-field-container kv-name kv-di-in ",
       type: "text",
-      name: "CurrentIdentifier[Attr[6]][folder]"
+      name: "CurrentIdentifier[add][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
-      "class": "kv-little-button",
-      name: "CurrentIdentifier[Attr[3]]",
-      value: "create_folder"
+      className: "kv-little-button",
+      name: "CurrentIdentifier[action]",
+      defaultValue: "create_folder"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-mar-top-3"
+      className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-field-container kv-name kv-di-in",
+      className: "kv-field-container kv-name kv-di-in",
       type: "text",
-      name: "CurrentIdentifier[Attr[6]][file]"
+      name: "CurrentIdentifier[add][file]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
-      "class": "kv-little-button",
-      name: "CurrentIdentifier[Attr[3]]",
-      value: "create_folder"
+      className: "kv-little-button",
+      name: "CurrentIdentifier[action]",
+      defaultValue: "create_folder"
     }, "+"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsList, {
       options: option.content
     })), typeof option.content == "string" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-item-container  kv-di-in  "
+      className: "kv-item-container  kv-di-in  "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-di-in"
+      className: "kv-di-in"
     }, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-tog-on-ib-switch kv-tog-off-ib-switch",
+      className: "kv-tog-on-ib-switch kv-tog-off-ib-switch",
       type: "checkbox",
       name: "checkbox",
-      value: "value"
+      defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-field-container kv-name kv-tog-on-ib",
+      className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
-      name: "CurrentIdentifier[Attr[0]]",
-      value: "value2[$Attr[0]]"
+      name: "CurrentIdentifier[name]",
+      defaultValue: option.name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#",
-      "class": "kv-name-unedit kv-name kv-tog-off-ib "
-    }, option.name, " value2[$Attr[0]]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      "class": "kv-little-button "
+      className: "kv-name-unedit kv-name kv-tog-off-ib "
+    }, option.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-di-no",
+      className: "kv-di-no",
       type: "text",
-      name: "CurrentIdentifier[Attr[1]]",
-      value: "value2[$Attr[1]]"
+      name: "CurrentIdentifier[type]",
+      defaultValue: option.type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      "class": "kv-di-no",
+      className: "kv-di-no",
       type: "text",
-      name: "CurrentIdentifier[Attr[4]]",
-      value: "value2[$Attr[4]]"
+      name: "CurrentIdentifier[id]",
+      defaultValue: option.id
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement = {
       type: "submit",
-      "class": "kv-little-button"
-    }, _defineProperty(_React$createElement, "type", "submit"), _defineProperty(_React$createElement, "name", "CurrentIdentifier[Attr[3]]"), _defineProperty(_React$createElement, "value", "update"), _React$createElement), "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement2 = {
+      className: "kv-little-button"
+    }, _defineProperty(_React$createElement, "type", "submit"), _defineProperty(_React$createElement, "name", "CurrentIdentifier[action]"), _defineProperty(_React$createElement, "defaultValue", "update"), _React$createElement), "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement2 = {
       type: "submit",
-      "class": "kv-little-button"
-    }, _defineProperty(_React$createElement2, "type", "submit"), _defineProperty(_React$createElement2, "name", "CurrentIdentifier[Attr[3]]"), _defineProperty(_React$createElement2, "value", "delete"), _React$createElement2), "\xD7")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      "class": "kv-list-parent"
+      className: "kv-little-button"
+    }, _defineProperty(_React$createElement2, "type", "submit"), _defineProperty(_React$createElement2, "name", "CurrentIdentifier[action]"), _defineProperty(_React$createElement2, "defaultValue", "delete"), _React$createElement2), "\xD7")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "kv-list-parent"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      "class": "kv-item-container "
+      className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-      "class": "kv-field-container kv-content-container kv-di-in",
-      name: "CurrentIdentifier[Attr[2]]",
-      rows: "8"
-    }, "value2[$Attr[2]]"))))));
+      className: "kv-field-container kv-content-container kv-di-in",
+      name: "CurrentIdentifier[content]",
+      rows: "8",
+      defaultValue: option.content
+    }))))));
   }));
 };
 
