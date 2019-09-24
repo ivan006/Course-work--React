@@ -62,7 +62,7 @@ const DataHelper = ({ datahelper, onChange,data}) => {
       // const isNotId = task => task.id !== id;
       // const updatedTasks = data.filter(isNotId);
       const updatedData = 1;
-      onChange(updatedData)
+      onChange(updatedData);
   }
   return (
     <ul className="kv-list-parent">
@@ -116,9 +116,13 @@ const DataHelper = ({ datahelper, onChange,data}) => {
 
           </div>
           {typeof datahelpervalue.content == "object" ?
+
             <DataHelper
               datahelper={datahelpervalue.content}
+              onChange={1}
+              data={1}
               />
+
             :
             <ul className="kv-list-parent">
               <li>

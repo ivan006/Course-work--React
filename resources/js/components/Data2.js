@@ -109,6 +109,7 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
     <div>
       {options.map(option => (
         <ul>
+
           <Checkbox
             selected={selectedOptions[option.id]}
             label={option.name}
@@ -118,8 +119,8 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
           {(option.subOptions.length > 0 && selectedOptions[option.id]) &&
             <OptionsList
               options={option.subOptions}
-              selectedOptions={selectedOptions[option.id]}
               onChange={(subSelections) => handleSubOptionsListChange(option.id, subSelections)}
+              selectedOptions={selectedOptions[option.id]}
              />
           }
         </ul>

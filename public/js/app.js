@@ -66315,7 +66315,9 @@ var DataHelper = function DataHelper(_ref) {
       name: "CurrentIdentifier[action]",
       defaultValue: "create_folder"
     }, "+"))))), _typeof(datahelpervalue.content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-      datahelper: datahelpervalue.content
+      datahelper: datahelpervalue.content,
+      onChange: 1,
+      data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
