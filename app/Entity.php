@@ -89,10 +89,10 @@ class Entity extends Model
 
   public static function FileExtention($name)
   {
-      $explodedName = explode('.', $name);
-      $extention = end($explodedName);
+    $explodedName = explode('.', $name);
+    $extention = end($explodedName);
 
-      return $extention;
+    return $extention;
   }
 
   public static function StoreMultiForEdit($ShowChangesForEdit,$EntityType)
@@ -117,7 +117,7 @@ class Entity extends Model
                 if (!empty($value[$Attr[4]])) {
                   $EntityTypeClass::find($value[$Attr[4]])
                   ->update([
-                    'name' => $value[$Attr[0]],
+                  'name' => $value[$Attr[0]],
                   ]);
                 }
                 break;
@@ -141,11 +141,11 @@ class Entity extends Model
                 case 'create_folder':
                 // dd($EntityTypeClass);
                 $var = $EntityTypeClass::create([
-                  'name' => $value[$Attr[6]]['folder'],
-                  'parent_id' => $value[$Attr[4]],
-                  'parent_type' => $value[$Attr[8]],
-                  'type' => 'folder',
-                  'content' => 'null'
+                'name' => $value[$Attr[6]]['folder'],
+                'parent_id' => $value[$Attr[4]],
+                'parent_type' => $value[$Attr[8]],
+                'type' => 'folder',
+                'content' => 'null'
                 ]);
 
                 if ($EntityType == "Report") {
@@ -241,30 +241,40 @@ class Entity extends Model
               $CurrentIdentifier = $Identifier.'['.$Attr[2].']'.'['.$IdentifierSuffix.']';
 
               if (is_array($value2)) {
-                if ('folder' == $value2[$Attr[1]]) {
-                  ?>
-                  <li>
+                ?>
+                <li>
 
-                    <div class="kv-item-container  kv-di-in ">
+                  <div class="kv-item-container  kv-di-in ">
+                    <?php if ('folder' == $value2[$Attr[1]]) { ?>
                       <div class="kv-di-in">📁</div>
-                      <label style="">
-                        <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
-                        <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
-                        <?php if ($EntityType=='Report') { ?>
-                          <a href="<?php echo $value2['url']; ?>" class="kv-name-unedit kv-name kv-tog-off-ib "><?php echo $value2[$Attr[0]]; ?></a>
-                        <?php } else { ?>
-                          <div class="kv-name-unedit kv-name kv-tog-off-ib "><?php echo $value2[$Attr[0]]; ?></div>
-                        <?php }?>
-                        <span class="kv-little-button ">∧</span>
-                      </label>
+                    <?php } else { ?>
+                      <div class="kv-di-in">📃</div>
+                    <?php } ?>
 
-                      <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[1]; ?>]" value="<?php echo $value2[$Attr[1]]; ?>">
-                      <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[4]; ?>]" value="<?php echo $value2[$Attr[4]]; ?>">
+                    <label style="">
+                      <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
+                      <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
+
+                      <?php if ($EntityType=='Report') { ?>
+                        <a href="<?php echo $value2['url']; ?>" class="kv-name-unedit kv-name kv-tog-off-ib "><?php echo $value2[$Attr[0]]; ?></a>
+                      <?php } else { ?>
+                        <div class="kv-name-unedit kv-name kv-tog-off-ib "><?php echo $value2[$Attr[0]]; ?></div>
+                      <?php }?>
+
+
+                      <span class="kv-little-button ">∧</span>
+                    </label>
+
+
+                    <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[1]; ?>]" value="<?php echo $value2[$Attr[1]]; ?>">
+                    <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[4]; ?>]" value="<?php echo $value2[$Attr[4]]; ?>">
+                    <?php if ('folder' == $value2[$Attr[1]]) { ?>
                       <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[8]; ?>]" value="<?php echo $value2[$Attr[8]]; ?>">
-                      <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="update">✓</button>
-                      <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="delete">×</button>
+                    <?php } ?>
 
-
+                    <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="update">✓</button>
+                    <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="delete">×</button>
+                    <?php if ('folder' == $value2[$Attr[1]]) { ?>
                       <label class="kv-po-re">
                         <span class="kv-little-button ">+</span>
                         <input class="kv-tog-on-bl-switch" type="checkbox" name="checkbox" value="value">
@@ -283,10 +293,11 @@ class Entity extends Model
                           <?php } ?>
                         </div>
                       </label>
-                    </div>
-                    <?php
+                    <?php } ?>
+                  </div>
+                  <?php
 
-
+                  if ('folder' == $value2[$Attr[1]]) {
 
                     $result .= ob_get_contents();
 
@@ -295,35 +306,10 @@ class Entity extends Model
 
 
                     ob_start();
+                  } else {
                     ?>
-                  </li>
-
-
-                  <?php
-                } else {
-                  ?>
-                  <li>
-                    <div class="kv-item-container  kv-di-in ">
-                      <div class="kv-di-in">📃</div>
-                      <label style="">
-                        <input class="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" value="value">
-                        <input class="kv-field-container kv-name kv-tog-on-ib" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[0]; ?>]" value="<?php echo $value2[$Attr[0]]; ?>">
-                        <div class="kv-name-unedit kv-name kv-tog-off-ib "><?php echo $value2[$Attr[0]]; ?></div>
-                        <span class="kv-little-button ">∧</span>
-                      </label>
-
-                      <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[1]; ?>]" value="<?php echo $value2[$Attr[1]]; ?>">
-                      <input class="kv-di-no" type="text" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[4]; ?>]" value="<?php echo $value2[$Attr[4]]; ?>">
-                      <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="update">✓</button>
-                      <button type="submit" class="kv-little-button" name="<?php echo $CurrentIdentifier; ?>[<?php echo $Attr[3]; ?>]" value="delete">×</button>
-
-                    </div>
-
-
                     <ul class="kv-list-parent">
                       <li>
-
-
 
                         <?php
                         $fileExtension = Entity::FileExtention($value2[$Attr[0]]);
@@ -348,10 +334,11 @@ class Entity extends Model
                         } ?>
                       </li>
                     </ul>
-                  </li>
-                  <?php
+                    <?php } ?>
+                </li>
 
-                }
+
+                <?php
               }
             }
           }?>

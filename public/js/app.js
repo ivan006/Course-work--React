@@ -66299,7 +66299,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "text",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[4] + "]",
       defaultValue: datahelpervalues[keyName].id
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
