@@ -66261,7 +66261,7 @@ var DataHelper = function DataHelper(_ref) {
     // const updatedTasks = data.filter(isNotId);
     var updatedData = 1;
     onChange(updatedData);
-  }; // var CurrentIdentifier = identifier+"["+"content"+"]"+i;
+  }; // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
 
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -66283,35 +66283,39 @@ var DataHelper = function DataHelper(_ref) {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[0] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[0] + "]",
       defaultValue: datahelpervalues[keyName].name
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#",
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
     }, datahelpervalues[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[1] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[1] + "]",
       defaultValue: datahelpervalues[keyName].type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[4] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[4] + "]",
       defaultValue: datahelpervalues[keyName].id
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-di-no",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
+      defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[4] + "]",
-      defaultValue: "update"
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      value: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick() {
         return handleDelete(datahelpervalues[keyName].id);
       },
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[4] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
       defaultValue: "delete"
     }, "\xD7"), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
@@ -66329,25 +66333,25 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in ",
       type: "text",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[6] + "]"
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[3] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
       defaultValue: "create_folder"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in",
       type: "text",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[6] + "]"
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][file]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[3] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
       defaultValue: "create_folder"
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-      identifier: identifier + "[" + "content" + "]" + i,
+      identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
       onChange: 1,
       data: 1
@@ -66357,7 +66361,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       className: "kv-field-container kv-content-container kv-di-in",
-      name: identifier + "[" + "content" + "]" + i + "[" + Attr[2] + "]",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
       defaultValue: datahelpervalues[keyName].content
     })))));

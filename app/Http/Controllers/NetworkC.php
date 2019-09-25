@@ -39,7 +39,7 @@ class NetworkC extends Controller
   {
     $routeParameters = func_get_args();
     array_shift($routeParameters);
-
+    dd($request->get("Data"));
     if (!empty($routeParameters)) {
       Report::Store($routeParameters, $request);
       $allURLs = Report::ShowActions($routeParameters);
