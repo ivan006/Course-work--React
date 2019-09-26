@@ -34,30 +34,31 @@
     </expressions>
     <?php
 
-    $xml = ob_get_contents();
+    $exp_tree_array_xml = ob_get_contents();
 
     ob_end_clean();
 
-    function array_from_xml($xml) {
+    function array_from_xml($xml){
       $array = $xml;
       $array = simplexml_load_string($array, "SimpleXMLElement", LIBXML_NOCDATA);
       $array = json_encode($array,JSON_PRETTY_PRINT);
       $array = json_decode($array,TRUE);
-      return $array;
     }
-    $exp_array = array_from_xml($xml);
+
+    $exp_tree_array = array_from_xml($exp_tree_array_xml);
 
 
-    // function exp_tree_from_exp(){
+
+    // function exp_tree_array_from_exp(){
     //
     // }
-    function exp_from_exp_tree($exp_array){
-      function exp_from_exp_tree_helper($exp_array,$parentKey,$operators){
+    function exp_tree_string_from_exp_tree_array($exp_tree_array){
+      function exp_tree_string_from_exp_tree_array_helper($exp_tree_array,$parentKey,$operators){
         if ($parentKey === "number") {
-          $exp_array = array_values($exp_array)[0];
+          $exp_tree_array = array_values($exp_tree_array)[0];
         }
         $i = 0;
-        foreach ($exp_array as $key => $value) {
+        foreach ($exp_tree_array as $key => $value) {
           if ($i < 2) {
             if (is_array($value)) {
               if ($key === "number" & is_array($value)) {
@@ -65,7 +66,7 @@
               } else {
                 $keyToPass = $key;
               }
-              $num[$i] = exp_from_exp_tree_helper($value,$keyToPass,$operators);
+              $num[$i] = exp_tree_string_from_exp_tree_array_helper($value,$keyToPass,$operators);
             } else {
               $num[$i] = $value;
             }
@@ -87,27 +88,28 @@
         'multiply' => '*',
       );
       $key = "baseKey";
-      $result = exp_from_exp_tree_helper($exp_array,$key,$operators);
+      $result = exp_tree_string_from_exp_tree_array_helper($exp_tree_array,$key,$operators);
       return $result;
     }
-    $exp_string = exp_from_exp_tree($exp_array['expression'][0]);
 
-    function exp_result($exp_string){
-      // // $exp_string ="2+10";
-      eval("\$result = $exp_string;");
-      return $result."<br>";
+    $exp_tree_string = exp_tree_string_from_exp_tree_array($exp_tree_array);
+
+    function exp_result($exp_tree_string){
+      eval("\$result = $exp;");
+      return $result;
     }
 
-    $exp_result = exp_result($exp_string);
+    $exp_result = exp_result($exp_tree_string);
     echo $exp_result;
 
-    // $exp_string = $exp_array['expression'][0];
+    // $expOne = $thing_array['expression'][0];
     // echo "<pre>";
-    // $exp_string = json_encode($exp_string,JSON_PRETTY_PRINT);
-    // echo $exp_string;
+    // $expOne = json_encode($expOne,JSON_PRETTY_PRINT);
+    // echo $expOne;
     // echo "</pre>";
-    // $exp_string = json_decode($exp_string,TRUE);
-    // echo $exp_string."<br>";
+    // $expOne = json_decode($expOne,TRUE);
+    // $expOne = exp_tree_string_from_exp_tree_array($expOne);
+    // echo $expOne."<br>";
 
 
 
