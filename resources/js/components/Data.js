@@ -11,12 +11,16 @@ export default class Data extends Component {
 
   };
   componentDidMount () {
+    this.data();
+  }
+  data(){
     axios.get('/api/show/Group_1')
     .then(response => {
       this.setState({
         data: response.data.content
       });
     });
+
   }
 
   // handleDelete (id) {

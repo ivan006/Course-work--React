@@ -66181,6 +66181,11 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.data();
+    }
+  }, {
+    key: "data",
+    value: function data() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
