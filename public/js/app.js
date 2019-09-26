@@ -66202,20 +66202,19 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         id: "form",
-        enctype: "multipart/form-data",
+        encType: "multipart/form-data",
         name: "",
-        "class": "",
         action: "http://react.test/store/Group_1",
         method: "post"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",
-        value: "6Xj6QCZ5YNBl9LpZXAHEZ14YdZu2eS9tfDTb7UFs"
+        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "kv-di-no",
         type: "text",
         name: "form",
-        value: "data"
+        defaultValue: "data"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
@@ -66316,7 +66315,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-little-button",
       type: "submit",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
-      defaultValue: "delete"
+      value: "delete"
     }, "\xD7"), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -66338,7 +66337,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
-      defaultValue: "create_folder"
+      value: "create_folder"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -66349,7 +66348,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
-      defaultValue: "create_folder"
+      value: "create_file"
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,

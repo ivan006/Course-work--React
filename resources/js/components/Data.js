@@ -30,9 +30,9 @@ export default class Data extends Component {
 
     return (
       <div>
-        <form  id="form" enctype="multipart/form-data" name="" class="" action="http://react.test/store/Group_1" method="post">
-          <input type="hidden" name="_token" value="6Xj6QCZ5YNBl9LpZXAHEZ14YdZu2eS9tfDTb7UFs" ></input>
-          <input className="kv-di-no" type="text" name="form" value="data"></input>
+        <form  id="form" encType="multipart/form-data" name=""  action="http://react.test/store/Group_1" method="post">
+          <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+          <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
             <br></br>
             <h2>Data</h2>
             <DataHelper
@@ -111,7 +111,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
                 <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
               }
               <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
-              <button onClick={() => handleDelete(datahelpervalues[keyName].id)} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} defaultValue="delete">×</button>
+              <button onClick={() => handleDelete(datahelpervalues[keyName].id)} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
 
@@ -123,12 +123,12 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
                     <div className="" >
                       <span>📁</span>
                       <input className="kv-field-container kv-name kv-di-in "  type="text"   name={identifier+"["+"content"+"]["+i+"]["+Attr[6]+"][folder]"}  ></input>
-                      <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} defaultValue="create_folder">+</button>
+                      <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="create_folder">+</button>
                     </div>
                     <div className="kv-mar-top-3">
                       <span>📃</span>
                       <input className="kv-field-container kv-name kv-di-in"  type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[6]+"][file]"} ></input>
-                      <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} defaultValue="create_folder">+</button>
+                      <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="create_file">+</button>
                     </div>
                   </div>
                 </label>
