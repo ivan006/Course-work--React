@@ -1,40 +1,23 @@
-<?php
-?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <ul>
+      <li>
+        <a href="http://react.test/copeland/api_create.php">Create</a> (<a href="http://react.test/copeland/create_try_it_here.php">try it here</a>)
+      </li>
+      <li>
+        <a href="http://react.test/copeland/api_list.php">List</a> (<a href="http://react.test/copeland/create_try_it_here.php">try it here</a>)
+      </li>
+    </ul>
 
 
-  <form class="" action="./post_end_point.php" method="post">
-    <textarea name="input_xml" rows="8" cols="80">
-      <?xml version="1.0" encoding="UTF-8"?>
-      <expressions>
-        <expression>
-          <add>
-            <number>1</number>
-            <multiply>
-              <number>2</number>
-              <number>8</number>
-            </multiply>
-          </add>
-        </expression>
-        <expression>
-          <minus>
-            <divide>
-              <number>1</number>
-              <number>2</number>
-            </divide>
-            <number>8</number>
-          </minus>
-        </expression>
-      </expressions>
-    </textarea>
-    <input type="submit" name="" value="1">
-  </form>
 
-</body>
+
+
+  </body>
 </html>
