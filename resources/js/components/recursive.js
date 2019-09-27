@@ -83,7 +83,7 @@ export default class Data extends Component {
 // Recursive component
 const OptionsList = ({ options, selectedOptions, onChange }) => {
 
-  const handleCheckboxClicked = (selectedOptionId) => {
+  const isChanged = (selectedOptionId) => {
     // is currently selected
     if(selectedOptions[selectedOptionId]){
       // remove selected key from options list
@@ -93,14 +93,16 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
       selectedOptions[selectedOptionId] = {}
     }
     // call onChange function given by parent
-    onChange(selectedOptions)
+    onChange(selectedOptions);
+    alert(selectedOptionId+" - is changed");
   }
 
-  const handleSubOptionsListChange = (optionId, subSelections) => {
+  const containsChange = (optionId, subSelections) => {
     // add sub selections to current optionId
     selectedOptions[optionId] = subSelections;
     // call onChange function given by parent
     onChange(selectedOptions);
+    alert(optionId+" - contains change" );
   }
 
 
@@ -110,36 +112,27 @@ const OptionsList = ({ options, selectedOptions, onChange }) => {
       {options.map(option => (
         <ul>
 
-          <Checkbox
-            selected={selectedOptions[option.id]}
-            label={option.name}
-            onChange={() => {handleCheckboxClicked(option.id)}}
-           />
+
+
+         <div>
+           <div
+             className="checkbox"
+             onClick={() => {isChanged(option.id)}}
+             >
+             d
+           </div>
+           <div className="label">{option.name}</div>
+         </div>
           {/* Base Case */}
           {(option.subOptions.length > 0 && selectedOptions[option.id]) &&
             <OptionsList
               options={option.subOptions}
-              onChange={(subSelections) => handleSubOptionsListChange(option.id, subSelections)}
+              onChange={(subSelections) => containsChange(option.id, subSelections)}
               selectedOptions={selectedOptions[option.id]}
              />
           }
         </ul>
       ))}
-    </div>
-  )
-}
-
-// Dumb checkbox component, completly controlled by parent
-const Checkbox = ({ selected, label, onChange }) => {
-  return (
-    <div>
-      <div
-        className="checkbox"
-        onClick={() => onChange(!selected)}
-        >
-        d
-      </div>
-      <div className="label">{label}</div>
     </div>
   )
 }
