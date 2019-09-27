@@ -66201,16 +66201,17 @@ function (_Component) {
     // }
 
   }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      alert(5);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        id: "form",
-        encType: "multipart/form-data",
-        name: "",
-        action: "http://react.test/store/Group_1",
-        method: "post"
+        onClick: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",
@@ -66220,7 +66221,7 @@ function (_Component) {
         type: "text",
         name: "form",
         defaultValue: "data"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
         onChange: function onChange(data) {
@@ -66265,6 +66266,16 @@ var DataHelper = function DataHelper(_ref) {
     // const updatedTasks = data.filter(isNotId);
     var updatedData = 1;
     onChange(updatedData);
+  };
+
+  var handleSubmit = function handleSubmit(event) {
+    // event.preventDefault();
+    // var name = event.target.name;
+    // var value = event.target.name;
+    // this.setState.dato({
+    //   [name]: value
+    // });
+    alert(10);
   }; // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
 
 
@@ -66364,6 +66375,7 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      onChange: handleSubmit,
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
