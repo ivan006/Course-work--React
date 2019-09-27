@@ -66221,7 +66221,7 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
-        onChange: function onChange(data) {
+        registerChange: function registerChange(data) {
           return _this3.setState({
             data: data
           });
@@ -66240,7 +66240,7 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       datahelper = _ref.datahelper,
-      onChange = _ref.onChange,
+      registerChange = _ref.registerChange,
       data = _ref.data;
   var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
   // alert(JSON.stringify(datahelpervalues));
@@ -66261,7 +66261,7 @@ var DataHelper = function DataHelper(_ref) {
   //   // const isNotId = task => task.id !== id;
   //   // const updatedTasks = data.filter(isNotId);
   //   const updatedData = 1;
-  //   onChange(updatedData);
+  //   registerChange(updatedData);
   // }
   // const handleSubmit = (event) => {
   //
@@ -66274,7 +66274,7 @@ var DataHelper = function DataHelper(_ref) {
   //   alert(10);
   // }
 
-  var isChanged = function isChanged(name, event) {
+  var registerAShallowChange = function registerAShallowChange(name, event) {
     event.preventDefault(); // // is currently selected
     // if(selectedOptions[selectedOptionId]){
     //   // remove selected key from options list
@@ -66283,18 +66283,18 @@ var DataHelper = function DataHelper(_ref) {
     //   // Add selected key to optionsList
     //   selectedOptions[selectedOptionId] = {}
     // }
-    // // call onChange function given by parent
+    // // call registerChange function given by parent
 
-    onChange(name);
-    alert(name + " - is changed");
+    registerChange(name);
+    alert("register a shallow change done to " + name);
   };
 
-  var containsChange = function containsChange(name) {
+  var registerADeepChange = function registerADeepChange(name) {
     // // add sub selections to current optionId
     // selectedOptions[optionId] = subSelections;
-    // // call onChange function given by parent
-    // onChange(selectedOptions);
-    alert(name + " - contains change");
+    // // call registerChange function given by parent
+    // registerChange(selectedOptions);
+    alert("register a deep change done to " + name);
   }; // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
 
 
@@ -66340,7 +66340,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick() {
-        isChanged(datahelpervalues[keyName].name, event);
+        registerAShallowChange(datahelpervalues[keyName].name, event);
       },
       className: "kv-little-button",
       type: "submit",
@@ -66387,8 +66387,8 @@ var DataHelper = function DataHelper(_ref) {
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
-      onChange: function onChange() {
-        return containsChange(datahelpervalues[keyName].name);
+      registerChange: function registerChange() {
+        return registerADeepChange(datahelpervalues[keyName].name);
       },
       data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {

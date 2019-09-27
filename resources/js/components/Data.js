@@ -49,7 +49,7 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            onChange={(data) => this.setState({data})}
+            registerChange={(data) => this.setState({data})}
             data={this.state.data}
             />
         </form>
@@ -66,7 +66,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, onChange,data}) => {
+const DataHelper = ({ identifier, datahelper, registerChange,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -89,7 +89,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
   //   // const isNotId = task => task.id !== id;
   //   // const updatedTasks = data.filter(isNotId);
   //   const updatedData = 1;
-  //   onChange(updatedData);
+  //   registerChange(updatedData);
   // }
   // const handleSubmit = (event) => {
   //
@@ -102,7 +102,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
   //   alert(10);
   // }
 
-  const isChanged = (name,event) => {
+  const registerAShallowChange = (name,event) => {
     event.preventDefault();
     // // is currently selected
     // if(selectedOptions[selectedOptionId]){
@@ -112,17 +112,17 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
     //   // Add selected key to optionsList
     //   selectedOptions[selectedOptionId] = {}
     // }
-    // // call onChange function given by parent
-    onChange(name);
-    alert(name+" - is changed");
+    // // call registerChange function given by parent
+    registerChange(name);
+    alert("register a shallow change done to "+name);
   }
 
-  const containsChange = (name) => {
+  const registerADeepChange = (name) => {
     // // add sub selections to current optionId
     // selectedOptions[optionId] = subSelections;
-    // // call onChange function given by parent
-    // onChange(selectedOptions);
-    alert(name+" - contains change" );
+    // // call registerChange function given by parent
+    // registerChange(selectedOptions);
+    alert("register a deep change done to "+name);
   }
 
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
@@ -155,7 +155,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
             {typeof datahelpervalues[keyName].content == "object" &&
               <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
             }
-            <button onClick={() => {isChanged(datahelpervalues[keyName].name,event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button onClick={() => {registerAShallowChange(datahelpervalues[keyName].name,event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
             <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
@@ -186,7 +186,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
             <DataHelper
               identifier= {identifier+"["+"content"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              onChange={() => containsChange(datahelpervalues[keyName].name)}
+              registerChange={() => registerADeepChange(datahelpervalues[keyName].name)}
               data={1}
               />
 
