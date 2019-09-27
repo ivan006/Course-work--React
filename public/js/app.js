@@ -66199,20 +66199,17 @@ function (_Component) {
     //   this.setState({data:updatedTasks})
     //   alert(1);
     // }
+    // handleSubmit(event){
+    //
+    //   alert(5);
+    // }
 
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(event) {
-      alert(5);
-    }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",
         defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
@@ -66259,23 +66256,45 @@ var DataHelper = function DataHelper(_ref) {
     '6': 'add',
     '7': 'url',
     '8': 'entity_type'
+  }; // const handleDelete = (id) => {
+  //
+  //   // const isNotId = task => task.id !== id;
+  //   // const updatedTasks = data.filter(isNotId);
+  //   const updatedData = 1;
+  //   onChange(updatedData);
+  // }
+  // const handleSubmit = (event) => {
+  //
+  //   // event.preventDefault();
+  //   // var name = event.target.name;
+  //   // var value = event.target.name;
+  //   // this.setState.dato({
+  //   //   [name]: value
+  //   // });
+  //   alert(10);
+  // }
+
+  var isChanged = function isChanged(name, event) {
+    event.preventDefault(); // // is currently selected
+    // if(selectedOptions[selectedOptionId]){
+    //   // remove selected key from options list
+    //   delete selectedOptions[selectedOptionId];
+    // } else { // is not currently selected
+    //   // Add selected key to optionsList
+    //   selectedOptions[selectedOptionId] = {}
+    // }
+    // // call onChange function given by parent
+
+    onChange(name);
+    alert(name + " - is changed");
   };
 
-  var handleDelete = function handleDelete(id) {
-    // const isNotId = task => task.id !== id;
-    // const updatedTasks = data.filter(isNotId);
-    var updatedData = 1;
-    onChange(updatedData);
-  };
-
-  var handleSubmit = function handleSubmit(event) {
-    // event.preventDefault();
-    // var name = event.target.name;
-    // var value = event.target.name;
-    // this.setState.dato({
-    //   [name]: value
-    // });
-    alert(10);
+  var containsChange = function containsChange(name) {
+    // // add sub selections to current optionId
+    // selectedOptions[optionId] = subSelections;
+    // // call onChange function given by parent
+    // onChange(selectedOptions);
+    alert(name + " - contains change");
   }; // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
 
 
@@ -66320,14 +66339,14 @@ var DataHelper = function DataHelper(_ref) {
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick() {
+        isChanged(datahelpervalues[keyName].name, event);
+      },
       className: "kv-little-button",
       type: "submit",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
       value: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return handleDelete(datahelpervalues[keyName].id);
-      },
       className: "kv-little-button",
       type: "submit",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
@@ -66368,14 +66387,15 @@ var DataHelper = function DataHelper(_ref) {
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
-      onChange: 1,
+      onChange: function onChange() {
+        return containsChange(datahelpervalues[keyName].name);
+      },
       data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-      onChange: handleSubmit,
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",

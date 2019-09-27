@@ -30,16 +30,16 @@ export default class Data extends Component {
   //   alert(1);
   // }
 
-  handleSubmit(event){
-
-    alert(5);
-  }
+  // handleSubmit(event){
+  //
+  //   alert(5);
+  // }
 
   render() {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit} >
+        <form >
 
 
           <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
@@ -84,22 +84,45 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
     '7': 'url',
     '8': 'entity_type',
   };
-  const handleDelete = (id) => {
+  // const handleDelete = (id) => {
+  //
+  //   // const isNotId = task => task.id !== id;
+  //   // const updatedTasks = data.filter(isNotId);
+  //   const updatedData = 1;
+  //   onChange(updatedData);
+  // }
+  // const handleSubmit = (event) => {
+  //
+  //   // event.preventDefault();
+  //   // var name = event.target.name;
+  //   // var value = event.target.name;
+  //   // this.setState.dato({
+  //   //   [name]: value
+  //   // });
+  //   alert(10);
+  // }
 
-    // const isNotId = task => task.id !== id;
-    // const updatedTasks = data.filter(isNotId);
-    const updatedData = 1;
-    onChange(updatedData);
+  const isChanged = (name,event) => {
+    event.preventDefault();
+    // // is currently selected
+    // if(selectedOptions[selectedOptionId]){
+    //   // remove selected key from options list
+    //   delete selectedOptions[selectedOptionId];
+    // } else { // is not currently selected
+    //   // Add selected key to optionsList
+    //   selectedOptions[selectedOptionId] = {}
+    // }
+    // // call onChange function given by parent
+    onChange(name);
+    alert(name+" - is changed");
   }
-  const handleSubmit = (event) => {
 
-    // event.preventDefault();
-    // var name = event.target.name;
-    // var value = event.target.name;
-    // this.setState.dato({
-    //   [name]: value
-    // });
-    alert(10);
+  const containsChange = (name) => {
+    // // add sub selections to current optionId
+    // selectedOptions[optionId] = subSelections;
+    // // call onChange function given by parent
+    // onChange(selectedOptions);
+    alert(name+" - contains change" );
   }
 
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
@@ -132,8 +155,8 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
             {typeof datahelpervalues[keyName].content == "object" &&
               <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
             }
-            <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
-            <button onClick={() => handleDelete(datahelpervalues[keyName].id)} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
+            <button onClick={() => {isChanged(datahelpervalues[keyName].name,event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
 
@@ -163,7 +186,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
             <DataHelper
               identifier= {identifier+"["+"content"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              onChange={1}
+              onChange={() => containsChange(datahelpervalues[keyName].name)}
               data={1}
               />
 
@@ -171,7 +194,7 @@ const DataHelper = ({ identifier, datahelper, onChange,data}) => {
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={handleSubmit} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
+                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
