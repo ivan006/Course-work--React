@@ -21,7 +21,7 @@ function loadDoc() {
 
   xhttp.open("POST", "./api_create.php", true);
   xhttp.setRequestHeader("Content-type", "text/plain");
-  xhttp.send("    
+  xhttp.send("
       <expressions>
         <expression>
           <add>

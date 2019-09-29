@@ -1,6 +1,6 @@
 <?php
 
-var_dump($_POST);
+
 
 include("login_details.php");
 
@@ -17,8 +17,8 @@ function query($arg){
 
 
   // sql to create table
-  $sql = "INSERT INTO articles (expression, result)
-  VALUES ('".$arg['expression']."', '".$arg['result']."')";
+  $sql = "INSERT INTO expressions (tree, result)
+  VALUES ('".$arg['tree']."', '".$arg['result']."')";
 
 
   $conn->query($sql);
@@ -71,7 +71,9 @@ function binary_expression_tree_decode($exp_array){
 }
 
 function xml_to_array($xml) {
+
   $array = $xml;
+  $array = preg_replace("/<\?xml(.*?)\?>/","",$array);
   $array = simplexml_load_string($array, "SimpleXMLElement", LIBXML_NOCDATA);
   $array = json_encode($array,JSON_PRETTY_PRINT);
   $array = json_decode($array,TRUE);
@@ -90,7 +92,7 @@ if (isset($_POST["expressions"])) {
     eval("\$exp_result = $exp_string;");
 
     query(array(
-      'expression'=>$exp_string,
+      'tree'=>$exp_string,
       'result'=>$exp_result,
     ));
   }

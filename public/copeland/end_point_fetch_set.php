@@ -18,7 +18,7 @@ function query($page_offset, $limit){
   $offset = 2*$page_offset;
 
 
-  $sql = "SELECT expression, result FROM articles LIMIT ? OFFSET ?;";
+  $sql = "SELECT tree, result FROM expressions LIMIT ? OFFSET ?;";
   $query = $conn->prepare($sql);
   $query->bind_param("ss", $limit, $offset);
   $query->execute();
@@ -26,7 +26,7 @@ function query($page_offset, $limit){
   $SQLresult[0] = mysqli_fetch_all($SQLresult[0],MYSQLI_ASSOC);
 
 
-  $sql = "SELECT COUNT(id) AS articlesCount FROM articles;";
+  $sql = "SELECT COUNT(id) AS expressionsCount FROM expressions;";
   $SQLresult2 = $conn->query($sql);
   $SQLresult2 = mysqli_fetch_all($SQLresult2,MYSQLI_ASSOC);
 
@@ -53,7 +53,7 @@ $nextPageOffset = $page_offset+1;
 $lastPageOffset = "unknown";
 $query =query($page_offset,$limit);
 $data =$query[0];
-$resultCount =$query[1]['articlesCount'];
+$resultCount =$query[1]['expressionsCount'];
 $total_pages = round($resultCount/$limit,0,PHP_ROUND_HALF_UP);
 $result = array(
   "page" => $page,
