@@ -1,6 +1,6 @@
 <?php
 
-
+var_dump($_POST);
 
 include("login_details.php");
 

@@ -5,7 +5,7 @@ include("login_details.php");
 
 
 
-function query($limit, $offset){
+function query($page_offset, $limit){
   $login_details = login_details();
 
   $conn = new mysqli($login_details["servername"], $login_details["username"], $login_details["password"], $login_details["db"]);
@@ -15,17 +15,23 @@ function query($limit, $offset){
     die("Connection failed: " . $conn->connect_error);
   }
 
-
+  $offset = 2*$page_offset;
 
 
   $sql = "SELECT expression, result FROM articles LIMIT ? OFFSET ?;";
   $query = $conn->prepare($sql);
   $query->bind_param("ss", $limit, $offset);
   $query->execute();
-  $SQLresult = $query->get_result();
+  $SQLresult[0] = $query->get_result();
+  $SQLresult[0] = mysqli_fetch_all($SQLresult[0],MYSQLI_ASSOC);
 
 
-  $result = mysqli_fetch_all($SQLresult,MYSQLI_ASSOC);
+  $sql = "SELECT COUNT(id) AS articlesCount FROM articles;";
+  $SQLresult2 = $conn->query($sql);
+  $SQLresult2 = mysqli_fetch_all($SQLresult2,MYSQLI_ASSOC);
+
+  $result = array_merge($SQLresult,$SQLresult2);
+
 
   $conn->close();
 
@@ -37,18 +43,22 @@ function query($limit, $offset){
 
 $limit = 2;
 if (isset($_GET["page"]["offset"])) {
-  $offset = $_GET["page"]["offset"];
+  $page_offset = $_GET["page"]["offset"];
 } else {
-  $offset = 0;
+  $page_offset = 0;
 }
+$page = 1+$page_offset;
 
-$nextPageOffset = $offset+$limit;
+$nextPageOffset = $page_offset+1;
 $lastPageOffset = "unknown";
-$data =query($limit, $offset);
+$query =query($page_offset,$limit);
+$data =$query[0];
+$resultCount =$query[1]['articlesCount'];
+$total_pages = round($resultCount/$limit,0,PHP_ROUND_HALF_UP);
 $result = array(
-  "pages" => "unknown",
+  "page" => $page,
   "per_page" => $limit,
-  "total_pages" => "unknown",
+  "total_pages" => $total_pages,
   "links" => array(
     "self" => "http://example.com/articles",
     "next" => "http://example.com/articles?page[offset]=".$nextPageOffset,
@@ -63,7 +73,7 @@ foreach ($data as $key => $value) {
 }
 
 echo "<pre>";
-echo json_encode($result,JSON_PRETTY_PRINT);
+echo json_encode($result,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 echo "</pre>";
 
 ?>

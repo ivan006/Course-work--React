@@ -1,17 +1,27 @@
-<?php
-?>
+
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
+<html>
 <body>
 
+<h1>The XMLHttpRequest Object</h1>
 
-  <form class="" action="./create_end_point.php" method="post">
-    <textarea name="expressions" rows="8" cols="80">
-      <?xml version="1.0" encoding="UTF-8"?>
+<button type="button" onclick="loadDoc()">Request data</button>
+
+<p id="demo"></p>
+<p id="demo-r"></p>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+
+  xhttp.open("POST", "./api_create.php", true);
+  xhttp.setRequestHeader("Content-type", "text/plain");
+  xhttp.send("    
       <expressions>
         <expression>
           <add>
@@ -31,10 +41,9 @@
             <number>8</number>
           </minus>
         </expression>
-      </expressions>
-    </textarea>
-    <input type="submit" name="" value="1">
-  </form>
+      </expressions>");
+}
+</script>
 
 </body>
 </html>
