@@ -66301,6 +66301,10 @@ var DataHelper = function DataHelper(_ref) {
     // // call registerChange function given by parent
     // registerChange(selectedOptions);
     alert("register a deep change done to " + name);
+  };
+
+  var registerAChange = function registerAChange(event) {
+    alert(event.target.name);
   }; // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
 
 
@@ -66405,7 +66409,10 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: datahelpervalues[keyName].content
+      defaultValue: datahelpervalues[keyName].content,
+      onChange: function onChange() {
+        registerAChange(event);
+      }
     })))));
   }));
 };

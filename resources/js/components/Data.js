@@ -127,6 +127,11 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
     alert("register a deep change done to "+name);
   }
 
+  const registerAChange = (event) => {
+
+    alert(event.target.name);
+  }
+
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
   return (
     <ul className="kv-list-parent">
@@ -196,7 +201,7 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
+                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content} onChange={() => {registerAChange(event)}}></textarea>
                 </div>
               </li>
             </ul>
