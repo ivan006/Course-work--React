@@ -66221,6 +66221,11 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
+        submit: function submit(data) {
+          return _this3.setState({
+            data: data
+          });
+        },
         registerChange: function registerChange(data) {
           return _this3.setState({
             data: data
@@ -66240,6 +66245,7 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       datahelper = _ref.datahelper,
+      submit = _ref.submit,
       registerChange = _ref.registerChange,
       data = _ref.data;
   var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
@@ -66340,7 +66346,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick() {
-        registerAShallowChange(datahelpervalues[keyName].name, event);
+        registerAShallowChange(identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]", event);
       },
       className: "kv-little-button",
       type: "submit",

@@ -49,6 +49,7 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
+            submit={(data) => this.setState({data})}
             registerChange={(data) => this.setState({data})}
             data={this.state.data}
             />
@@ -66,7 +67,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, registerChange,data}) => {
+const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -122,6 +123,7 @@ const DataHelper = ({ identifier, datahelper, registerChange,data}) => {
     // selectedOptions[optionId] = subSelections;
     // // call registerChange function given by parent
     // registerChange(selectedOptions);
+
     alert("register a deep change done to "+name);
   }
 
@@ -155,7 +157,7 @@ const DataHelper = ({ identifier, datahelper, registerChange,data}) => {
             {typeof datahelpervalues[keyName].content == "object" &&
               <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
             }
-            <button onClick={() => {registerAShallowChange(datahelpervalues[keyName].name,event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button onClick={() => {registerAShallowChange(identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]",event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
             <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
