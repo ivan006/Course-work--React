@@ -1,47 +1,40 @@
 {
-  "content": [
-  {
-    "name": "_data",
-    "type": "folder",
-    "id": "1",
-    "entity_type": "App\\Data",
-    "action": "update",
-    "add": {
-      "folder": null,
-      "file": null
-    },
-    "content": [
-    {
-      "name": "code",
+  "content": {
+    "X2RhdGE=": {
+      "name": "_data",
       "type": "folder",
-      "id": "26",
+      "id": 1,
+      "url": "/_data",
       "entity_type": "App\\Data",
-      "add": {
-        "folder": null,
-        "file": null
+      "content": {
+        "Y29kZQ==": {
+          "name": "code",
+          "type": "folder",
+          "id": 26,
+          "url": "/_data/code",
+          "entity_type": "App\\Data",
+          "content": {
+            "dzMuY3Nz": {
+              "name": "w3.css",
+              "type": "file",
+              "content": "123",
+              "id": 27
+            }
+          },
+        },
+        "UmljaC50eHQ=": {
+          "name": "Rich.txt",
+          "type": "file",
+          "content": "x",
+          "id": 28
+        },
+        "YWFhYQ==": {
+          "name": "aaaa",
+          "type": "file",
+          "content": "null",
+          "id": 205
+        }
       },
-      "content": [
-      {
-        "name": "w3.css",
-        "type": "file",
-        "id": "27",
-        "content": "123"
-      }
-      ]
-    },
-    {
-      "name": "Rich.txt",
-      "type": "file",
-      "id": "28",
-      "content": "x"
-    },
-    {
-      "name": "aaaa",
-      "type": "file",
-      "id": "205",
-      "content": "null"
     }
-    ]
   }
-  ]
 }

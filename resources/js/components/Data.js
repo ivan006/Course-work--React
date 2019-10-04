@@ -23,6 +23,72 @@ export default class Data extends Component {
 
   }
 
+  submitData(){
+    var thing = submitDataHelper( 1,1,1,1,1);
+
+  }
+
+  submitDataHelper( identifier, datahelper, submit, registerChange,data)  {
+
+    var datahelpervalues = datahelper;
+
+    var Attr = {
+      '0': 'name',
+      '1': 'type',
+      '2': 'content',
+      '3': 'action',
+      '4': 'id',
+      '5': 'subtype',
+      '6': 'add',
+      '7': 'url',
+      '8': 'entity_type',
+    };
+
+
+    var result = array();
+    {Object.keys(datahelpervalues).map((keyName, i) => (
+
+      // name
+      result["content"][i][Attr[0]] = datahelpervalues[keyName].name
+      // type
+      result["content"][i][Attr[1]] defaultValue=datahelpervalues[keyName].type
+      // id
+      result["content"][i][Attr[4]] defaultValue=datahelpervalues[keyName].id
+
+      {typeof datahelpervalues[keyName].content == "object" &&
+        // entity type
+        result["content"][i][Attr[8]] defaultValue=datahelpervalues[keyName].entity_type
+      }
+      // update
+      result["content"][i][Attr[3]] value="update"
+      // delete
+      result["content"][i][Attr[3]] value="delete"
+
+      {typeof datahelpervalues[keyName].content == "object" &&
+        // add file name
+        result["content"][i][Attr[6]]["folder"]
+        // add file submit
+        result["content"][i][Attr[3]] value="create_folder"
+        // add foldeer name
+        result["content"][i][Attr[6]]["file"]
+        // add folder submit
+        result["content"][i][Attr[3]] value="create_file"
+
+      }
+      {typeof datahelpervalues[keyName].content == "object" ?
+        // content
+        submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1)
+        :
+        // content
+        result["content"][i][Attr[2]] defaultValue=datahelpervalues[keyName].content
+      }
+    ))}
+    return result;
+  }
+
+
+
+
   // handleDelete (id) {
   //   const isNotId = task => task.id !== id;
   //   const updatedTasks = this.state.data.filter(isNotId);
@@ -129,8 +195,14 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
 
   const registerAChange = (event) => {
 
-    alert(event.target.name);
+    // alert(event.target.name);
+    hello();
   }
+
+  const hello = () => {
+    alert("hello");
+  }
+
 
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
   return (
