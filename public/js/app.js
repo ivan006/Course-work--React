@@ -66196,15 +66196,18 @@ function (_Component) {
     }
   }, {
     key: "submitData",
-    value: function submitData() {
+    value: function submitData(sumbitter) {
       event.preventDefault();
-      var thing = submitDataHelper(1, this.state.data, 1, 1, 1); // var thing = 1;
+      var thing = this.submitDataHelper(1, this.state.data, 1, 1, 1); // var thing = this.state.data;
+      // var thing = sumbitter;
+      // var thing = 1;
 
+      thing = JSON.stringify(thing, null, 2);
       alert(thing);
     }
   }, {
     key: "submitDataHelper",
-    value: function submitDataHelper(identifier, datahelper, submit, registerAChange, data) {
+    value: function submitDataHelper(identifier, datahelper, oldSubmit, submit, data) {
       var datahelpervalues = datahelper;
       var Attr = {
         0: 'name',
@@ -66217,51 +66220,24 @@ function (_Component) {
         7: 'url',
         8: 'entity_type'
       };
-      var Attr0 = Attr[0];
-      var Attr1 = Attr[1];
-      var Attr2 = Attr[2];
-      var Attr3 = Attr[3];
-      var Attr4 = Attr[4];
-      var Attr5 = Attr[5];
-      var Attr6 = Attr[6];
-      var Attr7 = Attr[7];
-      var Attr8 = Attr[8];
       var result = Object.keys(datahelpervalues).map(function (keyName, i) {
-        var thing = {
-          "content": {
-            i: {
-              "Attr[0]": datahelpervalues[keyName].name,
-              "Attr[1]": datahelpervalues[keyName].type,
-              "Attr[4]": datahelpervalues[keyName].id,
-              "Attr[3]": "update/delete"
-            }
-          }
-        };
-        return thing;
-
         if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
           var _i;
 
           var thing = {
-            "content": {
-              i: (_i = {
-                "Attr[8]": datahelpervalues[keyName].entity_type,
-                "Attr[6]": {
-                  "folder": "?",
-                  "file": "?"
-                },
-                "Attr[3]": "create_folder" + "/" + "create_file"
-              }, _defineProperty(_i, "Attr[8]", datahelpervalues[keyName].entity_type), _defineProperty(_i, "Attr[2]", 1), _i)
-            }
+            content: _defineProperty({}, i, (_i = {}, _defineProperty(_i, Attr[0], datahelpervalues[keyName].name), _defineProperty(_i, Attr[1], datahelpervalues[keyName].type), _defineProperty(_i, Attr[4], datahelpervalues[keyName].id), _defineProperty(_i, Attr[3], "update/delete"), _defineProperty(_i, Attr[8], datahelpervalues[keyName].entity_type), _defineProperty(_i, Attr[6], {
+              folder: "?",
+              file: "?"
+            }), _defineProperty(_i, Attr[3], "create_folder" + "/" + "create_file"), _defineProperty(_i, Attr[8], datahelpervalues[keyName].entity_type), _defineProperty(_i, Attr[2], this.submitDataHelper(identifier["content"][i], datahelpervalues[keyName].content, 0, function () {
+              return registerADeepChange(datahelpervalues[keyName].name);
+            }, 1)), _i))
           };
           return thing;
         } else {
+          var _i2;
+
           var thing = {
-            "content": {
-              i: {
-                "Attr[2]": datahelpervalues[keyName].content
-              }
-            }
+            content: _defineProperty({}, i, (_i2 = {}, _defineProperty(_i2, Attr[0], datahelpervalues[keyName].name), _defineProperty(_i2, Attr[1], datahelpervalues[keyName].type), _defineProperty(_i2, Attr[4], datahelpervalues[keyName].id), _defineProperty(_i2, Attr[3], "update/delete"), _defineProperty(_i2, Attr[2], datahelpervalues[keyName].content), _i2))
           };
           return thing;
         }
@@ -66270,20 +66246,10 @@ function (_Component) {
     }
   }, {
     key: "hello",
-    value: function hello() {
-      event.preventDefault();
-      alert("hello2");
-    } // handleDelete (id) {
-    //   const isNotId = task => task.id !== id;
-    //   const updatedTasks = this.state.data.filter(isNotId);
-    //   this.setState({data:updatedTasks})
-    //   alert(1);
-    // }
-    // handleSubmit(event){
-    //
-    //   alert(5);
-    // }
-
+    value: function hello(arg) {
+      // event.preventDefault();
+      alert(arg);
+    }
   }, {
     key: "render",
     value: function render() {
@@ -66301,11 +66267,11 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
-        oldSubmit: function oldSubmit() {
-          return _this3.hello();
+        change: function change(arg) {
+          return _this3.hello(arg);
         },
-        registerAChange: function registerAChange() {
-          return _this3.submitData();
+        submit: function submit(sumbitter) {
+          return _this3.submitData(sumbitter);
         },
         data: this.state.data
       })));
@@ -66321,8 +66287,8 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       datahelper = _ref.datahelper,
-      oldSubmit = _ref.oldSubmit,
-      _registerAChange = _ref.registerAChange,
+      change = _ref.change,
+      _submit = _ref.submit,
       data = _ref.data;
   var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
   // alert(JSON.stringify(datahelpervalues));
@@ -66338,62 +66304,7 @@ var DataHelper = function DataHelper(_ref) {
     '6': 'add',
     '7': 'url',
     '8': 'entity_type'
-  }; // const handleDelete = (id) => {
-  //
-  //   // const isNotId = task => task.id !== id;
-  //   // const updatedTasks = data.filter(isNotId);
-  //   const updatedData = 1;
-  //   registerAChange(updatedData);
-  // }
-  // const handleSubmit = (event) => {
-  //
-  //   // event.preventDefault();
-  //   // var name = event.target.name;
-  //   // var value = event.target.name;
-  //   // this.setState.dato({
-  //   //   [name]: value
-  //   // });
-  //   alert(10);
-  // }
-  // const registerAShallowChange = (name,event) => {
-  //   event.preventDefault();
-  //   // // is currently selected
-  //   // if(selectedOptions[selectedOptionId]){
-  //   //   // remove selected key from options list
-  //   //   delete selectedOptions[selectedOptionId];
-  //   // } else { // is not currently selected
-  //   //   // Add selected key to optionsList
-  //   //   selectedOptions[selectedOptionId] = {}
-  //   // }
-  //   // // call registerAChange function given by parent
-  //
-  //   registerAChange(name);
-  //   alert("register a shallow change done to "+name);
-  // }
-  //
-  // const registerADeepChange = (name) => {
-  //   // // add sub selections to current optionId
-  //   // selectedOptions[optionId] = subSelections;
-  //   // // call registerAChange function given by parent
-  //   // registerAChange(selectedOptions);
-  //
-  //   registerAChange(name);
-  //   alert("register a deep change done to "+name);
-  // }
-  // const registerAChange = (event) => {
-  //   registerAChange(name);
-  //   // alert(event.target.name);
-  //   hello();
-  //
-  //   submit();
-  //
-  // }
-  //
-  // const hello = () => {
-  //   alert("hello");
-  // }
-  // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
-
+  };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
   }, Object.keys(datahelpervalues).map(function (keyName, i) {
@@ -66435,8 +66346,8 @@ var DataHelper = function DataHelper(_ref) {
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        _registerAChange(event);
+      onClick: function onClick(sumbitter) {
+        _submit(datahelpervalues[keyName].name);
       },
       className: "kv-little-button",
       type: "submit",
@@ -66483,8 +66394,11 @@ var DataHelper = function DataHelper(_ref) {
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
-      registerAChange: function registerAChange() {
-        _registerAChange(event);
+      change: function change(arg) {
+        _submit(arg);
+      },
+      submit: function submit(sumbitter) {
+        _submit(sumbitter);
       },
       data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -66492,13 +66406,13 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      onChange: function onChange(arg) {
+        change(event.target.value);
+      },
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: datahelpervalues[keyName].content,
-      onChange: function onChange() {
-        alert(1);
-      }
+      defaultValue: datahelpervalues[keyName].content
     })))));
   }));
 };

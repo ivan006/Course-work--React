@@ -23,15 +23,19 @@ export default class Data extends Component {
 
   }
 
-  submitData(){
+  submitData(sumbitter){
     event.preventDefault();
 
-    var thing = submitDataHelper( 1,this.state.data,1,1,1);
+    var thing = this.submitDataHelper( 1,this.state.data,1,1,1);
+    // var thing = this.state.data;
+    // var thing = sumbitter;
     // var thing = 1;
+
+    thing = JSON.stringify(thing, null, 2);
     alert(thing);
   }
 
-  submitDataHelper( identifier, datahelper, submit, registerAChange,data)  {
+  submitDataHelper( identifier, datahelper, oldSubmit, submit,data)  {
 
     var datahelpervalues = datahelper;
 
@@ -46,53 +50,47 @@ export default class Data extends Component {
       7: 'url',
       8: 'entity_type',
     };
-    var Attr0 = Attr[0];
-    var Attr1 = Attr[1];
-    var Attr2 = Attr[2];
-    var Attr3 = Attr[3];
-    var Attr4 = Attr[4];
-    var Attr5 = Attr[5];
-    var Attr6 = Attr[6];
-    var Attr7 = Attr[7];
-    var Attr8 = Attr[8];
+
+
 
     var result = Object.keys(datahelpervalues).map(function(keyName, i) {
-      var thing = {
-        "content": {
-          i: {
-            "Attr[0]": datahelpervalues[keyName].name,
-            "Attr[1]": datahelpervalues[keyName].type,
-            "Attr[4]": datahelpervalues[keyName].id,
-            "Attr[3]": "update/delete",
-          }
-        }
-      }
-      return thing;
+
 
       if (typeof value === "object"){
         var thing = {
-          "content": {
-            i: {
+          content: {
+            [i]: {
+              [Attr[0]]: datahelpervalues[keyName].name,
+              [Attr[1]]: datahelpervalues[keyName].type,
+              [Attr[4]]: datahelpervalues[keyName].id,
+              [Attr[3]]: "update/delete",
 
 
-              "Attr[8]": datahelpervalues[keyName].entity_type,
-              "Attr[6]": {
-                "folder": "?",
-                "file": "?",
+
+              [Attr[8]]: datahelpervalues[keyName].entity_type,
+              [Attr[6]]: {
+                folder: "?",
+                file: "?",
               },
-              "Attr[3]": "create_folder"+"/"+"create_file",
-              "Attr[8]": datahelpervalues[keyName].entity_type,
-              "Attr[2]": 1,
-              // "Attr[2]": submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1),
+              [Attr[3]]: "create_folder"+"/"+"create_file",
+              [Attr[8]]: datahelpervalues[keyName].entity_type,
+              // [Attr[2]]: 1,
+              [Attr[2]]: this.submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1),
             }
           }
         }
         return thing;
       } else {
         var thing = {
-          "content": {
-            i: {
-              "Attr[2]": datahelpervalues[keyName].content
+          content: {
+            [i]: {
+              [Attr[0]]: datahelpervalues[keyName].name,
+              [Attr[1]]: datahelpervalues[keyName].type,
+              [Attr[4]]: datahelpervalues[keyName].id,
+              [Attr[3]]: "update/delete",
+
+
+              [Attr[2]]: datahelpervalues[keyName].content
             }
           }
         }
@@ -104,24 +102,13 @@ export default class Data extends Component {
     return result;
   }
 
-  hello (){
+  hello (arg){
 
-      event.preventDefault();
-    alert("hello2");
+      // event.preventDefault();
+    alert(arg);
   }
 
 
-  // handleDelete (id) {
-  //   const isNotId = task => task.id !== id;
-  //   const updatedTasks = this.state.data.filter(isNotId);
-  //   this.setState({data:updatedTasks})
-  //   alert(1);
-  // }
-
-  // handleSubmit(event){
-  //
-  //   alert(5);
-  // }
 
   render() {
 
@@ -137,8 +124,8 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            oldSubmit={() => this.hello()}
-            registerAChange={() => this.submitData()}
+            change={(arg) => this.hello(arg)}
+            submit={(sumbitter) => this.submitData(sumbitter)}
             data={this.state.data}
             />
         </form>
@@ -155,7 +142,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) => {
+const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -173,65 +160,7 @@ const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) 
     '7': 'url',
     '8': 'entity_type',
   };
-  // const handleDelete = (id) => {
-  //
-  //   // const isNotId = task => task.id !== id;
-  //   // const updatedTasks = data.filter(isNotId);
-  //   const updatedData = 1;
-  //   registerAChange(updatedData);
-  // }
-  // const handleSubmit = (event) => {
-  //
-  //   // event.preventDefault();
-  //   // var name = event.target.name;
-  //   // var value = event.target.name;
-  //   // this.setState.dato({
-  //   //   [name]: value
-  //   // });
-  //   alert(10);
-  // }
 
-  // const registerAShallowChange = (name,event) => {
-  //   event.preventDefault();
-  //   // // is currently selected
-  //   // if(selectedOptions[selectedOptionId]){
-  //   //   // remove selected key from options list
-  //   //   delete selectedOptions[selectedOptionId];
-  //   // } else { // is not currently selected
-  //   //   // Add selected key to optionsList
-  //   //   selectedOptions[selectedOptionId] = {}
-  //   // }
-  //   // // call registerAChange function given by parent
-  //
-  //   registerAChange(name);
-  //   alert("register a shallow change done to "+name);
-  // }
-  //
-  // const registerADeepChange = (name) => {
-  //   // // add sub selections to current optionId
-  //   // selectedOptions[optionId] = subSelections;
-  //   // // call registerAChange function given by parent
-  //   // registerAChange(selectedOptions);
-  //
-  //   registerAChange(name);
-  //   alert("register a deep change done to "+name);
-  // }
-
-  // const registerAChange = (event) => {
-  //   registerAChange(name);
-  //   // alert(event.target.name);
-  //   hello();
-  //
-  //   submit();
-  //
-  // }
-  //
-  // const hello = () => {
-  //   alert("hello");
-  // }
-
-
-  // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
   return (
     <ul className="kv-list-parent">
       {Object.keys(datahelpervalues).map((keyName, i) => (
@@ -263,7 +192,7 @@ const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) 
             }
 
 
-            <button onClick={() => {registerAChange(event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button onClick={(sumbitter) => {submit(datahelpervalues[keyName].name)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
             <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
@@ -294,7 +223,8 @@ const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) 
             <DataHelper
               identifier= {identifier+"["+"content"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              registerAChange={() => {registerAChange(event)}}
+              change={(arg) => {submit(arg)}}
+              submit={(sumbitter) => {submit(sumbitter)}}
               data={1}
               />
 
@@ -302,7 +232,7 @@ const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) 
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content} onChange={() => {alert(1)}}></textarea>
+                  <textarea onChange={(arg) => {change(event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
