@@ -33,55 +33,68 @@ export default class Data extends Component {
     var datahelpervalues = datahelper;
 
     var Attr = {
-      '0': 'name',
-      '1': 'type',
-      '2': 'content',
-      '3': 'action',
-      '4': 'id',
-      '5': 'subtype',
-      '6': 'add',
-      '7': 'url',
-      '8': 'entity_type',
+      0: 'name',
+      1: 'type',
+      2: 'content',
+      3: 'action',
+      4: 'id',
+      5: 'subtype',
+      6: 'add',
+      7: 'url',
+      8: 'entity_type',
     };
+    var Attr0 = Attr[0];
+    var Attr1 = Attr[1];
+    var Attr2 = Attr[2];
+    var Attr3 = Attr[3];
+    var Attr4 = Attr[4];
+    var Attr5 = Attr[5];
+    var Attr6 = Attr[6];
+    var Attr7 = Attr[7];
+    var Attr8 = Attr[8];
 
 
     var result = array();
     {Object.keys(datahelpervalues).map((keyName, i) => (
+      if (typeof value === "object"){
+        var thing = {
+          "content": {
+            i: {
+              Attr0: datahelpervalues[keyName].name,
+              Attr1: datahelpervalues[keyName].type,
+              Attr4: datahelpervalues[keyName].id,
+              Attr3: "update/delete",
 
-      // name
-      result["content"][i][Attr[0]] = datahelpervalues[keyName].name
-      // type
-      result["content"][i][Attr[1]] defaultValue=datahelpervalues[keyName].type
-      // id
-      result["content"][i][Attr[4]] defaultValue=datahelpervalues[keyName].id
 
-      {typeof datahelpervalues[keyName].content == "object" &&
-        // entity type
-        result["content"][i][Attr[8]] defaultValue=datahelpervalues[keyName].entity_type
+              Attr8: datahelpervalues[keyName].entity_type,
+              Attr6: {
+                "folder": "?",
+                "file": "?",
+              }
+              Attr3: "create_folder"."/"."create_file",
+              Attr8: datahelpervalues[keyName].entity_type,
+              Attr2: submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1),
+            }
+          }
+        }
+        return thing;
+      } else {
+        var thing = {
+          "content": {
+            i: {
+              Attr0: datahelpervalues[keyName].name,
+              Attr1: datahelpervalues[keyName].type,
+              Attr4: datahelpervalues[keyName].id,
+              Attr3: "update/delete",
+
+              Attr2: datahelpervalues[keyName].content
+            }
+          }
+        }
+        return thing;
       }
-      // update
-      result["content"][i][Attr[3]] value="update"
-      // delete
-      result["content"][i][Attr[3]] value="delete"
 
-      {typeof datahelpervalues[keyName].content == "object" &&
-        // add file name
-        result["content"][i][Attr[6]]["folder"]
-        // add file submit
-        result["content"][i][Attr[3]] value="create_folder"
-        // add foldeer name
-        result["content"][i][Attr[6]]["file"]
-        // add folder submit
-        result["content"][i][Attr[3]] value="create_file"
 
-      }
-      {typeof datahelpervalues[keyName].content == "object" ?
-        // content
-        submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1)
-        :
-        // content
-        result["content"][i][Attr[2]] defaultValue=datahelpervalues[keyName].content
-      }
     ))}
     return result;
   }
