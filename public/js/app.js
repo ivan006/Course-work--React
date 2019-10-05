@@ -66118,9 +66118,387 @@ if (document.getElementById('app')) {
   !*** ./resources/js/components/Data.js ***!
   \*****************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\resources\\js\\components\\Data.js: Unexpected token (59:6)\n\n  57 |     var result = array();\n  58 |     {Object.keys(datahelpervalues).map((keyName, i) => (\n> 59 |       if (typeof value === \"object\"){\n     |       ^\n  60 |         var thing = {\n  61 |           \"content\": {\n  62 |             i: {\n    at Object.raise (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:6387:17)\n    at Object.unexpected (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:7704:16)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8912:20)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:3609:20)\n    at Object.parseExprSubscripts (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8483:23)\n    at Object.parseMaybeUnary (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8463:21)\n    at Object.parseExprOps (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8329:23)\n    at Object.parseMaybeConditional (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8302:23)\n    at Object.parseMaybeAssign (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8249:21)\n    at Object.parseParenAndDistinguishExpression (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:9049:28)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8833:21)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:3609:20)\n    at Object.parseExprSubscripts (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8483:23)\n    at Object.parseMaybeUnary (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8463:21)\n    at Object.parseExprOps (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8329:23)\n    at Object.parseMaybeConditional (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8302:23)\n    at Object.parseMaybeAssign (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8249:21)\n    at Object.parseFunctionBody (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:9477:24)\n    at Object.parseArrowExpression (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:9436:10)\n    at Object.parseParenAndDistinguishExpression (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:9073:12)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8833:21)\n    at Object.parseExprAtom (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:3609:20)\n    at Object.parseExprSubscripts (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8483:23)\n    at Object.parseMaybeUnary (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8463:21)\n    at Object.parseExprOps (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8329:23)\n    at Object.parseMaybeConditional (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8302:23)\n    at Object.parseMaybeAssign (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8249:21)\n    at Object.parseExprListItem (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:9562:18)\n    at Object.parseCallExpressionArguments (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8692:22)\n    at Object.parseSubscript (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8585:29)\n    at Object.parseSubscripts (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8504:19)\n    at Object.parseExprSubscripts (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8493:17)\n    at Object.parseMaybeUnary (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8463:21)\n    at Object.parseExprOps (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8329:23)\n    at Object.parseMaybeConditional (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8302:23)\n    at Object.parseMaybeAssign (C:\\Users\\ivan\\Documents\\multimedia\\Course-work--React\\node_modules\\@babel\\parser\\lib\\index.js:8249:21)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Data; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var Data =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Data, _Component);
+
+  function Data() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Data);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      data: []
+    });
+
+    return _this;
+  }
+
+  _createClass(Data, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.data();
+    }
+  }, {
+    key: "data",
+    value: function data() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
+        _this2.setState({
+          data: response.data.content
+        });
+      });
+    }
+  }, {
+    key: "submitData",
+    value: function submitData() {
+      // var thing = submitDataHelper( 1,this.state.data,1,1,1);
+      var thing = 1;
+      alert(thing);
+    }
+  }, {
+    key: "submitDataHelper",
+    value: function submitDataHelper(identifier, datahelper, submit, registerAChange, data) {
+      var datahelpervalues = datahelper;
+      var Attr = {
+        0: 'name',
+        1: 'type',
+        2: 'content',
+        3: 'action',
+        4: 'id',
+        5: 'subtype',
+        6: 'add',
+        7: 'url',
+        8: 'entity_type'
+      };
+      var Attr0 = Attr[0];
+      var Attr1 = Attr[1];
+      var Attr2 = Attr[2];
+      var Attr3 = Attr[3];
+      var Attr4 = Attr[4];
+      var Attr5 = Attr[5];
+      var Attr6 = Attr[6];
+      var Attr7 = Attr[7];
+      var Attr8 = Attr[8];
+      var result = Object.keys(datahelpervalues).map(function (keyName, i) {
+        var thing = {
+          "content": {
+            i: {
+              "Attr[0]": datahelpervalues[keyName].name,
+              "Attr[1]": datahelpervalues[keyName].type,
+              "Attr[4]": datahelpervalues[keyName].id,
+              "Attr[3]": "update/delete"
+            }
+          }
+        };
+        return thing;
+
+        if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
+          var _i;
+
+          var thing = {
+            "content": {
+              i: (_i = {
+                "Attr[8]": datahelpervalues[keyName].entity_type,
+                "Attr[6]": {
+                  "folder": "?",
+                  "file": "?"
+                },
+                "Attr[3]": "create_folder" + "/" + "create_file"
+              }, _defineProperty(_i, "Attr[8]", datahelpervalues[keyName].entity_type), _defineProperty(_i, "Attr[2]", 1), _i)
+            }
+          };
+          return thing;
+        } else {
+          var thing = {
+            "content": {
+              i: {
+                "Attr[2]": datahelpervalues[keyName].content
+              }
+            }
+          };
+          return thing;
+        }
+      });
+      return result;
+    }
+  }, {
+    key: "hello",
+    value: function hello() {
+      alert("hello2");
+    } // handleDelete (id) {
+    //   const isNotId = task => task.id !== id;
+    //   const updatedTasks = this.state.data.filter(isNotId);
+    //   this.setState({data:updatedTasks})
+    //   alert(1);
+    // }
+    // handleSubmit(event){
+    //
+    //   alert(5);
+    // }
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        name: "_token",
+        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "kv-di-no",
+        type: "text",
+        name: "form",
+        defaultValue: "data"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+        identifier: "Data",
+        datahelper: this.state.data,
+        submit: function submit() {
+          return _this3.submitData();
+        },
+        registerAChange: function registerAChange() {
+          return _this3.hello();
+        },
+        data: this.state.data
+      })));
+    }
+  }]);
+
+  return Data;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // Recursive component
+
+
+
+
+var DataHelper = function DataHelper(_ref) {
+  var identifier = _ref.identifier,
+      datahelper = _ref.datahelper,
+      submit = _ref.submit,
+      registerAChange = _ref.registerAChange,
+      data = _ref.data;
+  var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
+  // alert(JSON.stringify(datahelpervalues));
+  // {JSON.stringify(datahelpervalues.content)}
+
+  var Attr = {
+    '0': 'name',
+    '1': 'type',
+    '2': 'content',
+    '3': 'action',
+    '4': 'id',
+    '5': 'subtype',
+    '6': 'add',
+    '7': 'url',
+    '8': 'entity_type'
+  }; // const handleDelete = (id) => {
+  //
+  //   // const isNotId = task => task.id !== id;
+  //   // const updatedTasks = data.filter(isNotId);
+  //   const updatedData = 1;
+  //   registerAChange(updatedData);
+  // }
+  // const handleSubmit = (event) => {
+  //
+  //   // event.preventDefault();
+  //   // var name = event.target.name;
+  //   // var value = event.target.name;
+  //   // this.setState.dato({
+  //   //   [name]: value
+  //   // });
+  //   alert(10);
+  // }
+
+  var registerAShallowChange = function registerAShallowChange(name, event) {
+    event.preventDefault(); // // is currently selected
+    // if(selectedOptions[selectedOptionId]){
+    //   // remove selected key from options list
+    //   delete selectedOptions[selectedOptionId];
+    // } else { // is not currently selected
+    //   // Add selected key to optionsList
+    //   selectedOptions[selectedOptionId] = {}
+    // }
+    // // call registerAChange function given by parent
+
+    registerAChange(name);
+    alert("register a shallow change done to " + name);
+  };
+
+  var registerADeepChange = function registerADeepChange(name) {
+    // // add sub selections to current optionId
+    // selectedOptions[optionId] = subSelections;
+    // // call registerAChange function given by parent
+    // registerAChange(selectedOptions);
+    registerAChange(name);
+    alert("register a deep change done to " + name);
+  }; // const registerAChange = (event) => {
+  //   registerAChange(name);
+  //   // alert(event.target.name);
+  //   hello();
+  //
+  //   submit();
+  //
+  // }
+  //
+  // const hello = () => {
+  //   alert("hello");
+  // }
+  // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
+
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "kv-list-parent"
+  }, Object.keys(datahelpervalues).map(function (keyName, i) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: datahelpervalues[keyName].id
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-item-container  kv-di-in "
+    }, _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-di-in"
+    }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-di-in"
+    }, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-tog-on-ib-switch kv-tog-off-ib-switch",
+      type: "checkbox",
+      name: "checkbox",
+      defaultValue: "value"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-field-container kv-name kv-tog-on-ib",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[0] + "]",
+      defaultValue: datahelpervalues[keyName].name
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-name-unedit kv-name kv-tog-off-ib "
+    }, datahelpervalues[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "kv-little-button "
+    }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-di-no",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[1] + "]",
+      defaultValue: datahelpervalues[keyName].type
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-di-no",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[4] + "]",
+      defaultValue: datahelpervalues[keyName].id
+    }), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-di-no",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
+      defaultValue: datahelpervalues[keyName].entity_type
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick() {
+        registerAShallowChange(identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]", event);
+      },
+      className: "kv-little-button",
+      type: "submit",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      value: "update"
+    }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "kv-little-button",
+      type: "submit",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      value: "delete"
+    }, "\xD7"), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      className: "kv-po-re"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "kv-little-button "
+    }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-tog-on-bl-switch",
+      type: "checkbox",
+      name: "checkbox",
+      defaultValue: "value"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: ""
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-field-container kv-name kv-di-in ",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][folder]"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "submit",
+      className: "kv-little-button",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      value: "create_folder"
+    }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-mar-top-3"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-field-container kv-name kv-di-in",
+      type: "text",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][file]"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "submit",
+      className: "kv-little-button",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      value: "create_file"
+    }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      identifier: identifier + "[" + "content" + "][" + i + "]",
+      datahelper: datahelpervalues[keyName].content,
+      registerAChange: function registerAChange() {
+        return registerADeepChange(datahelpervalues[keyName].name);
+      },
+      data: 1
+    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "kv-list-parent"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-item-container "
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      className: "kv-field-container kv-content-container kv-di-in",
+      name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
+      rows: "8",
+      defaultValue: datahelpervalues[keyName].content,
+      onChange: function onChange() {
+        registerAChange(event);
+      }
+    })))));
+  }));
+};
 
 /***/ }),
 

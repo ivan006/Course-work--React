@@ -24,11 +24,12 @@ export default class Data extends Component {
   }
 
   submitData(){
-    var thing = submitDataHelper( 1,1,1,1,1);
-
+    // var thing = submitDataHelper( 1,this.state.data,1,1,1);
+    var thing = 1;
+    alert(thing);
   }
 
-  submitDataHelper( identifier, datahelper, submit, registerChange,data)  {
+  submitDataHelper( identifier, datahelper, submit, registerAChange,data)  {
 
     var datahelpervalues = datahelper;
 
@@ -53,27 +54,34 @@ export default class Data extends Component {
     var Attr7 = Attr[7];
     var Attr8 = Attr[8];
 
+    var result = Object.keys(datahelpervalues).map(function(keyName, i) {
+      var thing = {
+        "content": {
+          i: {
+            "Attr[0]": datahelpervalues[keyName].name,
+            "Attr[1]": datahelpervalues[keyName].type,
+            "Attr[4]": datahelpervalues[keyName].id,
+            "Attr[3]": "update/delete",
+          }
+        }
+      }
+      return thing;
 
-    var result = array();
-    {Object.keys(datahelpervalues).map((keyName, i) => (
       if (typeof value === "object"){
         var thing = {
           "content": {
             i: {
-              Attr0: datahelpervalues[keyName].name,
-              Attr1: datahelpervalues[keyName].type,
-              Attr4: datahelpervalues[keyName].id,
-              Attr3: "update/delete",
 
 
-              Attr8: datahelpervalues[keyName].entity_type,
-              Attr6: {
+              "Attr[8]": datahelpervalues[keyName].entity_type,
+              "Attr[6]": {
                 "folder": "?",
                 "file": "?",
-              }
-              Attr3: "create_folder"."/"."create_file",
-              Attr8: datahelpervalues[keyName].entity_type,
-              Attr2: submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1),
+              },
+              "Attr[3]": "create_folder"+"/"+"create_file",
+              "Attr[8]": datahelpervalues[keyName].entity_type,
+              "Attr[2]": 1,
+              // "Attr[2]": submitDataHelper( identifier["content"][i], datahelpervalues[keyName].content, 0, () => registerADeepChange(datahelpervalues[keyName].name),1),
             }
           }
         }
@@ -82,24 +90,21 @@ export default class Data extends Component {
         var thing = {
           "content": {
             i: {
-              Attr0: datahelpervalues[keyName].name,
-              Attr1: datahelpervalues[keyName].type,
-              Attr4: datahelpervalues[keyName].id,
-              Attr3: "update/delete",
-
-              Attr2: datahelpervalues[keyName].content
+              "Attr[2]": datahelpervalues[keyName].content
             }
           }
         }
         return thing;
       }
 
+    });
 
-    ))}
     return result;
   }
 
-
+  hello (){
+    alert("hello2");
+  }
 
 
   // handleDelete (id) {
@@ -128,8 +133,8 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            submit={(data) => this.setState({data})}
-            registerChange={(data) => this.setState({data})}
+            submit={() => this.submitData()}
+            registerAChange={() => this.hello()}
             data={this.state.data}
             />
         </form>
@@ -146,7 +151,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
+const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -169,7 +174,7 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
   //   // const isNotId = task => task.id !== id;
   //   // const updatedTasks = data.filter(isNotId);
   //   const updatedData = 1;
-  //   registerChange(updatedData);
+  //   registerAChange(updatedData);
   // }
   // const handleSubmit = (event) => {
   //
@@ -192,29 +197,34 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
     //   // Add selected key to optionsList
     //   selectedOptions[selectedOptionId] = {}
     // }
-    // // call registerChange function given by parent
-    registerChange(name);
+    // // call registerAChange function given by parent
+
+    registerAChange(name);
     alert("register a shallow change done to "+name);
   }
 
   const registerADeepChange = (name) => {
     // // add sub selections to current optionId
     // selectedOptions[optionId] = subSelections;
-    // // call registerChange function given by parent
-    // registerChange(selectedOptions);
+    // // call registerAChange function given by parent
+    // registerAChange(selectedOptions);
 
+    registerAChange(name);
     alert("register a deep change done to "+name);
   }
 
-  const registerAChange = (event) => {
-
-    // alert(event.target.name);
-    hello();
-  }
-
-  const hello = () => {
-    alert("hello");
-  }
+  // const registerAChange = (event) => {
+  //   registerAChange(name);
+  //   // alert(event.target.name);
+  //   hello();
+  //
+  //   submit();
+  //
+  // }
+  //
+  // const hello = () => {
+  //   alert("hello");
+  // }
 
 
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
@@ -278,7 +288,7 @@ const DataHelper = ({ identifier, datahelper, submit, registerChange,data}) => {
             <DataHelper
               identifier= {identifier+"["+"content"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              registerChange={() => registerADeepChange(datahelpervalues[keyName].name)}
+              registerAChange={() => registerADeepChange(datahelpervalues[keyName].name)}
               data={1}
               />
 
