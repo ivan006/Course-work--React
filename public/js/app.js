@@ -66197,18 +66197,37 @@ function (_Component) {
   }, {
     key: "submitData",
     value: function submitData(sumbitter) {
-      event.preventDefault();
-      var thing = this.submitDataHelper(1, this.state.data, 1, 1, 1); // var thing = this.state.data;
-      // var thing = sumbitter;
-      // var thing = 1;
+      event.preventDefault(); //var data = this.state.data;
 
-      thing = JSON.stringify(thing, null, 2);
-      alert(thing);
-    }
-  }, {
-    key: "submitDataHelper",
-    value: function submitDataHelper(identifier, datahelper, oldSubmit, submit, data) {
-      var datahelpervalues = datahelper;
+      var data = {
+        "Y29kZQ==": {
+          "name": "code",
+          "type": "folder",
+          "content": {
+            "dzMuY3Nz": {
+              "name": "w3.css",
+              "type": "file",
+              "content": "123",
+              "id": 27
+            }
+          },
+          "id": 26,
+          "url": "/_data/code",
+          "entity_type": "App\\Data"
+        },
+        "UmljaC50eHQ=": {
+          "name": "Rich.txt",
+          "type": "file",
+          "content": "x",
+          "id": 28
+        },
+        "YWFhYQ==": {
+          "name": "aaaa",
+          "type": "file",
+          "content": "null",
+          "id": 205
+        }
+      };
       var Attr = {
         0: 'name',
         1: 'type',
@@ -66218,32 +66237,65 @@ function (_Component) {
         5: 'subtype',
         6: 'add',
         7: 'url',
-        8: 'entity_type'
+        8: 'entity_type',
+        9: 'conteent'
       };
-      var result = Object.keys(datahelpervalues).map(function (keyName, i) {
-        if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
-          var _i;
+      var result = this.submitDataHelper(data, Attr); // var result = this.state.data;
+      // var result = sumbitter;
+      // var result = 1;
 
-          var thing = {
-            content: _defineProperty({}, i, (_i = {}, _defineProperty(_i, Attr[0], datahelpervalues[keyName].name), _defineProperty(_i, Attr[1], datahelpervalues[keyName].type), _defineProperty(_i, Attr[4], datahelpervalues[keyName].id), _defineProperty(_i, Attr[3], "update/delete"), _defineProperty(_i, Attr[8], datahelpervalues[keyName].entity_type), _defineProperty(_i, Attr[6], {
-              folder: "?",
-              file: "?"
-            }), _defineProperty(_i, Attr[3], "create_folder" + "/" + "create_file"), _defineProperty(_i, Attr[8], datahelpervalues[keyName].entity_type), _defineProperty(_i, Attr[2], this.submitDataHelper(identifier["content"][i], datahelpervalues[keyName].content, 0, function () {
-              return registerADeepChange(datahelpervalues[keyName].name);
-            }, 1)), _i))
-          };
-          return thing;
-        } else {
-          var _i2;
-
-          var thing = {
-            content: _defineProperty({}, i, (_i2 = {}, _defineProperty(_i2, Attr[0], datahelpervalues[keyName].name), _defineProperty(_i2, Attr[1], datahelpervalues[keyName].type), _defineProperty(_i2, Attr[4], datahelpervalues[keyName].id), _defineProperty(_i2, Attr[3], "update/delete"), _defineProperty(_i2, Attr[2], datahelpervalues[keyName].content), _i2))
-          };
-          return thing;
-        }
-      });
-      return result;
+      result = {
+        content: result
+      };
+      result = JSON.stringify(result, null, 2);
+      alert(result);
     }
+  }, {
+    key: "submitDataHelper",
+    value: function submitDataHelper(data, Attr) {
+      var result = Object.keys(data).map(function (keyName, i) {
+        var result = _defineProperty({}, Attr[6], {});
+
+        result[Attr[0]] = data[keyName].name;
+        result[Attr[1]] = data[keyName].type;
+        result[Attr[4]] = data[keyName].id;
+        result[Attr[3]] = "update/delete";
+
+        if (_typeof(data[keyName].content) === "object") {
+          result[Attr[8]] = data[keyName].entity_type;
+          result[Attr[6]]["folder"] = "?";
+          result[Attr[6]]["file"] = "?";
+          result[Attr[3]] = "create_folder" + "/" + "create_file";
+          result[Attr[2]] = this.submitDataHelper(data[keyName].content, Attr);
+        } else {
+          result[Attr[2]] = data[keyName].content;
+        }
+
+        return result;
+      }, this);
+      return result;
+    } // submitData(sumbitter){
+    //   event.preventDefault();
+    //
+    //   var result = this.submitDataHelper( 1,1);
+    //   result = JSON.stringify(result, null, 2);
+    //   alert(result);
+    //
+    // }
+    // submitDataHelper(data, Attr)  {
+    //   var thing = [1,2]
+    //   var result = thing.map(function(keyName, i) {
+    //
+    //     if (data==1) {
+    //       return [this.submitDataHelper(0, 1)]
+    //     } else {
+    //       return 1;
+    //     }
+    //   }, this)
+    //   return result;
+    //
+    // }
+
   }, {
     key: "hello",
     value: function hello(arg) {
