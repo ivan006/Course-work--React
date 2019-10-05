@@ -66197,8 +66197,9 @@ function (_Component) {
   }, {
     key: "submitData",
     value: function submitData() {
-      // var thing = submitDataHelper( 1,this.state.data,1,1,1);
-      var thing = 1;
+      event.preventDefault();
+      var thing = submitDataHelper(1, this.state.data, 1, 1, 1); // var thing = 1;
+
       alert(thing);
     }
   }, {
@@ -66270,6 +66271,7 @@ function (_Component) {
   }, {
     key: "hello",
     value: function hello() {
+      event.preventDefault();
       alert("hello2");
     } // handleDelete (id) {
     //   const isNotId = task => task.id !== id;
@@ -66299,11 +66301,11 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
-        submit: function submit() {
-          return _this3.submitData();
+        oldSubmit: function oldSubmit() {
+          return _this3.hello();
         },
         registerAChange: function registerAChange() {
-          return _this3.hello();
+          return _this3.submitData();
         },
         data: this.state.data
       })));
@@ -66319,8 +66321,8 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       datahelper = _ref.datahelper,
-      submit = _ref.submit,
-      registerAChange = _ref.registerAChange,
+      oldSubmit = _ref.oldSubmit,
+      _registerAChange = _ref.registerAChange,
       data = _ref.data;
   var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
   // alert(JSON.stringify(datahelpervalues));
@@ -66353,30 +66355,32 @@ var DataHelper = function DataHelper(_ref) {
   //   // });
   //   alert(10);
   // }
-
-  var registerAShallowChange = function registerAShallowChange(name, event) {
-    event.preventDefault(); // // is currently selected
-    // if(selectedOptions[selectedOptionId]){
-    //   // remove selected key from options list
-    //   delete selectedOptions[selectedOptionId];
-    // } else { // is not currently selected
-    //   // Add selected key to optionsList
-    //   selectedOptions[selectedOptionId] = {}
-    // }
-    // // call registerAChange function given by parent
-
-    registerAChange(name);
-    alert("register a shallow change done to " + name);
-  };
-
-  var registerADeepChange = function registerADeepChange(name) {
-    // // add sub selections to current optionId
-    // selectedOptions[optionId] = subSelections;
-    // // call registerAChange function given by parent
-    // registerAChange(selectedOptions);
-    registerAChange(name);
-    alert("register a deep change done to " + name);
-  }; // const registerAChange = (event) => {
+  // const registerAShallowChange = (name,event) => {
+  //   event.preventDefault();
+  //   // // is currently selected
+  //   // if(selectedOptions[selectedOptionId]){
+  //   //   // remove selected key from options list
+  //   //   delete selectedOptions[selectedOptionId];
+  //   // } else { // is not currently selected
+  //   //   // Add selected key to optionsList
+  //   //   selectedOptions[selectedOptionId] = {}
+  //   // }
+  //   // // call registerAChange function given by parent
+  //
+  //   registerAChange(name);
+  //   alert("register a shallow change done to "+name);
+  // }
+  //
+  // const registerADeepChange = (name) => {
+  //   // // add sub selections to current optionId
+  //   // selectedOptions[optionId] = subSelections;
+  //   // // call registerAChange function given by parent
+  //   // registerAChange(selectedOptions);
+  //
+  //   registerAChange(name);
+  //   alert("register a deep change done to "+name);
+  // }
+  // const registerAChange = (event) => {
   //   registerAChange(name);
   //   // alert(event.target.name);
   //   hello();
@@ -66389,7 +66393,6 @@ var DataHelper = function DataHelper(_ref) {
   //   alert("hello");
   // }
   // var CurrentIdentifier = identifier+"["+"content"+"]["+i+"]";
-
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
@@ -66433,7 +66436,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick() {
-        registerAShallowChange(identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]", event);
+        _registerAChange(event);
       },
       className: "kv-little-button",
       type: "submit",
@@ -66481,7 +66484,7 @@ var DataHelper = function DataHelper(_ref) {
       identifier: identifier + "[" + "content" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
       registerAChange: function registerAChange() {
-        return registerADeepChange(datahelpervalues[keyName].name);
+        _registerAChange(event);
       },
       data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -66494,7 +66497,7 @@ var DataHelper = function DataHelper(_ref) {
       rows: "8",
       defaultValue: datahelpervalues[keyName].content,
       onChange: function onChange() {
-        registerAChange(event);
+        alert(1);
       }
     })))));
   }));

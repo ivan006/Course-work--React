@@ -24,8 +24,10 @@ export default class Data extends Component {
   }
 
   submitData(){
-    // var thing = submitDataHelper( 1,this.state.data,1,1,1);
-    var thing = 1;
+    event.preventDefault();
+
+    var thing = submitDataHelper( 1,this.state.data,1,1,1);
+    // var thing = 1;
     alert(thing);
   }
 
@@ -103,6 +105,8 @@ export default class Data extends Component {
   }
 
   hello (){
+
+      event.preventDefault();
     alert("hello2");
   }
 
@@ -133,8 +137,8 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            submit={() => this.submitData()}
-            registerAChange={() => this.hello()}
+            oldSubmit={() => this.hello()}
+            registerAChange={() => this.submitData()}
             data={this.state.data}
             />
         </form>
@@ -151,7 +155,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => {
+const DataHelper = ({ identifier, datahelper, oldSubmit, registerAChange,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -187,31 +191,31 @@ const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => 
   //   alert(10);
   // }
 
-  const registerAShallowChange = (name,event) => {
-    event.preventDefault();
-    // // is currently selected
-    // if(selectedOptions[selectedOptionId]){
-    //   // remove selected key from options list
-    //   delete selectedOptions[selectedOptionId];
-    // } else { // is not currently selected
-    //   // Add selected key to optionsList
-    //   selectedOptions[selectedOptionId] = {}
-    // }
-    // // call registerAChange function given by parent
-
-    registerAChange(name);
-    alert("register a shallow change done to "+name);
-  }
-
-  const registerADeepChange = (name) => {
-    // // add sub selections to current optionId
-    // selectedOptions[optionId] = subSelections;
-    // // call registerAChange function given by parent
-    // registerAChange(selectedOptions);
-
-    registerAChange(name);
-    alert("register a deep change done to "+name);
-  }
+  // const registerAShallowChange = (name,event) => {
+  //   event.preventDefault();
+  //   // // is currently selected
+  //   // if(selectedOptions[selectedOptionId]){
+  //   //   // remove selected key from options list
+  //   //   delete selectedOptions[selectedOptionId];
+  //   // } else { // is not currently selected
+  //   //   // Add selected key to optionsList
+  //   //   selectedOptions[selectedOptionId] = {}
+  //   // }
+  //   // // call registerAChange function given by parent
+  //
+  //   registerAChange(name);
+  //   alert("register a shallow change done to "+name);
+  // }
+  //
+  // const registerADeepChange = (name) => {
+  //   // // add sub selections to current optionId
+  //   // selectedOptions[optionId] = subSelections;
+  //   // // call registerAChange function given by parent
+  //   // registerAChange(selectedOptions);
+  //
+  //   registerAChange(name);
+  //   alert("register a deep change done to "+name);
+  // }
 
   // const registerAChange = (event) => {
   //   registerAChange(name);
@@ -257,7 +261,9 @@ const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => 
             {typeof datahelpervalues[keyName].content == "object" &&
               <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
             }
-            <button onClick={() => {registerAShallowChange(identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]",event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+
+
+            <button onClick={() => {registerAChange(event)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
             <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
@@ -288,7 +294,7 @@ const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => 
             <DataHelper
               identifier= {identifier+"["+"content"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              registerAChange={() => registerADeepChange(datahelpervalues[keyName].name)}
+              registerAChange={() => {registerAChange(event)}}
               data={1}
               />
 
@@ -296,7 +302,7 @@ const DataHelper = ({ identifier, datahelper, submit, registerAChange,data}) => 
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content} onChange={() => {registerAChange(event)}}></textarea>
+                  <textarea className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content} onChange={() => {alert(1)}}></textarea>
                 </div>
               </li>
             </ul>
