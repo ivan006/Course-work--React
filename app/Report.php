@@ -117,12 +117,7 @@ class Report extends Model
   {
     switch ($request->get('form')) {
       case 'data':
-      // $thing = $request->all();
-      $thing = $request->get("Data");
-      $thing = JSON_ENCODE($thing,JSON_PRETTY_PRINT);
-      echo "<pre>";
-      var_dump($thing);
-      exit;
+
       $EntityType = 'Data';
       $ShowChangesForEdit = Entity::ShowChangesForEdit($request,$EntityType);
       Data::StoreMultiForEdit($ShowChangesForEdit);

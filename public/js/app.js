@@ -66194,11 +66194,11 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.data();
+      this.readData();
     }
   }, {
-    key: "data",
-    value: function data() {
+    key: "readData",
+    value: function readData() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
@@ -66215,14 +66215,29 @@ function (_Component) {
       });
     }
   }, {
-    key: "submitData",
-    value: function submitData(sumbitter) {
-      event.preventDefault();
+    key: "writeData",
+    value: function writeData(submitterIdentifier) {
+      event.preventDefault(); // var Data = this.state.SubmittableData;
+      // var result = JSON.stringify(Data, null, 2);
+      //
+      // // alert(result);
+      // alert(submitterIdentifier);
+
       var Data = this.state.SubmittableData;
-      var result = JSON.stringify(Data, null, 2);
-      alert(result); // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
-      // alert(sumbitter);
-    }
+      eval(submitterIdentifier + "['action']='update'");
+      var Post = {
+        "Data": Data,
+        "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+        "form": "data"
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/store/Group_1', Post).then(function (response) {
+        this.readData();
+      });
+    } // writeData(submitterIdentifier){
+    //
+    //
+    // }
+
   }, {
     key: "setSubmittableDataHelper",
     value: function setSubmittableDataHelper(data, Attr) {
@@ -66230,15 +66245,14 @@ function (_Component) {
         var result = {};
         result[Attr[0]] = data[keyName].name;
         result[Attr[1]] = data[keyName].type;
-        result[Attr[4]] = data[keyName].id;
-        result[Attr[3]] = "update/delete";
+        result[Attr[4]] = data[keyName].id; // result[Attr[3]] = "update/delete";
 
         if (_typeof(data[keyName].content) === "object") {
           result[Attr[8]] = data[keyName].entity_type;
           result[Attr[6]] = {};
-          result[Attr[6]]["folder"] = "?";
-          result[Attr[6]]["file"] = "?";
-          result[Attr[3]] = "create_folder" + "/" + "create_file";
+          result[Attr[6]]["folder"] = null;
+          result[Attr[6]]["file"] = null; // result[Attr[3]] = "create_folder"+"/"+"create_file";
+
           result[Attr[2]] = this.setSubmittableDataHelper(data[keyName].content, Attr);
         } else {
           result[Attr[2]] = data[keyName].content;
@@ -66250,9 +66264,9 @@ function (_Component) {
     }
   }, {
     key: "changeSubmittableData",
-    value: function changeSubmittableData(identifyer, value) {
+    value: function changeSubmittableData(changerIdentifier, value) {
       var Data = this.state.SubmittableData;
-      eval(identifyer + "=value");
+      eval(changerIdentifier + "=value");
       this.setState({
         SubmittableData: Data
       });
@@ -66277,11 +66291,11 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
-        changeSubmittableData: function changeSubmittableData(identifyer, value) {
-          return _this3.changeSubmittableData(identifyer, value);
+        changeSubmittableData: function changeSubmittableData(changerIdentifier, value) {
+          return _this3.changeSubmittableData(changerIdentifier, value);
         },
-        submit: function submit(sumbitter) {
-          return _this3.submitData(sumbitter);
+        submit: function submit(submitterIdentifier) {
+          return _this3.writeData(submitterIdentifier);
         },
         data: this.state.data
       })));
@@ -66356,7 +66370,7 @@ var DataHelper = function DataHelper(_ref) {
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick(sumbitter) {
+      onClick: function onClick(submitterIdentifier) {
         _submit(identifier + "[" + "'content'" + "][" + i + "]");
       },
       className: "kv-little-button",
@@ -66404,11 +66418,11 @@ var DataHelper = function DataHelper(_ref) {
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
-      changeSubmittableData: function changeSubmittableData(identifyer, value) {
-        _changeSubmittableData(identifyer, value);
+      changeSubmittableData: function changeSubmittableData(changerIdentifier, value) {
+        _changeSubmittableData(changerIdentifier, value);
       },
-      submit: function submit(sumbitter) {
-        _submit(sumbitter);
+      submit: function submit(submitterIdentifier) {
+        _submit(submitterIdentifier);
       },
       data: 1
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -66416,7 +66430,7 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-      onChange: function onChange(identifyer, value) {
+      onChange: function onChange(changerIdentifier, value) {
         _changeSubmittableData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",

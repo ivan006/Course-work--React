@@ -23,9 +23,9 @@ export default class Data extends Component {
 
   };
   componentDidMount () {
-    this.data();
+    this.readData();
   }
-  data(){
+  readData(){
     axios.get('/api/show/Group_1')
     .then(response => {
       var data = response.data.content;
@@ -39,20 +39,38 @@ export default class Data extends Component {
 
   }
 
-
-  submitData(sumbitter){
+  writeData(submitterIdentifier){
     event.preventDefault();
 
 
+    // var Data = this.state.SubmittableData;
+    // var result = JSON.stringify(Data, null, 2);
+    //
+    // // alert(result);
+    // alert(submitterIdentifier);
+
+
     var Data = this.state.SubmittableData;
-    var result = JSON.stringify(Data, null, 2);
+    eval(submitterIdentifier+"['action']='update'");
+    var Post = {
+      "Data":Data,
+      "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+      "form": "data",
 
-    alert(result);
-    // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
-    // alert(sumbitter);
+    }
 
 
+    axios.post('/store/Group_1', Post)
+    .then(function (response) {
+      this.readData();
+    });
   }
+
+
+  // writeData(submitterIdentifier){
+  //
+  //
+  // }
 
   setSubmittableDataHelper(data, Attr)  {
     var result = Object.keys(data).map(function(keyName, i) {
@@ -60,13 +78,13 @@ export default class Data extends Component {
       result[Attr[0]] = data[keyName].name;
       result[Attr[1]] = data[keyName].type;
       result[Attr[4]] = data[keyName].id;
-      result[Attr[3]] = "update/delete";
+      // result[Attr[3]] = "update/delete";
       if (typeof data[keyName].content === "object"){
         result[Attr[8]] = data[keyName].entity_type;
         result[Attr[6]]= {}
-        result[Attr[6]]["folder"] = "?";
-        result[Attr[6]]["file"] = "?";
-        result[Attr[3]] = "create_folder"+"/"+"create_file";
+        result[Attr[6]]["folder"] = null;
+        result[Attr[6]]["file"] = null;
+        // result[Attr[3]] = "create_folder"+"/"+"create_file";
         result[Attr[2]] = this.setSubmittableDataHelper( data[keyName].content,Attr);
       } else {
         result[Attr[2]] = data[keyName].content;
@@ -78,10 +96,10 @@ export default class Data extends Component {
 
 
 
-  changeSubmittableData (identifyer,value){
+  changeSubmittableData (changerIdentifier,value){
 
     var Data = this.state.SubmittableData;
-    eval(identifyer+"=value");
+    eval(changerIdentifier+"=value");
     this.setState({
       SubmittableData: Data
     });
@@ -108,8 +126,8 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            changeSubmittableData={(identifyer,value) => this.changeSubmittableData(identifyer,value)}
-            submit={(sumbitter) => this.submitData(sumbitter)}
+            changeSubmittableData={(changerIdentifier,value) => this.changeSubmittableData(changerIdentifier,value)}
+            submit={(submitterIdentifier) => this.writeData(submitterIdentifier)}
             data={this.state.data}
             />
         </form>
@@ -176,7 +194,7 @@ const DataHelper = ({ identifier, datahelper, changeSubmittableData, submit,data
             }
 
 
-            <button onClick={(sumbitter) => {submit(identifier+"["+"'content'"+"]["+i+"]")}} className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button onClick={(submitterIdentifier) => {submit(identifier+"["+"'content'"+"]["+i+"]")}} className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
             <button className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
@@ -207,8 +225,8 @@ const DataHelper = ({ identifier, datahelper, changeSubmittableData, submit,data
             <DataHelper
               identifier= {identifier+"["+"'content'"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              changeSubmittableData={(identifyer,value) => {changeSubmittableData(identifyer,value)}}
-              submit={(sumbitter) => {submit(sumbitter)}}
+              changeSubmittableData={(changerIdentifier,value) => {changeSubmittableData(changerIdentifier,value)}}
+              submit={(submitterIdentifier) => {submit(submitterIdentifier)}}
               data={1}
               />
 
@@ -216,7 +234,7 @@ const DataHelper = ({ identifier, datahelper, changeSubmittableData, submit,data
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(identifyer,value) => {changeSubmittableData(identifier+"["+"'content'"+"]["+i+"]['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
+                  <textarea onChange={(changerIdentifier,value) => {changeSubmittableData(identifier+"["+"'content'"+"]["+i+"]['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
