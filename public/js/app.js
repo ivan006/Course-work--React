@@ -66172,8 +66172,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      data: [],
-      SubmittableData: [],
+      DataIn: [],
+      PostData: [],
       Attr: {
         0: 'name',
         1: 'type',
@@ -66194,68 +66194,71 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.readData();
+      this.GetData();
     }
   }, {
-    key: "readData",
-    value: function readData() {
+    key: "GetData",
+    value: function GetData() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
-        var data = response.data.content;
-        var Attr = _this2.state.Attr;
-        var SubmittableData = {
-          content: _this2.setSubmittableDataHelper(data, Attr)
-        };
+        var DataIn = response.data.content;
+
+        var PostData = _this2.CreatePostData(DataIn);
 
         _this2.setState({
-          data: data,
-          SubmittableData: SubmittableData
+          DataIn: DataIn,
+          PostData: PostData
         });
       });
     }
   }, {
-    key: "writeData",
-    value: function writeData(submitterIdentifier) {
-      event.preventDefault(); // var Data = this.state.SubmittableData;
-      // var result = JSON.stringify(Data, null, 2);
-      //
-      // // alert(result);
-      // alert(submitterIdentifier);
-
-      var Data = this.state.SubmittableData;
+    key: "SendPostData",
+    value: function SendPostData(submitterIdentifier) {
+      event.preventDefault();
+      var PostData = this.state.PostData;
       eval(submitterIdentifier + "['action']='update'");
       var Post = {
-        "Data": Data,
+        "Data": PostData,
         "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
         "form": "data"
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/store/Group_1', Post).then(function (response) {
-        this.readData();
-      });
-    } // writeData(submitterIdentifier){
-    //
-    //
-    // }
-
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      }); // axios.post('/store/Group_1', Post)
+      // .then(function (response) {
+      //   this.GetData();
+      // });
+    }
   }, {
-    key: "setSubmittableDataHelper",
-    value: function setSubmittableDataHelper(data, Attr) {
-      var result = Object.keys(data).map(function (keyName, i) {
+    key: "CreatePostData",
+    value: function CreatePostData(DataIn) {
+      var Attr = this.state.Attr;
+      var result = {
+        content: this.CreatePostDataHelper(DataIn, Attr)
+      };
+      return result;
+    }
+  }, {
+    key: "CreatePostDataHelper",
+    value: function CreatePostDataHelper(DataIn, Attr) {
+      var result = Object.keys(DataIn).map(function (keyName, i) {
         var result = {};
-        result[Attr[0]] = data[keyName].name;
-        result[Attr[1]] = data[keyName].type;
-        result[Attr[4]] = data[keyName].id; // result[Attr[3]] = "update/delete";
+        result[Attr[0]] = DataIn[keyName].name;
+        result[Attr[1]] = DataIn[keyName].type;
+        result[Attr[4]] = DataIn[keyName].id; // result[Attr[3]] = "update/delete";
 
-        if (_typeof(data[keyName].content) === "object") {
-          result[Attr[8]] = data[keyName].entity_type;
+        if (_typeof(DataIn[keyName].content) === "object") {
+          result[Attr[8]] = DataIn[keyName].entity_type;
           result[Attr[6]] = {};
           result[Attr[6]]["folder"] = null;
           result[Attr[6]]["file"] = null; // result[Attr[3]] = "create_folder"+"/"+"create_file";
 
-          result[Attr[2]] = this.setSubmittableDataHelper(data[keyName].content, Attr);
+          result[Attr[2]] = this.CreatePostDataHelper(DataIn[keyName].content, Attr);
         } else {
-          result[Attr[2]] = data[keyName].content;
+          result[Attr[2]] = DataIn[keyName].content;
         }
 
         return result;
@@ -66263,15 +66266,15 @@ function (_Component) {
       return result;
     }
   }, {
-    key: "changeSubmittableData",
-    value: function changeSubmittableData(changerIdentifier, value) {
-      var Data = this.state.SubmittableData;
+    key: "UpdatePostData",
+    value: function UpdatePostData(changerIdentifier, value) {
+      var PostData = this.state.PostData;
       eval(changerIdentifier + "=value");
       this.setState({
-        SubmittableData: Data
+        PostData: PostData
       });
-      var Data = this.state.SubmittableData;
-      var DataString = JSON.stringify(Data, null, 2);
+      var PostData = this.state.PostData;
+      var DataString = JSON.stringify(PostData, null, 2);
       alert(DataString);
     }
   }, {
@@ -66289,15 +66292,14 @@ function (_Component) {
         name: "form",
         defaultValue: "data"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        identifier: "Data",
-        datahelper: this.state.data,
-        changeSubmittableData: function changeSubmittableData(changerIdentifier, value) {
-          return _this3.changeSubmittableData(changerIdentifier, value);
+        identifier: "PostData",
+        DataIn: this.state.DataIn,
+        UpdatePostData: function UpdatePostData(changerIdentifier, value) {
+          return _this3.UpdatePostData(changerIdentifier, value);
         },
         submit: function submit(submitterIdentifier) {
-          return _this3.writeData(submitterIdentifier);
-        },
-        data: this.state.data
+          return _this3.SendPostData(submitterIdentifier);
+        }
       })));
     }
   }]);
@@ -66310,14 +66312,12 @@ function (_Component) {
 
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
-      datahelper = _ref.datahelper,
-      _changeSubmittableData = _ref.changeSubmittableData,
-      _submit = _ref.submit,
-      data = _ref.data;
-  var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
-  // alert(JSON.stringify(datahelpervalues));
-  // {JSON.stringify(datahelpervalues.content)}
-
+      DataIn = _ref.DataIn,
+      _UpdatePostData = _ref.UpdatePostData,
+      _submit = _ref.submit;
+  // var DataIn = Object.values(DataIn);
+  // alert(JSON.stringify(DataIn));
+  // {JSON.stringify(DataIn.content)}
   var Attr = {
     '0': 'name',
     '1': 'type',
@@ -66331,12 +66331,12 @@ var DataHelper = function DataHelper(_ref) {
   };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
-  }, Object.keys(datahelpervalues).map(function (keyName, i) {
+  }, Object.keys(DataIn).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: datahelpervalues[keyName].id
+      key: DataIn[keyName].id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, _typeof(DataIn[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66349,26 +66349,26 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[0] + "]",
-      defaultValue: datahelpervalues[keyName].name
+      defaultValue: DataIn[keyName].name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
-    }, datahelpervalues[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, DataIn[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[1] + "]",
-      defaultValue: datahelpervalues[keyName].type
+      defaultValue: DataIn[keyName].type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[4] + "]",
-      defaultValue: datahelpervalues[keyName].id
-    }), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      defaultValue: DataIn[keyName].id
+    }), _typeof(DataIn[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
-      defaultValue: datahelpervalues[keyName].entity_type
+      defaultValue: DataIn[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(submitterIdentifier) {
         _submit(identifier + "[" + "'content'" + "][" + i + "]");
@@ -66382,7 +66382,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "delete"
-    }, "\xD7"), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    }, "\xD7"), _typeof(DataIn[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66415,28 +66415,27 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "create_file"
-    }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+    }, "+"))))), _typeof(DataIn[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "][" + i + "]",
-      datahelper: datahelpervalues[keyName].content,
-      changeSubmittableData: function changeSubmittableData(changerIdentifier, value) {
-        _changeSubmittableData(changerIdentifier, value);
+      DataIn: DataIn[keyName].content,
+      UpdatePostData: function UpdatePostData(changerIdentifier, value) {
+        _UpdatePostData(changerIdentifier, value);
       },
       submit: function submit(submitterIdentifier) {
         _submit(submitterIdentifier);
-      },
-      data: 1
+      }
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       onChange: function onChange(changerIdentifier, value) {
-        _changeSubmittableData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
+        _UpdatePostData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: datahelpervalues[keyName].content
+      defaultValue: DataIn[keyName].content
     })))));
   }));
 };
