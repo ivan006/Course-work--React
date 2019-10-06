@@ -66173,7 +66173,19 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       data: [],
-      submit: []
+      SubmittableData: [],
+      Attr: {
+        0: 'name',
+        1: 'type',
+        2: 'content',
+        3: 'action',
+        4: 'id',
+        5: 'subtype',
+        6: 'add',
+        7: 'url',
+        8: 'entity_type',
+        9: 'conteent'
+      }
     });
 
     return _this;
@@ -66190,8 +66202,15 @@ function (_Component) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
+        var data = response.data.content;
+        var Attr = _this2.state.Attr;
+        var SubmittableData = {
+          content: _this2.setSubmittableDataHelper(data, Attr)
+        };
+
         _this2.setState({
-          data: response.data.content
+          data: data,
+          SubmittableData: SubmittableData
         });
       });
     }
@@ -66199,38 +66218,14 @@ function (_Component) {
     key: "submitData",
     value: function submitData(sumbitter) {
       event.preventDefault();
-      var data = this.state.data;
-      var Attr = {
-        0: 'name',
-        1: 'type',
-        2: 'content',
-        3: 'action',
-        4: 'id',
-        5: 'subtype',
-        6: 'add',
-        7: 'url',
-        8: 'entity_type',
-        9: 'conteent'
-      };
-      var result = this.submitDataHelper(data, Attr); // var result = this.state.data;
-      // var result = sumbitter;
-      // var result = 1;
-
-      result = {
-        content: result
-      };
-      this.setState({
-        submit: result
-      });
-      var Data = this.state.submit;
-      eval(sumbitter + "['content']=123321");
-      result = JSON.stringify(Data, null, 2);
+      var Data = this.state.SubmittableData;
+      var result = JSON.stringify(Data, null, 2);
       alert(result); // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
       // alert(sumbitter);
     }
   }, {
-    key: "submitDataHelper",
-    value: function submitDataHelper(data, Attr) {
+    key: "setSubmittableDataHelper",
+    value: function setSubmittableDataHelper(data, Attr) {
       var result = Object.keys(data).map(function (keyName, i) {
         var result = {};
         result[Attr[0]] = data[keyName].name;
@@ -66244,7 +66239,7 @@ function (_Component) {
           result[Attr[6]]["folder"] = "?";
           result[Attr[6]]["file"] = "?";
           result[Attr[3]] = "create_folder" + "/" + "create_file";
-          result[Attr[2]] = this.submitDataHelper(data[keyName].content, Attr);
+          result[Attr[2]] = this.setSubmittableDataHelper(data[keyName].content, Attr);
         } else {
           result[Attr[2]] = data[keyName].content;
         }
@@ -66252,33 +66247,18 @@ function (_Component) {
         return result;
       }, this);
       return result;
-    } // submitData(sumbitter){
-    //   event.preventDefault();
-    //
-    //   var result = this.submitDataHelper( 1,1);
-    //   result = JSON.stringify(result, null, 2);
-    //   alert(result);
-    //
-    // }
-    // submitDataHelper(data, Attr)  {
-    //   var thing = [1,2]
-    //   var result = thing.map(function(keyName, i) {
-    //
-    //     if (data==1) {
-    //       return [this.submitDataHelper(0, 1)]
-    //     } else {
-    //       return 1;
-    //     }
-    //   }, this)
-    //   return result;
-    //
-    // }
-
+    }
   }, {
-    key: "hello",
-    value: function hello(arg) {
-      // event.preventDefault();
-      alert(arg);
+    key: "changeSubmittableData",
+    value: function changeSubmittableData(identifyer, value) {
+      var Data = this.state.SubmittableData;
+      eval(identifyer + "=value");
+      this.setState({
+        SubmittableData: Data
+      });
+      var Data = this.state.SubmittableData;
+      var DataString = JSON.stringify(Data, null, 2);
+      alert(DataString);
     }
   }, {
     key: "render",
@@ -66297,8 +66277,8 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "Data",
         datahelper: this.state.data,
-        change: function change(arg) {
-          return _this3.hello(arg);
+        changeSubmittableData: function changeSubmittableData(identifyer, value) {
+          return _this3.changeSubmittableData(identifyer, value);
         },
         submit: function submit(sumbitter) {
           return _this3.submitData(sumbitter);
@@ -66317,7 +66297,7 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       datahelper = _ref.datahelper,
-      change = _ref.change,
+      _changeSubmittableData = _ref.changeSubmittableData,
       _submit = _ref.submit,
       data = _ref.data;
   var datahelpervalues = datahelper; // var datahelpervalues = Object.values(datahelper);
@@ -66424,8 +66404,8 @@ var DataHelper = function DataHelper(_ref) {
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
-      change: function change(arg) {
-        _submit(arg);
+      changeSubmittableData: function changeSubmittableData(identifyer, value) {
+        _changeSubmittableData(identifyer, value);
       },
       submit: function submit(sumbitter) {
         _submit(sumbitter);
@@ -66436,8 +66416,8 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-      onChange: function onChange(arg) {
-        change(event.target.value);
+      onChange: function onChange(identifyer, value) {
+        _changeSubmittableData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",

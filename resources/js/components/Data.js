@@ -7,29 +7,8 @@ import axios from 'axios';
 export default class Data extends Component {
   state = {
     data: [],
-    submit: [],
-
-
-  };
-  componentDidMount () {
-    this.data();
-  }
-  data(){
-    axios.get('/api/show/Group_1')
-    .then(response => {
-      this.setState({
-        data: response.data.content
-      });
-    });
-
-  }
-
-  submitData(sumbitter){
-    event.preventDefault();
-
-    var data = this.state.data;
-
-    var Attr = {
+    SubmittableData: [],
+    Attr: {
       0: 'name',
       1: 'type',
       2: 'content',
@@ -40,18 +19,33 @@ export default class Data extends Component {
       7: 'url',
       8: 'entity_type',
       9: 'conteent',
-    };
-    var result = this.submitDataHelper( data,Attr);
-    // var result = this.state.data;
-    // var result = sumbitter;
-    // var result = 1;
-    result = {content: result}
-    this.setState({
-      submit: result
+    },
+
+  };
+  componentDidMount () {
+    this.data();
+  }
+  data(){
+    axios.get('/api/show/Group_1')
+    .then(response => {
+      var data = response.data.content;
+      var Attr = this.state.Attr;
+      var SubmittableData = {content: this.setSubmittableDataHelper( data,Attr)}
+      this.setState({
+        data: data,
+        SubmittableData: SubmittableData
+      });
     });
-    var Data = this.state.submit;
-    eval(sumbitter+"['content']=123321")
-    result = JSON.stringify(Data, null, 2);
+
+  }
+
+
+  submitData(sumbitter){
+    event.preventDefault();
+
+
+    var Data = this.state.SubmittableData;
+    var result = JSON.stringify(Data, null, 2);
 
     alert(result);
     // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
@@ -60,7 +54,7 @@ export default class Data extends Component {
 
   }
 
-  submitDataHelper(data, Attr)  {
+  setSubmittableDataHelper(data, Attr)  {
     var result = Object.keys(data).map(function(keyName, i) {
       var result = {}
       result[Attr[0]] = data[keyName].name;
@@ -73,7 +67,7 @@ export default class Data extends Component {
         result[Attr[6]]["folder"] = "?";
         result[Attr[6]]["file"] = "?";
         result[Attr[3]] = "create_folder"+"/"+"create_file";
-        result[Attr[2]] = this.submitDataHelper( data[keyName].content,Attr);
+        result[Attr[2]] = this.setSubmittableDataHelper( data[keyName].content,Attr);
       } else {
         result[Attr[2]] = data[keyName].content;
       }
@@ -82,33 +76,20 @@ export default class Data extends Component {
     return result;
   }
 
-  // submitData(sumbitter){
-  //   event.preventDefault();
-  //
-  //   var result = this.submitDataHelper( 1,1);
-  //   result = JSON.stringify(result, null, 2);
-  //   alert(result);
-  //
-  // }
-  // submitDataHelper(data, Attr)  {
-  //   var thing = [1,2]
-  //   var result = thing.map(function(keyName, i) {
-  //
-  //     if (data==1) {
-  //       return [this.submitDataHelper(0, 1)]
-  //     } else {
-  //       return 1;
-  //     }
-  //   }, this)
-  //   return result;
-  //
-  // }
 
 
-  hello (arg){
+  changeSubmittableData (identifyer,value){
 
-      // event.preventDefault();
-    alert(arg);
+    var Data = this.state.SubmittableData;
+    eval(identifyer+"=value");
+    this.setState({
+      SubmittableData: Data
+    });
+
+    var Data = this.state.SubmittableData;
+    var DataString = JSON.stringify(Data, null, 2);
+    alert(DataString);
+
   }
 
 
@@ -127,7 +108,7 @@ export default class Data extends Component {
           <DataHelper
             identifier="Data"
             datahelper={this.state.data}
-            change={(arg) => this.hello(arg)}
+            changeSubmittableData={(identifyer,value) => this.changeSubmittableData(identifyer,value)}
             submit={(sumbitter) => this.submitData(sumbitter)}
             data={this.state.data}
             />
@@ -145,7 +126,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
+const DataHelper = ({ identifier, datahelper, changeSubmittableData, submit,data}) => {
 
   var datahelpervalues = datahelper;
   // var datahelpervalues = Object.values(datahelper);
@@ -226,7 +207,7 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
             <DataHelper
               identifier= {identifier+"["+"'content'"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
-              change={(arg) => {submit(arg)}}
+              changeSubmittableData={(identifyer,value) => {changeSubmittableData(identifyer,value)}}
               submit={(sumbitter) => {submit(sumbitter)}}
               data={1}
               />
@@ -235,7 +216,7 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(arg) => {change(event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
+                  <textarea onChange={(identifyer,value) => {changeSubmittableData(identifier+"["+"'content'"+"]["+i+"]['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
