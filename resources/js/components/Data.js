@@ -7,6 +7,7 @@ import axios from 'axios';
 export default class Data extends Component {
   state = {
     data: [],
+    submit: [],
 
 
   };
@@ -26,36 +27,8 @@ export default class Data extends Component {
   submitData(sumbitter){
     event.preventDefault();
 
-    //var data = this.state.data;
-    var data = {
-      "Y29kZQ==": {
-        "name": "code",
-        "type": "folder",
-        "content": {
-          "dzMuY3Nz": {
-            "name": "w3.css",
-            "type": "file",
-            "content": "123",
-            "id": 27
-          }
-        },
-        "id": 26,
-        "url": "/_data/code",
-        "entity_type": "App\\Data"
-      },
-      "UmljaC50eHQ=": {
-        "name": "Rich.txt",
-        "type": "file",
-        "content": "x",
-        "id": 28
-      },
-      "YWFhYQ==": {
-        "name": "aaaa",
-        "type": "file",
-        "content": "null",
-        "id": 205
-      }
-    }
+    var data = this.state.data;
+
     var Attr = {
       0: 'name',
       1: 'type',
@@ -73,20 +46,30 @@ export default class Data extends Component {
     // var result = sumbitter;
     // var result = 1;
     result = {content: result}
-    result = JSON.stringify(result, null, 2);
+    this.setState({
+      submit: result
+    });
+    var Data = this.state.submit;
+    eval(sumbitter+"['content']=123321")
+    result = JSON.stringify(Data, null, 2);
+
     alert(result);
+    // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
+    // alert(sumbitter);
+
 
   }
 
   submitDataHelper(data, Attr)  {
     var result = Object.keys(data).map(function(keyName, i) {
-      var result =  {[Attr[6]]: {}}
+      var result = {}
       result[Attr[0]] = data[keyName].name;
       result[Attr[1]] = data[keyName].type;
       result[Attr[4]] = data[keyName].id;
       result[Attr[3]] = "update/delete";
       if (typeof data[keyName].content === "object"){
         result[Attr[8]] = data[keyName].entity_type;
+        result[Attr[6]]= {}
         result[Attr[6]]["folder"] = "?";
         result[Attr[6]]["file"] = "?";
         result[Attr[3]] = "create_folder"+"/"+"create_file";
@@ -198,22 +181,22 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[0]+"]"} defaultValue={datahelpervalues[keyName].name} ></input>
+              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[0]+"]"} defaultValue={datahelpervalues[keyName].name} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{datahelpervalues[keyName].name}</div>
               <span className="kv-little-button ">^</span>
             </label>
 
 
-            <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[1]+"]"} defaultValue={datahelpervalues[keyName].type} ></input>
-            <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[4]+"]"} defaultValue={datahelpervalues[keyName].id} ></input>
+            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[1]+"]"} defaultValue={datahelpervalues[keyName].type} ></input>
+            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[4]+"]"} defaultValue={datahelpervalues[keyName].id} ></input>
 
             {typeof datahelpervalues[keyName].content == "object" &&
-              <input className="kv-di-no" type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
+              <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[8]+"]"} defaultValue={datahelpervalues[keyName].entity_type} ></input>
             }
 
 
-            <button onClick={(sumbitter) => {submit(datahelpervalues[keyName].name)}} className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
-            <button className="kv-little-button" type="submit" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
+            <button onClick={(sumbitter) => {submit(identifier+"["+"'content'"+"]["+i+"]")}} className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="update">✓</button>
+            <button className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="delete">×</button>
 
 
 
@@ -224,13 +207,13 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
                 <div className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
                   <div className="" >
                     <span>📁</span>
-                    <input className="kv-field-container kv-name kv-di-in "  type="text"   name={identifier+"["+"content"+"]["+i+"]["+Attr[6]+"][folder]"}  ></input>
-                    <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="create_folder">+</button>
+                    <input className="kv-field-container kv-name kv-di-in "  type="text"   name={identifier+"["+"'content'"+"]["+i+"]["+Attr[6]+"][folder]"}  ></input>
+                    <button type="submit" className="kv-little-button" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="create_folder">+</button>
                   </div>
                   <div className="kv-mar-top-3">
                     <span>📃</span>
-                    <input className="kv-field-container kv-name kv-di-in"  type="text" name={identifier+"["+"content"+"]["+i+"]["+Attr[6]+"][file]"} ></input>
-                    <button type="submit" className="kv-little-button" name={identifier+"["+"content"+"]["+i+"]["+Attr[3]+"]"} value="create_file">+</button>
+                    <input className="kv-field-container kv-name kv-di-in"  type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[6]+"][file]"} ></input>
+                    <button type="submit" className="kv-little-button" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[3]+"]"} value="create_file">+</button>
                   </div>
                 </div>
               </label>
@@ -241,7 +224,7 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
           {typeof datahelpervalues[keyName].content == "object" ?
 
             <DataHelper
-              identifier= {identifier+"["+"content"+"]["+i+"]"}
+              identifier= {identifier+"["+"'content'"+"]["+i+"]"}
               datahelper={datahelpervalues[keyName].content}
               change={(arg) => {submit(arg)}}
               submit={(sumbitter) => {submit(sumbitter)}}
@@ -252,7 +235,7 @@ const DataHelper = ({ identifier, datahelper, change, submit,data}) => {
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(arg) => {change(event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"content"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
+                  <textarea onChange={(arg) => {change(event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={datahelpervalues[keyName].content}></textarea>
                 </div>
               </li>
             </ul>

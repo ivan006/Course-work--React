@@ -66172,7 +66172,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      data: []
+      data: [],
+      submit: []
     });
 
     return _this;
@@ -66197,37 +66198,8 @@ function (_Component) {
   }, {
     key: "submitData",
     value: function submitData(sumbitter) {
-      event.preventDefault(); //var data = this.state.data;
-
-      var data = {
-        "Y29kZQ==": {
-          "name": "code",
-          "type": "folder",
-          "content": {
-            "dzMuY3Nz": {
-              "name": "w3.css",
-              "type": "file",
-              "content": "123",
-              "id": 27
-            }
-          },
-          "id": 26,
-          "url": "/_data/code",
-          "entity_type": "App\\Data"
-        },
-        "UmljaC50eHQ=": {
-          "name": "Rich.txt",
-          "type": "file",
-          "content": "x",
-          "id": 28
-        },
-        "YWFhYQ==": {
-          "name": "aaaa",
-          "type": "file",
-          "content": "null",
-          "id": 205
-        }
-      };
+      event.preventDefault();
+      var data = this.state.data;
       var Attr = {
         0: 'name',
         1: 'type',
@@ -66247,15 +66219,20 @@ function (_Component) {
       result = {
         content: result
       };
-      result = JSON.stringify(result, null, 2);
-      alert(result);
+      this.setState({
+        submit: result
+      });
+      var Data = this.state.submit;
+      eval(sumbitter + "['content']=123321");
+      result = JSON.stringify(Data, null, 2);
+      alert(result); // alert(Data["content"][0]["content"][0]["content"][0]["content"]);
+      // alert(sumbitter);
     }
   }, {
     key: "submitDataHelper",
     value: function submitDataHelper(data, Attr) {
       var result = Object.keys(data).map(function (keyName, i) {
-        var result = _defineProperty({}, Attr[6], {});
-
+        var result = {};
         result[Attr[0]] = data[keyName].name;
         result[Attr[1]] = data[keyName].type;
         result[Attr[4]] = data[keyName].id;
@@ -66263,6 +66240,7 @@ function (_Component) {
 
         if (_typeof(data[keyName].content) === "object") {
           result[Attr[8]] = data[keyName].entity_type;
+          result[Attr[6]] = {};
           result[Attr[6]]["folder"] = "?";
           result[Attr[6]]["file"] = "?";
           result[Attr[3]] = "create_folder" + "/" + "create_file";
@@ -66376,7 +66354,7 @@ var DataHelper = function DataHelper(_ref) {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[0] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[0] + "]",
       defaultValue: datahelpervalues[keyName].name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
@@ -66385,30 +66363,30 @@ var DataHelper = function DataHelper(_ref) {
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[1] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[1] + "]",
       defaultValue: datahelpervalues[keyName].type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[4] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[4] + "]",
       defaultValue: datahelpervalues[keyName].id
     }), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[8] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
       defaultValue: datahelpervalues[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(sumbitter) {
-        _submit(datahelpervalues[keyName].name);
+        _submit(identifier + "[" + "'content'" + "][" + i + "]");
       },
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "delete"
     }, "\xD7"), _typeof(datahelpervalues[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
@@ -66426,25 +66404,25 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in ",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][folder]"
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "create_folder"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in",
       type: "text",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[6] + "][file]"
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][file]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "create_file"
     }, "+"))))), _typeof(datahelpervalues[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-      identifier: identifier + "[" + "content" + "][" + i + "]",
+      identifier: identifier + "[" + "'content'" + "][" + i + "]",
       datahelper: datahelpervalues[keyName].content,
       change: function change(arg) {
         _submit(arg);
@@ -66462,7 +66440,7 @@ var DataHelper = function DataHelper(_ref) {
         change(event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
-      name: identifier + "[" + "content" + "][" + i + "][" + Attr[2] + "]",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
       defaultValue: datahelpervalues[keyName].content
     })))));
