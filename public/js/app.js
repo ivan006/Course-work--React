@@ -66284,26 +66284,35 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.RecievedData, null, 2))); // return (
+      var _this3 = this;
+
+      // return (
       //   <div>
-      //     <form >
+      //     <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
       //
-      //
-      //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-      //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-      //       <br></br>
-      //       <h2>JS Data</h2>
-      //       <DataHelper
-      //         identifier="PostData"
-      //         Attr={this.state.Attr}
-      //         RecievedData={this.state.RecievedData}
-      //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-      //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-      //         />
-      //     </form>
       //   </div>
       //
       // );
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        name: "_token",
+        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "kv-di-no",
+        type: "text",
+        name: "form",
+        defaultValue: "data"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+        identifier: "PostData",
+        Attr: this.state.Attr,
+        RecievedData: this.state.RecievedData,
+        UpdatePostData: function UpdatePostData(changerIdentifier, value) {
+          return _this3.UpdatePostData(changerIdentifier, value);
+        },
+        submit: function submit(submitterIdentifier) {
+          return _this3.SendPostData(submitterIdentifier);
+        }
+      })));
     }
   }]);
 

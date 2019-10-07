@@ -109,33 +109,33 @@ export default class Data extends Component {
 
   render() {
 
-    return (
-      <div>
-        <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
-
-      </div>
-
-    );
     // return (
     //   <div>
-    //     <form >
+    //     <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
     //
-    //
-    //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-    //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-    //       <br></br>
-    //       <h2>JS Data</h2>
-    //       <DataHelper
-    //         identifier="PostData"
-    //         Attr={this.state.Attr}
-    //         RecievedData={this.state.RecievedData}
-    //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-    //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-    //         />
-    //     </form>
     //   </div>
     //
     // );
+    return (
+      <div>
+        <form >
+
+
+          <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+          <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+          <br></br>
+          <h2>JS Data</h2>
+          <DataHelper
+            identifier="PostData"
+            Attr={this.state.Attr}
+            RecievedData={this.state.RecievedData}
+            UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
+            submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
+            />
+        </form>
+      </div>
+
+    );
   }
 }
 
