@@ -66186,7 +66186,8 @@ function (_Component) {
         7: 'url',
         8: 'entity_type',
         9: 'conteent'
-      }
+      },
+      loading: "loaded"
     });
 
     return _this;
@@ -66202,16 +66203,35 @@ function (_Component) {
     value: function GetAllData() {
       var _this2 = this;
 
-      // axios.get('/api/show/Group_1')
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1').then(function (response) {
-        var RecievedData = response.data.content;
+      this.setState({
+        loading: "loading"
+      }); // axios.get('/api/show/Group_1')
+      // .then(response => {
+      //   this.setState({
+      //     RecievedData: response.data.content,
+      //     loading:"loaded"
+      //   });
+      //   this.CreatePostData(RecievedData);
+      // }).catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
 
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
         _this2.setState({
-          RecievedData: RecievedData
+          RecievedData: response,
+          loading: "loaded"
         });
-
-        _this2.CreatePostData(RecievedData);
-      });
+      })["catch"](function (error) {
+        _this2.setState({
+          loading: "failed"
+        });
+      }); // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+      // .then(response => {
+      //   this.setState({loading:"loaded"});
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
     }
   }, {
     key: "CreatePostData",
@@ -66284,35 +66304,34 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
-      // return (
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          fontSize: "100px"
+        }
+      }, "\u231B") : this.state.loading == "failed" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          fontSize: "100px"
+        }
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.RecievedData, null, 2))); // return (
       //   <div>
-      //     <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
+      //     <form >
       //
+      //
+      //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+      //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+      //       <br></br>
+      //       <h2>JS Data</h2>
+      //       <DataHelper
+      //         identifier="PostData"
+      //         Attr={this.state.Attr}
+      //         RecievedData={this.state.RecievedData}
+      //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
+      //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
+      //         />
+      //     </form>
       //   </div>
       //
       // );
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "hidden",
-        name: "_token",
-        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "kv-di-no",
-        type: "text",
-        name: "form",
-        defaultValue: "data"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        identifier: "PostData",
-        Attr: this.state.Attr,
-        RecievedData: this.state.RecievedData,
-        UpdatePostData: function UpdatePostData(changerIdentifier, value) {
-          return _this3.UpdatePostData(changerIdentifier, value);
-        },
-        submit: function submit(submitterIdentifier) {
-          return _this3.SendPostData(submitterIdentifier);
-        }
-      })));
     }
   }]);
 

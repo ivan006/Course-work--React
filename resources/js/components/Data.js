@@ -20,6 +20,7 @@ export default class Data extends Component {
       8: 'entity_type',
       9: 'conteent',
     },
+    loading: "loaded",
 
   };
   componentDidMount () {
@@ -27,15 +28,41 @@ export default class Data extends Component {
   }
 
   GetAllData(){
+
+    this.setState({loading:"loading"});
+
     // axios.get('/api/show/Group_1')
-    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1')
+    // .then(response => {
+    //   this.setState({
+    //     RecievedData: response.data.content,
+    //     loading:"loaded"
+    //   });
+    //   this.CreatePostData(RecievedData);
+    // }).catch(error => {
+    //   this.setState({loading:"failed"});
+    // });
+
+
+    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
     .then(response => {
-      var RecievedData = response.data.content;
       this.setState({
-        RecievedData: RecievedData
+        RecievedData: response,
+        loading:"loaded"
       });
-      this.CreatePostData(RecievedData);
+    })
+    .catch(error => {
+      this.setState({loading:"failed"});
     });
+
+
+    // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+    // .then(response => {
+    //   this.setState({loading:"loaded"});
+    // })
+    // .catch(error => {
+    //   this.setState({loading:"failed"});
+    // });
+
   }
 
   CreatePostData(RecievedData)  {
@@ -109,33 +136,45 @@ export default class Data extends Component {
 
   render() {
 
-    // return (
-    //   <div>
-    //     <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
-    //
-    //   </div>
-    //
-    // );
     return (
       <div>
-        <form >
 
+        {this.state.loading == "loading" ?
+          <div style={{fontSize: "100px"}}>
+            ⌛
+          </div>
+          : this.state.loading == "failed" ?
+          <div style={{fontSize: "100px"}}>
+            ⚠
+          </div>
+          :
+          <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
 
-          <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-          <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-          <br></br>
-          <h2>JS Data</h2>
-          <DataHelper
-            identifier="PostData"
-            Attr={this.state.Attr}
-            RecievedData={this.state.RecievedData}
-            UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-            submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-            />
-        </form>
+        }
       </div>
 
     );
+
+    // return (
+    //   <div>
+    //     <form >
+    //
+    //
+    //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+    //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+    //       <br></br>
+    //       <h2>JS Data</h2>
+    //       <DataHelper
+    //         identifier="PostData"
+    //         Attr={this.state.Attr}
+    //         RecievedData={this.state.RecievedData}
+    //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
+    //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
+    //         />
+    //     </form>
+    //   </div>
+    //
+    // );
   }
 }
 
