@@ -66205,27 +66205,33 @@ function (_Component) {
 
       this.setState({
         loading: "loading"
-      }); // axios.get('/api/show/Group_1')
-      // .then(response => {
-      //   this.setState({
-      //     RecievedData: response.data.content,
-      //     loading:"loaded"
-      //   });
-      //   this.CreatePostData(RecievedData);
-      // }).catch(error => {
-      //   this.setState({loading:"failed"});
-      // });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
+        var RecievedData = response.data.content;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
         _this2.setState({
-          RecievedData: response,
+          RecievedData: response.data.content,
           loading: "loaded"
         });
+
+        _this2.CreatePostData(RecievedData);
       })["catch"](function (error) {
+        console.log(error);
+
         _this2.setState({
           loading: "failed"
         });
-      }); // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+      }); // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+      // .then(response => {
+      //   this.setState({
+      //     RecievedData: response,
+      //     loading:"loaded"
+      //   });
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
+      // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
       // .then(response => {
       //   this.setState({loading:"loaded"});
       // })
@@ -66306,29 +66312,40 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
-          fontSize: "100px"
+          fontSize: "100px",
+          textAlign: "center"
         }
       }, "\u231B") : this.state.loading == "failed" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
-          fontSize: "100px"
+          fontSize: "100px",
+          textAlign: "center"
         }
       }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.RecievedData, null, 2))); // return (
       //   <div>
-      //     <form >
+      //     {this.state.loading == "loading" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⌛
+      //       </div>
+      //       : this.state.loading == "failed" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⚠
+      //       </div>
+      //       :
+      //       <form >
       //
-      //
-      //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-      //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-      //       <br></br>
-      //       <h2>JS Data</h2>
-      //       <DataHelper
-      //         identifier="PostData"
-      //         Attr={this.state.Attr}
-      //         RecievedData={this.state.RecievedData}
-      //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-      //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-      //         />
-      //     </form>
+      //         <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+      //         <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+      //         <br></br>
+      //         <h2>JS Data</h2>
+      //         <DataHelper
+      //           identifier="PostData"
+      //           Attr={this.state.Attr}
+      //           RecievedData={this.state.RecievedData}
+      //           UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
+      //           submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
+      //           />
+      //       </form>
+      //     }
       //   </div>
       //
       // );

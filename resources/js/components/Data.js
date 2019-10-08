@@ -31,28 +31,30 @@ export default class Data extends Component {
 
     this.setState({loading:"loading"});
 
-    // axios.get('/api/show/Group_1')
-    // .then(response => {
-    //   this.setState({
-    //     RecievedData: response.data.content,
-    //     loading:"loaded"
-    //   });
-    //   this.CreatePostData(RecievedData);
-    // }).catch(error => {
-    //   this.setState({loading:"failed"});
-    // });
-
-
-    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    axios.get('/api/show/Group_1')
     .then(response => {
+      var RecievedData = response.data.content;
       this.setState({
-        RecievedData: response,
+        RecievedData: response.data.content,
         loading:"loaded"
       });
-    })
-    .catch(error => {
+      this.CreatePostData(RecievedData);
+    }).catch(error => {
+      console.log(error);
       this.setState({loading:"failed"});
     });
+
+
+    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    // .then(response => {
+    //   this.setState({
+    //     RecievedData: response,
+    //     loading:"loaded"
+    //   });
+    // })
+    // .catch(error => {
+    //   this.setState({loading:"failed"});
+    // });
 
 
     // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
@@ -140,11 +142,11 @@ export default class Data extends Component {
       <div>
 
         {this.state.loading == "loading" ?
-          <div style={{fontSize: "100px"}}>
+          <div style={{fontSize: "100px", textAlign: "center"}}>
             ⌛
           </div>
           : this.state.loading == "failed" ?
-          <div style={{fontSize: "100px"}}>
+          <div style={{fontSize: "100px", textAlign: "center"}}>
             ⚠
           </div>
           :
@@ -157,21 +159,30 @@ export default class Data extends Component {
 
     // return (
     //   <div>
-    //     <form >
+    //     {this.state.loading == "loading" ?
+    //       <div style={{fontSize: "100px", textAlign: "center"}}>
+    //         ⌛
+    //       </div>
+    //       : this.state.loading == "failed" ?
+    //       <div style={{fontSize: "100px", textAlign: "center"}}>
+    //         ⚠
+    //       </div>
+    //       :
+    //       <form >
     //
-    //
-    //       <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-    //       <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-    //       <br></br>
-    //       <h2>JS Data</h2>
-    //       <DataHelper
-    //         identifier="PostData"
-    //         Attr={this.state.Attr}
-    //         RecievedData={this.state.RecievedData}
-    //         UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-    //         submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-    //         />
-    //     </form>
+    //         <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+    //         <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+    //         <br></br>
+    //         <h2>JS Data</h2>
+    //         <DataHelper
+    //           identifier="PostData"
+    //           Attr={this.state.Attr}
+    //           RecievedData={this.state.RecievedData}
+    //           UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
+    //           submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
+    //           />
+    //       </form>
+    //     }
     //   </div>
     //
     // );
