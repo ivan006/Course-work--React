@@ -66205,33 +66205,30 @@ function (_Component) {
 
       this.setState({
         loading: "loading"
-      });
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
-        var RecievedData = response.data.content;
+      }); // axios.get('/api/show/Group_1')
+      // .then(response => {
+      //   var RecievedData = response.data.content;
+      //   this.setState({
+      //     RecievedData: response.data.content,
+      //     loading:"loaded"
+      //   });
+      //   this.CreatePostData(RecievedData);
+      //
+      // }).catch(error => {
+      //   console.log(error);
+      //   this.setState({loading:"failed"});
+      // });
 
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Groups/Group_1.json').then(function (response) {
         _this2.setState({
-          RecievedData: response.data.content,
+          RecievedData: response.data,
           loading: "loaded"
         });
-
-        _this2.CreatePostData(RecievedData);
       })["catch"](function (error) {
-        console.log(error);
-
         _this2.setState({
           loading: "failed"
         });
-      }); // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-      // .then(response => {
-      //   this.setState({
-      //     RecievedData: response,
-      //     loading:"loaded"
-      //   });
-      // })
-      // .catch(error => {
-      //   this.setState({loading:"failed"});
-      // });
-      // axios.post('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+      }); // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
       // .then(response => {
       //   this.setState({loading:"loaded"});
       // })
@@ -66289,10 +66286,10 @@ function (_Component) {
     }
   }, {
     key: "SendPostData",
-    value: function SendPostData(submitterIdentifier) {
+    value: function SendPostData(UpdateSubmitterIdentifier) {
       event.preventDefault();
       var PostData = this.state.PostData;
-      eval(submitterIdentifier + "['action']='update'");
+      eval(UpdateSubmitterIdentifier + "['action']='update'");
       var Post = {
         "Data": PostData,
         "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
@@ -66310,6 +66307,26 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      // return (
+      //   <div>
+      //
+      //     {this.state.loading == "loading" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⌛
+      //       </div>
+      //       : this.state.loading == "failed" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⚠
+      //       </div>
+      //       :
+      //       <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
+      //
+      //     }
+      //   </div>
+      //
+      // );
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: "100px",
@@ -66320,35 +66337,26 @@ function (_Component) {
           fontSize: "100px",
           textAlign: "center"
         }
-      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.RecievedData, null, 2))); // return (
-      //   <div>
-      //     {this.state.loading == "loading" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⌛
-      //       </div>
-      //       : this.state.loading == "failed" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⚠
-      //       </div>
-      //       :
-      //       <form >
-      //
-      //         <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-      //         <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-      //         <br></br>
-      //         <h2>JS Data</h2>
-      //         <DataHelper
-      //           identifier="PostData"
-      //           Attr={this.state.Attr}
-      //           RecievedData={this.state.RecievedData}
-      //           UpdatePostData={(changerIdentifier,value) => this.UpdatePostData(changerIdentifier,value)}
-      //           submit={(submitterIdentifier) => this.SendPostData(submitterIdentifier)}
-      //           />
-      //       </form>
-      //     }
-      //   </div>
-      //
-      // );
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        name: "_token",
+        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "kv-di-no",
+        type: "text",
+        name: "form",
+        defaultValue: "data"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+        identifier: "PostData",
+        Attr: this.state.Attr,
+        RecievedData: this.state.RecievedData,
+        UpdatePostData: function UpdatePostData(changerIdentifier, value) {
+          return _this3.UpdatePostData(changerIdentifier, value);
+        },
+        SubmitUpdate: function SubmitUpdate(UpdateSubmitterIdentifier) {
+          return _this3.SendPostData(UpdateSubmitterIdentifier);
+        }
+      })));
     }
   }]);
 
@@ -66363,7 +66371,7 @@ var DataHelper = function DataHelper(_ref) {
       Attr = _ref.Attr,
       RecievedData = _ref.RecievedData,
       _UpdatePostData = _ref.UpdatePostData,
-      _submit = _ref.submit;
+      _SubmitUpdate = _ref.SubmitUpdate;
   // var RecievedData = Object.values(RecievedData);
   // alert(JSON.stringify(RecievedData));
   // {JSON.stringify(RecievedData.content)}
@@ -66371,10 +66379,10 @@ var DataHelper = function DataHelper(_ref) {
     className: "kv-list-parent"
   }, Object.keys(RecievedData).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: RecievedData[keyName].id
+      key: RecievedData[keyName]
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, _typeof(RecievedData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, _typeof(RecievedData[keyName]) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66387,10 +66395,10 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[0] + "]",
-      defaultValue: RecievedData[keyName].name
+      defaultValue: keyName
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
-    }, RecievedData[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, keyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
@@ -66402,14 +66410,14 @@ var DataHelper = function DataHelper(_ref) {
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[4] + "]",
       defaultValue: RecievedData[keyName].id
-    }), _typeof(RecievedData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }), _typeof(RecievedData[keyName]) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
       defaultValue: RecievedData[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick(submitterIdentifier) {
-        _submit(identifier + "[" + "'content'" + "][" + i + "]");
+      onClick: function onClick(UpdateSubmitterIdentifier) {
+        _SubmitUpdate(identifier + "[" + "'content'" + "][" + i + "]");
       },
       className: "kv-little-button",
       type: "submit",
@@ -66420,7 +66428,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "delete"
-    }, "\xD7"), _typeof(RecievedData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    }, "\xD7"), _typeof(RecievedData[keyName]) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66433,35 +66441,38 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: ""
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      onChange: function onChange(changerIdentifier, value) {
+        _UpdatePostData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
+      },
       className: "kv-field-container kv-name kv-di-in ",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick(AddSubmitterIdentifier) {
+        SubmitAdd(identifier + "[" + "'content'" + "][" + i + "]");
+      },
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "create_folder"
-    }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "kv-mar-top-3"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      className: "kv-field-container kv-name kv-di-in",
-      type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][file]"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick(AddSubmitterIdentifier) {
+        SubmitAdd(identifier + "[" + "'content'" + "][" + i + "]");
+      },
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
-      value: "create_file"
-    }, "+"))))), _typeof(RecievedData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      value: "create_folder"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3")))))), _typeof(RecievedData[keyName]) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "][" + i + "]",
       Attr: Attr,
-      RecievedData: RecievedData[keyName].content,
+      RecievedData: RecievedData[keyName],
       UpdatePostData: function UpdatePostData(changerIdentifier, value) {
         _UpdatePostData(changerIdentifier, value);
       },
-      submit: function submit(submitterIdentifier) {
-        _submit(submitterIdentifier);
+      SubmitUpdate: function SubmitUpdate(UpdateSubmitterIdentifier) {
+        _SubmitUpdate(UpdateSubmitterIdentifier);
       }
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
@@ -66474,7 +66485,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: RecievedData[keyName].content
+      defaultValue: RecievedData[keyName]
     })))));
   }));
 };
