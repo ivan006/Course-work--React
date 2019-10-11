@@ -41,7 +41,7 @@ function terms(){
     0 => "number of coins",
     2 => "income for month",
     3 => "equivilant (at initial value)",
-    1 => "equivilant (at initial value) not rounded",
+    1 => "not rounded",
     4 => "time",
   );
   return $result;
@@ -81,7 +81,7 @@ function style($args){
         <?php echo $value[$terms[3]] ?>
       </td>
       <td class="bor-1 pad-3">
-        <?php echo $value[$terms[1]] ?>
+        ~ <?php echo round($value[$terms[1]],2) ?>
       </td>
       <td class="bor-1 pad-3">
         <?php echo $value[$terms[2]] ?>
