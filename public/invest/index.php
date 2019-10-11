@@ -1,27 +1,49 @@
 <?php
 
 function query(){
-  $years=2;
-  $investment=160;
+  $terms = terms();
+
+  $years=5;
+  $months = $years*12;
+  $timeInMonths = 0;
+
   $appreciationPerYear=0.07;
   $appreciationPerMonth=$appreciationPerYear/12;
-  $months = $years*12;
-  $income = 0;
+  $initialInvestment=160;
 
 
 
-  for ($timeInMonths=0; $timeInMonths < $months; $timeInMonths++) {
-    $timeInYears = $timeInMonths/12;
+  $result[$timeInMonths][$terms[4]]=0;
+  $result[$timeInMonths][$terms[1]]=$initialInvestment;
+  $result[$timeInMonths][$terms[3]]=round($result[$timeInMonths][$terms[1]]);
+  $result[$timeInMonths][$terms[2]]=round($result[$timeInMonths][$terms[1]])-$initialInvestment;
+  $result[$timeInMonths][$terms[0]]=$initialInvestment;
+  $investment = $result[0][$terms[0]];
 
-    $result[$timeInMonths]["investment_igc"]=$investment;
-    $result[$timeInMonths]["investment_ic"]=$investment;
-    $result[$timeInMonths]["appreciation_igc"]=$income;
-    $result[$timeInMonths]["appreciation_ic"]=$income;
-    $result[$timeInMonths]["time"]=round($timeInYears,2);
+  while ($timeInMonths < $months) {
+    $timeInMonths++;
 
-    $income = round($investment*($appreciationPerMonth),2);
-    $investment = $investment-$income;
+    $result[$timeInMonths][$terms[4]]=round($timeInMonths/12,2);
+    $result[$timeInMonths][$terms[1]]=$investment+($investment*($appreciationPerMonth));
+    $result[$timeInMonths][$terms[3]]=round($result[$timeInMonths][$terms[1]]);
+    $result[$timeInMonths][$terms[2]]=round($result[$timeInMonths][$terms[1]])-$initialInvestment;
+    $result[$timeInMonths][$terms[0]]=$result[$timeInMonths][$terms[3]]-$result[$timeInMonths][$terms[2]];
+    $investment = $result[$timeInMonths][$terms[0]];
+
+
   }
+  return $result;
+}
+
+
+function terms(){
+  $result = array(
+    0 => "number of coins",
+    2 => "income for month",
+    3 => "equivilant (at initial value)",
+    1 => "equivilant (at initial value) not rounded",
+    4 => "time",
+  );
   return $result;
 }
 
@@ -39,29 +61,34 @@ function style($args){
   </style>
   <table>
     <tr>
-      <th class="bor-1 pad-3">time</th>
-      <th class="bor-1 pad-3">appreciation in gold coins</th>
-      <th class="bor-1 pad-3">appreciation in cur.</th>
-      <th class="bor-1 pad-3">investment in gold coins</th>
-      <th class="bor-1 pad-3">investment in cur.</th>
+      <?php $terms = terms(); ?>
+      <th class="bor-1 pad-3"><?php echo $terms[4] ?></th>
+      <th class="bor-1 pad-3"><?php echo $terms[0] ?></th>
+      <th class="bor-1 pad-3"><?php echo $terms[3] ?></th>
+      <th class="bor-1 pad-3"><?php echo $terms[1] ?></th>
+      <th class="bor-1 pad-3"><?php echo $terms[2] ?></th>
+      <!-- <th class="bor-1 pad-3"><?php //echo $terms[1] ?></th> -->
     </tr>
   <?php foreach ($args as $key => $value): ?>
     <tr>
       <td class="bor-1 pad-3">
-        <?php echo $value["time"] ?>
+        <?php echo $value[$terms[4]] ?>
       </td>
       <td class="bor-1 pad-3">
-        <?php echo $value["appreciation_igc"] ?>
+        <?php echo $value[$terms[0]] ?>
       </td>
       <td class="bor-1 pad-3">
-        <?php echo $value["appreciation_ic"] ?>
+        <?php echo $value[$terms[3]] ?>
       </td>
       <td class="bor-1 pad-3">
-        <?php echo $value["investment_igc"] ?>
+        <?php echo $value[$terms[1]] ?>
       </td>
       <td class="bor-1 pad-3">
-        <?php echo $value["investment_ic"] ?>
+        <?php echo $value[$terms[2]] ?>
       </td>
+      <!-- <td class="bor-1 pad-3">
+        <?php //echo $value[$terms[1]] ?>
+      </td> -->
     </tr>
   <?php endforeach; ?>
 </table>
