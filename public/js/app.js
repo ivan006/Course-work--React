@@ -66173,8 +66173,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      RecievedData: [],
-      PostData: [],
+      ShowData: [],
+      ShowDataChanges: [],
       Attr: {
         0: 'name',
         1: 'type',
@@ -66205,30 +66205,33 @@ function (_Component) {
 
       this.setState({
         loading: "loading"
-      }); // axios.get('/api/show/Group_1')
-      // .then(response => {
-      //   var RecievedData = response.data.content;
-      //   this.setState({
-      //     RecievedData: response.data.content,
-      //     loading:"loaded"
-      //   });
-      //   this.CreatePostData(RecievedData);
-      //
-      // }).catch(error => {
-      //   console.log(error);
-      //   this.setState({loading:"failed"});
-      // });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
+        var ShowData = response.data.content;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Groups/Group_1.json').then(function (response) {
         _this2.setState({
-          RecievedData: response.data,
+          ShowData: response.data.content,
           loading: "loaded"
         });
+
+        _this2.CreateDataChanges(ShowData);
       })["catch"](function (error) {
+        console.log(error);
+
         _this2.setState({
           loading: "failed"
         });
-      }); // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+      }); // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+      // .then(response => {
+      //   this.setState({
+      //     ShowData: response,
+      //     loading:"loaded"
+      //   });
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
+      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
       // .then(response => {
       //   this.setState({loading:"loaded"});
       // })
@@ -66237,35 +66240,35 @@ function (_Component) {
       // });
     }
   }, {
-    key: "CreatePostData",
-    value: function CreatePostData(RecievedData) {
+    key: "CreateDataChanges",
+    value: function CreateDataChanges(ShowData) {
       var Attr = this.state.Attr;
       var result = {
-        content: this.CreatePostDataHelper(RecievedData, Attr)
+        content: this.CreateDataChangesHelper(ShowData, Attr)[0]
       };
       this.setState({
-        PostData: result
+        ShowDataChanges: result
       });
       return result;
     }
   }, {
-    key: "CreatePostDataHelper",
-    value: function CreatePostDataHelper(RecievedData, Attr) {
-      var result = Object.keys(RecievedData).map(function (keyName, i) {
+    key: "CreateDataChangesHelper",
+    value: function CreateDataChangesHelper(ShowData, Attr) {
+      var result = Object.keys(ShowData).map(function (keyName, i) {
         var result = {};
-        result[Attr[0]] = RecievedData[keyName].name;
-        result[Attr[1]] = RecievedData[keyName].type;
-        result[Attr[4]] = RecievedData[keyName].id; // result[Attr[3]] = "update/delete";
+        result[ShowData[keyName].name] = {};
+        result[ShowData[keyName].name][Attr[1]] = ShowData[keyName].type;
+        result[Attr[3]] = "update/delete"; // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
+        // result[ShowData[keyName].name][Attr[4]] = ShowData[keyName].id;
 
-        if (_typeof(RecievedData[keyName].content) === "object") {
-          result[Attr[8]] = RecievedData[keyName].entity_type;
-          result[Attr[6]] = {};
-          result[Attr[6]]["folder"] = null;
-          result[Attr[6]]["file"] = null; // result[Attr[3]] = "create_folder"+"/"+"create_file";
-
-          result[Attr[2]] = this.CreatePostDataHelper(RecievedData[keyName].content, Attr);
+        if (_typeof(ShowData[keyName].content) === "object") {
+          result[ShowData[keyName].name][Attr[2]] = this.CreateDataChangesHelper(ShowData[keyName].content, Attr)[0];
+          result[ShowData[keyName].name][Attr[6]] = {};
+          result[ShowData[keyName].name][Attr[6]]["folder"] = null;
+          result[ShowData[keyName].name][Attr[6]]["file"] = null;
+          result[ShowData[keyName].name][Attr[3]] = "create_folder" + "/" + "create_file"; // result[ShowData[keyName].name][Attr[8]] = ShowData[keyName].entity_type;
         } else {
-          result[Attr[2]] = RecievedData[keyName].content;
+          result[ShowData[keyName].name][Attr[2]] = ShowData[keyName].content;
         }
 
         return result;
@@ -66273,25 +66276,25 @@ function (_Component) {
       return result;
     }
   }, {
-    key: "UpdatePostData",
-    value: function UpdatePostData(changerIdentifier, value) {
-      var PostData = this.state.PostData;
+    key: "UpdateDataChanges",
+    value: function UpdateDataChanges(changerIdentifier, value) {
+      var ShowDataChanges = this.state.ShowDataChanges;
       eval(changerIdentifier + "=value");
       this.setState({
-        PostData: PostData
+        ShowDataChanges: ShowDataChanges
       });
-      var PostData = this.state.PostData;
-      var DataString = JSON.stringify(PostData, null, 2);
+      var ShowDataChanges = this.state.ShowDataChanges;
+      var DataString = JSON.stringify(ShowDataChanges, null, 2);
       alert(DataString);
     }
   }, {
-    key: "SendPostData",
-    value: function SendPostData(UpdateSubmitterIdentifier) {
+    key: "SendDataChanges",
+    value: function SendDataChanges(submitterIdentifier) {
       event.preventDefault();
-      var PostData = this.state.PostData;
-      eval(UpdateSubmitterIdentifier + "['action']='update'");
+      var ShowDataChanges = this.state.ShowDataChanges;
+      eval(submitterIdentifier + "['action']='update'");
       var Post = {
-        "Data": PostData,
+        "Data": ShowDataChanges,
         "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
         "form": "data"
       };
@@ -66307,26 +66310,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
-      // return (
-      //   <div>
-      //
-      //     {this.state.loading == "loading" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⌛
-      //       </div>
-      //       : this.state.loading == "failed" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⚠
-      //       </div>
-      //       :
-      //       <pre>{JSON.stringify(this.state.RecievedData, null, 2) }</pre>
-      //
-      //     }
-      //   </div>
-      //
-      // );
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: "100px",
@@ -66337,26 +66320,35 @@ function (_Component) {
           fontSize: "100px",
           textAlign: "center"
         }
-      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "hidden",
-        name: "_token",
-        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "kv-di-no",
-        type: "text",
-        name: "form",
-        defaultValue: "data"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        identifier: "PostData",
-        Attr: this.state.Attr,
-        RecievedData: this.state.RecievedData,
-        UpdatePostData: function UpdatePostData(changerIdentifier, value) {
-          return _this3.UpdatePostData(changerIdentifier, value);
-        },
-        SubmitUpdate: function SubmitUpdate(UpdateSubmitterIdentifier) {
-          return _this3.SendPostData(UpdateSubmitterIdentifier);
-        }
-      })));
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDataChanges, null, 2))); // return (
+      //   <div>
+      //     {this.state.loading == "loading" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⌛
+      //       </div>
+      //       : this.state.loading == "failed" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⚠
+      //       </div>
+      //       :
+      //       <form >
+      //
+      //         <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+      //         <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+      //         <br></br>
+      //         <h2>JS Data</h2>
+      //         <DataHelper
+      //           identifier="ShowDataChanges"
+      //           Attr={this.state.Attr}
+      //           ShowData={this.state.ShowData}
+      //           UpdateDataChanges={(changerIdentifier,value) => this.UpdateDataChanges(changerIdentifier,value)}
+      //           submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
+      //           />
+      //       </form>
+      //     }
+      //   </div>
+      //
+      // );
     }
   }]);
 
@@ -66369,20 +66361,20 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
-      RecievedData = _ref.RecievedData,
-      _UpdatePostData = _ref.UpdatePostData,
-      _SubmitUpdate = _ref.SubmitUpdate;
-  // var RecievedData = Object.values(RecievedData);
-  // alert(JSON.stringify(RecievedData));
-  // {JSON.stringify(RecievedData.content)}
+      ShowData = _ref.ShowData,
+      _UpdateDataChanges = _ref.UpdateDataChanges,
+      _submit = _ref.submit;
+  // var ShowData = Object.values(ShowData);
+  // alert(JSON.stringify(ShowData));
+  // {JSON.stringify(ShowData.content)}
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
-  }, Object.keys(RecievedData).map(function (keyName, i) {
+  }, Object.keys(ShowData).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: RecievedData[keyName]
+      key: ShowData[keyName].id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, _typeof(RecievedData[keyName]) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66395,29 +66387,29 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[0] + "]",
-      defaultValue: keyName
+      defaultValue: ShowData[keyName].name
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
-    }, keyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, ShowData[keyName].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[1] + "]",
-      defaultValue: RecievedData[keyName].type
+      defaultValue: ShowData[keyName].type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[4] + "]",
-      defaultValue: RecievedData[keyName].id
-    }), _typeof(RecievedData[keyName]) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      defaultValue: ShowData[keyName].id
+    }), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
-      defaultValue: RecievedData[keyName].entity_type
+      defaultValue: ShowData[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick(UpdateSubmitterIdentifier) {
-        _SubmitUpdate(identifier + "[" + "'content'" + "][" + i + "]");
+      onClick: function onClick(submitterIdentifier) {
+        _submit(identifier + "[" + "'content'" + "][" + i + "]");
       },
       className: "kv-little-button",
       type: "submit",
@@ -66428,7 +66420,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "delete"
-    }, "\xD7"), _typeof(RecievedData[keyName]) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    }, "\xD7"), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66441,38 +66433,35 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-popover kv-tog-on-bl kv-item-container  kv-di-in"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: ""
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      onChange: function onChange(changerIdentifier, value) {
-        _UpdatePostData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
-      },
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in ",
       type: "text",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick(AddSubmitterIdentifier) {
-        SubmitAdd(identifier + "[" + "'content'" + "][" + i + "]");
-      },
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
       value: "create_folder"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick(AddSubmitterIdentifier) {
-        SubmitAdd(identifier + "[" + "'content'" + "][" + i + "]");
-      },
+    }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "kv-mar-top-3"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "kv-field-container kv-name kv-di-in",
+      type: "text",
+      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][file]"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
-      value: "create_folder"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3")))))), _typeof(RecievedData[keyName]) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      value: "create_file"
+    }, "+"))))), _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "][" + i + "]",
       Attr: Attr,
-      RecievedData: RecievedData[keyName],
-      UpdatePostData: function UpdatePostData(changerIdentifier, value) {
-        _UpdatePostData(changerIdentifier, value);
+      ShowData: ShowData[keyName].content,
+      UpdateDataChanges: function UpdateDataChanges(changerIdentifier, value) {
+        _UpdateDataChanges(changerIdentifier, value);
       },
-      SubmitUpdate: function SubmitUpdate(UpdateSubmitterIdentifier) {
-        _SubmitUpdate(UpdateSubmitterIdentifier);
+      submit: function submit(submitterIdentifier) {
+        _submit(submitterIdentifier);
       }
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
@@ -66480,12 +66469,12 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       onChange: function onChange(changerIdentifier, value) {
-        _UpdatePostData(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
+        _UpdateDataChanges(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: RecievedData[keyName]
+      defaultValue: ShowData[keyName].content
     })))));
   }));
 };

@@ -143,7 +143,8 @@ class Entity extends Model
                 $var = $EntityTypeClass::create([
                 'name' => $value[$Attr[6]]['folder'],
                 'parent_id' => $value[$Attr[4]],
-                'parent_type' => $value[$Attr[8]],
+                // 'parent_type' => $value[$Attr[8]],
+                'parent_type' => $EntityTypeClass,
                 'type' => 'folder',
                 'content' => 'null'
                 ]);
