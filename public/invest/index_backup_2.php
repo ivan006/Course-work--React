@@ -30,8 +30,7 @@ function query($arg){
     $result[$timeXInMonths][$terms[5]] = $cummulativePercIncrease;
 
     $cummulativePercIncrease = $cummulativePercIncrease+$IncPerMonth;
-    // $increase = $currentInvetment*$IncPerMonth;
-    $increase = ($currentInvetment+($currentInvetment*$cummulativePercIncrease))-$initialInvestment;
+    $increase = $currentInvetment*$IncPerMonth;
     $currentInvetment = $result[$timeXInMonths][$terms[0]];
     $timeXInMonths++;
 
