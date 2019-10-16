@@ -31,14 +31,22 @@ export default class Data extends Component {
 
     this.setState({loading:"loading"});
 
-    axios.get('/api/show/Group_1')
+    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
     .then(response => {
-      var ShowData = response.data.content;
+      var ShowData = response.data;
       this.setState({
-        ShowData: response.data.content,
+        ShowData: response.data,
         loading:"loaded"
       });
       this.CreateDataChanges(ShowData);
+
+          axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+          .then(response => {
+            this.setState({loading:"loaded"});
+          })
+          .catch(error => {
+            this.setState({loading:"failed"});
+          });
 
     }).catch(error => {
       console.log(error);
@@ -58,7 +66,7 @@ export default class Data extends Component {
     // });
 
 
-    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowDataChanges)
     // .then(response => {
     //   this.setState({loading:"loaded"});
     // })
@@ -87,7 +95,7 @@ export default class Data extends Component {
 
       result[ShowData[keyName].name][Attr[1]] = ShowData[keyName].type;
 
-      result[Attr[3]] = "update/delete";
+      result[ShowData[keyName].name][Attr[3]] = "update/delete";
 
       // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
       // result[ShowData[keyName].name][Attr[4]] = ShowData[keyName].id;
@@ -95,8 +103,10 @@ export default class Data extends Component {
         result[ShowData[keyName].name][Attr[2]] = this.CreateDataChangesHelper( ShowData[keyName].content,Attr)[0];
 
         result[ShowData[keyName].name][Attr[6]]= {}
-        result[ShowData[keyName].name][Attr[6]]["folder"] = null;
-        result[ShowData[keyName].name][Attr[6]]["file"] = null;
+        // result[ShowData[keyName].name][Attr[6]]["folder"] = null;
+        // result[ShowData[keyName].name][Attr[6]]["file"] = null;
+        result[ShowData[keyName].name][Attr[6]]["folder"] = 0;
+        result[ShowData[keyName].name][Attr[6]]["file"] = 0;
         result[ShowData[keyName].name][Attr[3]] = "create_folder"+"/"+"create_file";
 
         // result[ShowData[keyName].name][Attr[8]] = ShowData[keyName].entity_type;
@@ -159,7 +169,7 @@ export default class Data extends Component {
             ⚠
           </div>
           :
-          <pre>{JSON.stringify(this.state.ShowDataChanges, null, 2) }</pre>
+          <pre>{JSON.stringify(this.state.ShowData, null, 2) }</pre>
 
         }
       </div>
@@ -186,7 +196,7 @@ export default class Data extends Component {
     //         <DataHelper
     //           identifier="ShowDataChanges"
     //           Attr={this.state.Attr}
-    //           ShowData={this.state.ShowData}
+    //           ShowData={this.state.ShowData.content}
     //           UpdateDataChanges={(changerIdentifier,value) => this.UpdateDataChanges(changerIdentifier,value)}
     //           submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
     //           />

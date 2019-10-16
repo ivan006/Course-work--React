@@ -66206,15 +66206,25 @@ function (_Component) {
       this.setState({
         loading: "loading"
       });
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/show/Group_1').then(function (response) {
-        var ShowData = response.data.content;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
+        var ShowData = response.data;
 
         _this2.setState({
-          ShowData: response.data.content,
+          ShowData: response.data,
           loading: "loaded"
         });
 
         _this2.CreateDataChanges(ShowData);
+
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json', _this2.state.ShowData).then(function (response) {
+          _this2.setState({
+            loading: "loaded"
+          });
+        })["catch"](function (error) {
+          _this2.setState({
+            loading: "failed"
+          });
+        });
       })["catch"](function (error) {
         console.log(error);
 
@@ -66231,7 +66241,7 @@ function (_Component) {
       // .catch(error => {
       //   this.setState({loading:"failed"});
       // });
-      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1.json',[1])
+      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowDataChanges)
       // .then(response => {
       //   this.setState({loading:"loaded"});
       // })
@@ -66258,14 +66268,16 @@ function (_Component) {
         var result = {};
         result[ShowData[keyName].name] = {};
         result[ShowData[keyName].name][Attr[1]] = ShowData[keyName].type;
-        result[Attr[3]] = "update/delete"; // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
+        result[ShowData[keyName].name][Attr[3]] = "update/delete"; // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
         // result[ShowData[keyName].name][Attr[4]] = ShowData[keyName].id;
 
         if (_typeof(ShowData[keyName].content) === "object") {
           result[ShowData[keyName].name][Attr[2]] = this.CreateDataChangesHelper(ShowData[keyName].content, Attr)[0];
-          result[ShowData[keyName].name][Attr[6]] = {};
-          result[ShowData[keyName].name][Attr[6]]["folder"] = null;
-          result[ShowData[keyName].name][Attr[6]]["file"] = null;
+          result[ShowData[keyName].name][Attr[6]] = {}; // result[ShowData[keyName].name][Attr[6]]["folder"] = null;
+          // result[ShowData[keyName].name][Attr[6]]["file"] = null;
+
+          result[ShowData[keyName].name][Attr[6]]["folder"] = 0;
+          result[ShowData[keyName].name][Attr[6]]["file"] = 0;
           result[ShowData[keyName].name][Attr[3]] = "create_folder" + "/" + "create_file"; // result[ShowData[keyName].name][Attr[8]] = ShowData[keyName].entity_type;
         } else {
           result[ShowData[keyName].name][Attr[2]] = ShowData[keyName].content;
@@ -66320,7 +66332,7 @@ function (_Component) {
           fontSize: "100px",
           textAlign: "center"
         }
-      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDataChanges, null, 2))); // return (
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowData, null, 2))); // return (
       //   <div>
       //     {this.state.loading == "loading" ?
       //       <div style={{fontSize: "100px", textAlign: "center"}}>
@@ -66340,7 +66352,7 @@ function (_Component) {
       //         <DataHelper
       //           identifier="ShowDataChanges"
       //           Attr={this.state.Attr}
-      //           ShowData={this.state.ShowData}
+      //           ShowData={this.state.ShowData.content}
       //           UpdateDataChanges={(changerIdentifier,value) => this.UpdateDataChanges(changerIdentifier,value)}
       //           submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
       //           />

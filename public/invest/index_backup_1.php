@@ -1,39 +1,82 @@
 <?php
 
-function query(){
-  $years=2;
-  $investment=160;
-  $appreciationPerYear=0.07;
-  $appreciationPerMonth=$appreciationPerYear/12;
+function query($arg){
+  $c = terms();
+
+  $years=$arg[0];
   $months = $years*12;
-  $income = 0;
+
+  $IncPerYear=0.07;
+  $percentGain=$IncPerYear/12;
+
+  $initialInvestment=$arg[1];
+
+  $r = 0;
+
+  $rate1 = 300;
+
+  $coins1 = $arg[1];
+  $currentInvetmentMoney = $arg[1]*$rate1;
+  $increase = 0;
+
+  // $cummulativePercIncrease = 0;
+
+  $lockeddivs1 = 0;
+
+  // $r is $row
+
+  // $x is $result
+
+  // $t is $terms
+
+  while ($r < $months) {
+
+    $x[$r][$c[0]] = round($r/12,2);
+    // $x[$r][$c[1]] = $coins1-$x[$r][$c[5]];
+    $x[$r][$c[1]] = $coins1;
+    $x[$r][$c[8]] = $rate1;
+    $x[$r][$c[2]] = $value1 = $coins1*$rate1;
+    $x[$r][$c[9]] = $rate2 = $rate1+($rate1*$percentGain);
+    $x[$r][$c[4]] = $value2 = $coins1*$rate2;
+    $x[$r][$c[3]] = $valuegain = $value2-$value1;
+    // echo $x[$r][$c[9]]."<br>";
+    $x[$r][$c[10]] = $lockeddivs1 = $valuegain+$lockeddivs1;
+    $x[$r][$c[5]] = $unlockeddivs = floor($lockeddivs1/$rate2);
+    $x[$r][$c[11]] = $lockeddivs2 = $lockeddivs1-($unlockeddivs*$rate2);
+    $x[$r][$c[6]] = $coins2 = $coins1-$unlockeddivs;
+    $x[$r][$c[7]] = $value2 = $coins2*$rate2;
 
 
+    // $increase = $currentInvetmentMoney*$percentGain;
+    // $increase = ($currentInvetmentMoney+($currentInvetmentMoney*$cummulativePercIncrease))-$initialInvestment;
 
-  for ($timeInMonths=0; $timeInMonths < $months; $timeInMonths++) {
-    $timeInYears = $timeInMonths/12;
-    $terms = terms();
-    $result[$timeInMonths][$terms[0]]=$investment;
-    $result[$timeInMonths][$terms[1]]=$investment;
-    $result[$timeInMonths][$terms[2]]=$income;
-    $result[$timeInMonths][$terms[3]]=$income;
-    $result[$timeInMonths][$terms[4]]=round($timeInYears,2);
+    // $currentInvetmentMoney = $x[$r][$c[1]];
+    $coins1 = $coins2;
+    $rate1 = $rate2;
+    $lockeddivs1 = $lockeddivs2;
+    $r++;
 
-    $income = round($investment*($appreciationPerMonth),2);
-    $investment = $investment-$income;
   }
-  return $result;
+  return $x;
 }
 
+
 function terms(){
-  $result = array(
-    0 => "investment_in_gold_coin",
-    1 => "investment_in_currency",
-    2 => "appreciation_in_gold_coin",
-    3 => "appreciation_in_currency",
-    4 => "time",
+  $r = array(
+    0 => "time",
+    1 => "coins at start",
+    8 => "predicted exchange rate at start",
+    2 => "value at start",
+    9 => "predicted exchange rate at end",
+    4 => "value after appreciation",
+    3 => "appreciation value",
+    10 => "locked dividents value at start",
+    5 => "unlcoked dividents coins",
+    11 => "locked dividents value at end",
+    6 => "coins at end",
+    7 => "value at end",
   );
-  return $result;
+  return $r;
 }
 
 
@@ -43,45 +86,71 @@ function style($args){
 
 
 
-
   <style media="screen">
-    .bor-1 {border: solid 1px black;}
-    .pad-3 {padding: 3px;}
+  .bor-1 {border: solid 1px black;}
+  .pad-3 {padding: 3px;}
   </style>
   <table>
     <tr>
-      <?php $terms = terms(); ?>
-      <th class="bor-1 pad-3"><?php echo $terms[4] ?></th>
-      <th class="bor-1 pad-3"><?php echo $terms[2] ?></th>
-      <th class="bor-1 pad-3"><?php echo $terms[3] ?></th>
-      <th class="bor-1 pad-3"><?php echo $terms[0] ?></th>
-      <th class="bor-1 pad-3"><?php echo $terms[1] ?></th>
+      <?php $c = terms(); ?>
+      <th class="bor-1 pad-3"><?php echo $c[0] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[1] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[8] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[2] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[9] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[4] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[3] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[5] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[6] ?></th>
+      <th class="bor-1 pad-3"><?php echo $c[7] ?></th>
+      <!-- <th class="bor-1 pad-3"><?php //echo $c[3] ?></th> -->
     </tr>
-  <?php foreach ($args as $key => $value): ?>
-    <tr>
-      <td class="bor-1 pad-3">
-        <?php echo $value[$terms[4]] ?>
-      </td>
-      <td class="bor-1 pad-3">
-        <?php echo $value[$terms[2]] ?>
-      </td>
-      <td class="bor-1 pad-3">
-        <?php echo $value[$terms[3]] ?>
-      </td>
-      <td class="bor-1 pad-3">
-        <?php echo $value[$terms[0]] ?>
-      </td>
-      <td class="bor-1 pad-3">
-        <?php echo $value[$terms[1]] ?>
-      </td>
+    <?php foreach ($args as $key => $value): ?>
+      <tr>
+        <td class="bor-1 pad-3">
+          <?php echo $value[$c[0]] ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[1]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[8]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[2]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[9]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[4]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[3]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[5]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[6]]) ?>
+        </td>
+        <td class="bor-1 pad-3">
+          <?php echo round($value[$c[7]]) ?>
+        </td>
+        <!-- <td class="bor-1 pad-3">
+        <?php //echo $value[$c[3]] ?>
+      </td> -->
     </tr>
   <?php endforeach; ?>
 </table>
-  <?php
-  $result = ob_get_contents();
-  ob_flush();
+<?php
+$r = ob_get_contents();
+ob_flush();
+
 };
-$query = query();
-$result = style($query);
-echo $result;
+
+
+$query = query(array(1,160));
+$r = style($query);
+echo $r;
 ?>
