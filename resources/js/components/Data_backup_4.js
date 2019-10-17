@@ -7,8 +7,7 @@ import axios from 'axios';
 export default class Data extends Component {
   state = {
     ShowData: [],
-    ShowDecomDataChanges: [],
-    ShowComprDataChanges: [],
+    ShowDataChanges: [],
     Attr: {
       0: 'name',
       1: 'type',
@@ -39,7 +38,7 @@ export default class Data extends Component {
         ShowData: response.data,
         loading:"loaded"
       });
-      this.CreateDecomDataChanges(ShowData);
+      this.CreateDataChanges(ShowData);
 
           axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
           .then(response => {
@@ -67,7 +66,7 @@ export default class Data extends Component {
     // });
 
 
-    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowDecomDataChanges)
+    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowDataChanges)
     // .then(response => {
     //   this.setState({loading:"loaded"});
     // })
@@ -79,17 +78,17 @@ export default class Data extends Component {
 
   }
 
-  CreateDecomDataChanges(ShowData)  {
+  CreateDataChanges(ShowData)  {
     var Attr = this.state.Attr;
-    var result = {content: this.CreateDecomDataChangesHelper(ShowData,Attr)[0]};
+    var result = {content: this.CreateDataChangesHelper(ShowData,Attr)[0]};
     this.setState({
-      ShowDecomDataChanges: result
+      ShowDataChanges: result
     });
 
     return result;
   }
 
-  CreateDecomDataChangesHelper(ShowData, Attr)  {
+  CreateDataChangesHelper(ShowData, Attr)  {
     var result = Object.keys(ShowData).map(function(keyName, i) {
       var result = {}
       result[ShowData[keyName].name] = {};
@@ -101,7 +100,7 @@ export default class Data extends Component {
       // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
       // result[ShowData[keyName].name][Attr[4]] = ShowData[keyName].id;
       if (typeof ShowData[keyName].content === "object"){
-        result[ShowData[keyName].name][Attr[2]] = this.CreateDecomDataChangesHelper( ShowData[keyName].content,Attr)[0];
+        result[ShowData[keyName].name][Attr[2]] = this.CreateDataChangesHelper( ShowData[keyName].content,Attr)[0];
 
         result[ShowData[keyName].name][Attr[6]]= {}
         // result[ShowData[keyName].name][Attr[6]]["folder"] = null;
@@ -119,54 +118,31 @@ export default class Data extends Component {
     return result;
   }
 
-  UpdateDecomDataChanges (changerIdentifier,value){
+  UpdateDataChanges (changerIdentifier,value){
 
-    var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    var ShowDataChanges = this.state.ShowDataChanges;
     eval(changerIdentifier+"=value");
     this.setState({
-      ShowDecomDataChanges: ShowDecomDataChanges
+      ShowDataChanges: ShowDataChanges
     });
 
-    var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-    var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
+    var ShowDataChanges = this.state.ShowDataChanges;
+    var DataString = JSON.stringify(ShowDataChanges, null, 2);
     alert(DataString);
 
   }
 
-  CreateComprDataChanges(){
-    var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-
-    var ShowComprDataChangesContent = {
-      "Data": this.state.ShowComprDataChanges,
-      "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
-      "form": "data",
-    }
-    var UrlSuffix = "";
-    this.setState({
-      ShowComprDataChanges: {
-        "Content": ShowComprDataChangesContent,
-        "UrlSuffix": UrlSuffix
-      }
-    });
-  }
-  CreateComprDataChangesHelper(){
-    
-  }
-
   SendDataChanges(submitterIdentifier){
     event.preventDefault();
-
-    var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    var ShowDataChanges = this.state.ShowDataChanges;
     eval(submitterIdentifier+"['action']='update'");
-    this.setState({
-      ShowDecomDataChanges: ShowDecomDataChanges
-    });
+    var Post = {
+      "Data":ShowDataChanges,
+      "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+      "form": "data",
 
-
-
-    var Content = this.state.ShowComprDataChanges.Content;
-    var UrlSuffix = this.state.ShowComprDataChanges.UrlSuffix;
-    axios.post('/store/Group_1'+UrlSuffix, Content)
+    }
+    axios.post('/store/Group_1', Post)
     .then(function (response) {
       console.log(response);
     })
@@ -218,10 +194,10 @@ export default class Data extends Component {
     //         <br></br>
     //         <h2>JS Data</h2>
     //         <DataHelper
-    //           identifier="ShowDecomDataChanges"
+    //           identifier="ShowDataChanges"
     //           Attr={this.state.Attr}
     //           ShowData={this.state.ShowData.content}
-    //           UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
+    //           UpdateDataChanges={(changerIdentifier,value) => this.UpdateDataChanges(changerIdentifier,value)}
     //           submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
     //           />
     //       </form>
@@ -239,7 +215,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}) => {
+const DataHelper = ({ identifier,Attr, ShowData, UpdateDataChanges, submit}) => {
 
   // var ShowData = Object.values(ShowData);
   // alert(JSON.stringify(ShowData));
@@ -310,7 +286,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
               identifier= {identifier+"["+"'content'"+"]["+i+"]"}
               Attr= {Attr}
               ShowData={ShowData[keyName].content}
-              UpdateDecomDataChanges={(changerIdentifier,value) => {UpdateDecomDataChanges(changerIdentifier,value)}}
+              UpdateDataChanges={(changerIdentifier,value) => {UpdateDataChanges(changerIdentifier,value)}}
               submit={(submitterIdentifier) => {submit(submitterIdentifier)}}
               />
 
@@ -318,7 +294,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(changerIdentifier,value) => {UpdateDecomDataChanges(identifier+"["+"'content'"+"]["+i+"]['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={ShowData[keyName].content}></textarea>
+                  <textarea onChange={(changerIdentifier,value) => {UpdateDataChanges(identifier+"["+"'content'"+"]["+i+"]['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[2]+"]"} rows="8" defaultValue={ShowData[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
