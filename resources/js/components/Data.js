@@ -41,19 +41,30 @@ export default class Data extends Component {
       });
       this.CreateDecomDataChanges(ShowData);
 
-          axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
-          .then(response => {
-            this.setState({loading:"loaded"});
-          })
-          .catch(error => {
-            this.setState({loading:"failed"});
-          });
+      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+      // .then(response => {
+      //   this.setState({loading:"loaded"});
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
 
     }).catch(error => {
       console.log(error);
       this.setState({loading:"failed"});
     });
 
+    // axios.get('/api/show/Group_1')
+    // .then(response => {
+    //   this.setState({
+    //     ShowData: response,
+    //     loading:"loaded"
+    //   });
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    //   this.setState({loading:"failed"});
+    // });
 
     // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
     // .then(response => {
@@ -150,7 +161,7 @@ export default class Data extends Component {
     });
   }
   CreateComprDataChangesHelper(){
-    
+
   }
 
   SendDataChanges(submitterIdentifier){
@@ -193,7 +204,7 @@ export default class Data extends Component {
             ⚠
           </div>
           :
-          <pre>{JSON.stringify(this.state.ShowData, null, 2) }</pre>
+          <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
 
         }
       </div>
@@ -227,8 +238,9 @@ export default class Data extends Component {
     //       </form>
     //     }
     //   </div>
-    //
     // );
+
+
   }
 }
 
@@ -249,7 +261,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
 
   return (
     <ul className="kv-list-parent">
-      {Object.keys(ShowData).map((keyName, i) => (
+      {typeof ShowData !== 'undefined' && Object.keys(ShowData).map((keyName, i) => (
 
         <li key={ShowData[keyName].id}>
 
@@ -264,8 +276,8 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[0]+"]"} defaultValue={ShowData[keyName].name} ></input>
-              <div className="kv-name-unedit kv-name kv-tog-off-ib ">{ShowData[keyName].name}</div>
+              <input className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]["+i+"]["+Attr[0]+"]"} defaultValue={keyName} ></input>
+              <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
 
