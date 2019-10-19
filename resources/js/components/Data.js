@@ -92,7 +92,7 @@ export default class Data extends Component {
 
   CreateDecomDataChanges(ShowData)  {
     var Attr = this.state.Attr;
-    var result = {content: this.CreateDecomDataChangesHelper(ShowData,Attr)[0]};
+    var result = {content: this.CreateDecomDataChangesHelper(ShowData.content,Attr)[0]};
     this.setState({
       ShowDecomDataChanges: result
     });
