@@ -66263,7 +66263,7 @@ function (_Component) {
     value: function CreateDecomDataChanges(ShowData) {
       var Attr = this.state.Attr;
       var result = {
-        content: this.CreateDecomDataChangesHelper(ShowData, Attr)[0]
+        content: this.CreateDecomDataChangesHelper(ShowData.content, Attr)[0]
       };
       this.setState({
         ShowDecomDataChanges: result
@@ -66274,24 +66274,26 @@ function (_Component) {
     key: "CreateDecomDataChangesHelper",
     value: function CreateDecomDataChangesHelper(ShowData, Attr) {
       var result = Object.keys(ShowData).map(function (keyName, i) {
+        // alert(keyName);
         var result = {};
-        result[ShowData[keyName].name] = {};
-        result[ShowData[keyName].name][Attr[1]] = ShowData[keyName].type;
-        result[ShowData[keyName].name][Attr[3]] = "update/delete"; // result[ShowData[keyName].name][Attr[0]] = ShowData[keyName].name;
-        // result[ShowData[keyName].name][Attr[4]] = ShowData[keyName].id;
+        result[keyName] = {}; // result[keyName][Attr[3]] = "update/delete";
+        // result[keyName][Attr[0]] = keyName;
+        // result[keyName][Attr[4]] = ShowData[keyName].id;
 
         if (_typeof(ShowData[keyName].content) === "object") {
-          result[ShowData[keyName].name][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr)[0];
-          result[ShowData[keyName].name][Attr[6]] = {}; // result[ShowData[keyName].name][Attr[6]]["folder"] = null;
-          // result[ShowData[keyName].name][Attr[6]]["file"] = null;
-
-          result[ShowData[keyName].name][Attr[6]]["folder"] = 0;
-          result[ShowData[keyName].name][Attr[6]]["file"] = 0;
-          result[ShowData[keyName].name][Attr[3]] = "create_folder" + "/" + "create_file"; // result[ShowData[keyName].name][Attr[8]] = ShowData[keyName].entity_type;
+          result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr)[0];
+          result[keyName][Attr[6]] = {}; // result[keyName][Attr[6]]["folder"] = null;
+          // result[keyName][Attr[6]]["file"] = null;
+          // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
+          // result[keyName][Attr[6]]["folder"] = 0;
+          // result[keyName][Attr[6]]["file"] = 0;
+          // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
         } else {
-          result[ShowData[keyName].name][Attr[2]] = ShowData[keyName].content;
+          result[keyName][Attr[2]] = ShowData[keyName].content;
         }
 
+        result[keyName][Attr[1]] = ShowData[keyName].type;
+        result[keyName][Attr[0]] = keyName;
         return result;
       }, this);
       return result;
@@ -66299,14 +66301,14 @@ function (_Component) {
   }, {
     key: "UpdateDecomDataChanges",
     value: function UpdateDecomDataChanges(changerIdentifier, value) {
+      // alert(changerIdentifier);
       var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
       eval(changerIdentifier + "=value");
       this.setState({
         ShowDecomDataChanges: ShowDecomDataChanges
       });
       var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-      var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
-      alert(DataString);
+      var DataString = JSON.stringify(ShowDecomDataChanges, null, 2); // alert(DataString);
     }
   }, {
     key: "CreateComprDataChanges",
@@ -66351,6 +66353,26 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      // return (
+      //   <div>
+      //
+      //     {this.state.loading == "loading" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⌛
+      //       </div>
+      //       : this.state.loading == "failed" ?
+      //       <div style={{fontSize: "100px", textAlign: "center"}}>
+      //         ⚠
+      //       </div>
+      //       :
+      //       <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
+      //
+      //     }
+      //   </div>
+      //
+      // );
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: "100px",
@@ -66361,34 +66383,26 @@ function (_Component) {
           fontSize: "100px",
           textAlign: "center"
         }
-      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2))); // return (
-      //   <div>
-      //     {this.state.loading == "loading" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⌛
-      //       </div>
-      //       : this.state.loading == "failed" ?
-      //       <div style={{fontSize: "100px", textAlign: "center"}}>
-      //         ⚠
-      //       </div>
-      //       :
-      //       <form >
-      //
-      //         <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-      //         <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-      //         <br></br>
-      //         <h2>JS Data</h2>
-      //         <DataHelper
-      //           identifier="ShowDecomDataChanges"
-      //           Attr={this.state.Attr}
-      //           ShowData={this.state.ShowData.content}
-      //           UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
-      //           submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
-      //           />
-      //       </form>
-      //     }
-      //   </div>
-      // );
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        name: "_token",
+        defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "kv-di-no",
+        type: "text",
+        name: "form",
+        defaultValue: "data"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+        identifier: "ShowDecomDataChanges",
+        Attr: this.state.Attr,
+        ShowData: this.state.ShowData.content,
+        UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
+          return _this3.UpdateDecomDataChanges(changerIdentifier, value);
+        },
+        submit: function submit(submitterIdentifier) {
+          return _this3.SendDataChanges(submitterIdentifier);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2))));
     }
   }]);
 
@@ -66424,9 +66438,12 @@ var DataHelper = function DataHelper(_ref) {
       name: "checkbox",
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      onChange: function onChange(changerIdentifier, value) {
+        UpdateNameDecomDataChanges(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[0] + "']", event.target.value);
+      },
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[0] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[0] + "]",
       defaultValue: keyName
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-name-unedit kv-name kv-tog-off-ib "
@@ -66435,30 +66452,30 @@ var DataHelper = function DataHelper(_ref) {
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[1] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[1] + "]",
       defaultValue: ShowData[keyName].type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[4] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[4] + "]",
       defaultValue: ShowData[keyName].id
     }), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[8] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[8] + "]",
       defaultValue: ShowData[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(submitterIdentifier) {
-        _submit(identifier + "[" + "'content'" + "][" + i + "]");
+        _submit(identifier + "[" + "'content'" + "]['" + keyName + "']");
       },
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "kv-little-button",
       type: "submit",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "delete"
     }, "\xD7"), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
@@ -66476,25 +66493,25 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in ",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][folder]"
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[6] + "][folder]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "create_folder"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-field-container kv-name kv-di-in",
       type: "text",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[6] + "][file]"
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[6] + "][file]"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       type: "submit",
       className: "kv-little-button",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[3] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "create_file"
     }, "+"))))), _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-      identifier: identifier + "[" + "'content'" + "][" + i + "]",
+      identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
       ShowData: ShowData[keyName].content,
       UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
@@ -66509,10 +66526,10 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       onChange: function onChange(changerIdentifier, value) {
-        _UpdateDecomDataChanges(identifier + "[" + "'content'" + "][" + i + "]['" + Attr[2] + "']", event.target.value);
+        _UpdateDecomDataChanges(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
-      name: identifier + "[" + "'content'" + "][" + i + "][" + Attr[2] + "]",
+      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[2] + "]",
       rows: "8",
       defaultValue: ShowData[keyName].content
     })))));

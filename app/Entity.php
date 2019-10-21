@@ -422,5 +422,147 @@ class Entity extends Model
     return $result;
   }
 
+  // ------------
+  // not to be used start
+  // ------------
+  public static function StoreOldHigherMultiForEdit($arguments, $request) {
+    // dd($request);
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+    $ShowID = PostM::ShowID($arguments);
+    $ShowLocation = PostM::ShowLocation($ShowID);
+    if (!empty($request->get('All_Content'))) {
+      // dd(123);
+      if (null !== $request->file('zip_file')) {
+        $SubLocation = SmartDataItemM::ShowBaseLocation()."/";
+        FileM::CreateFromZip($arguments, $request, $SubLocation );
+      }
+    }
+    elseif (!empty($request->get('post_files_create_from_zip'))) {
+      // dd(123);
+      if (null !== $request->file('zip_file')) {
+        $SubLocation = null;
+        FileM::CreateFromZip($arguments, $request, $SubLocation );
+      }
+    }
+    elseif (!empty($request->get('SmartDataItemShowFieldValues_Form'))) {
+      // if (!empty($request->get($SmartDataItemM_ShowActions['RichDataStore'])) ) {
+      //
+      //
+      //   function StoreRichData($ShowLocation, $request){
+      //
+      //     $filename =  "rich.html";
+      //     $file =  $ShowLocation."/".$filename;
+      //     // echo file_get_contents($file);
+      //
+      //     $contents =  $request->get('contents');
+      //     file_put_contents($file,$contents);
+      //
+      //   }
+      //
+      //   StoreRichData($ShowLocation, $request);
+      // }
+      SmartDataItemM::StoreOldMultiForEdit($ShowLocation, $request, $ShowID);
+    }
+  }
+
+  public static function StoreOldMultiForEdit($ShowLocation, $request, $ShowID)
+  {
+    function StoreOldMultiForEditHelperDestroy($ShowLocation,$ShowDataID, $SelectedSmartDataItem, $SmartDataItemShowFieldValues) {
+      // dd($SmartDataItemShowFieldValues);
+      foreach ($SmartDataItemShowFieldValues as $key => $value) {
+        if (1==1) {
+          // code...
+          // dd($SmartDataItemShowFieldValues);
+          // dd($SmartDataItemShowFieldValues);
+          // dd($SmartDataItemShowFieldValues);
+          // dd($SmartDataItemShowFieldValues);
+          $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
+          $String_SmartDataName = 'SmartDataName';
+          $String_SmartDataLocationParent = 'SmartDataLocationParent';
+          $String_SmartDataContent = 'SmartDataContent';
+          $String_SmartDataLocation = 'SmartDataLocation';
+        }
+        if ($key !== $String_SelectedSmartDataItem && $key !== $String_SmartDataName && $key !== $String_SmartDataLocationParent && $key !== $String_SmartDataContent && $key !== $String_SmartDataLocation) {
+          $key = SmartDataItemM::g_base64_decode($key);
+          if (!array_key_exists($String_SmartDataContent, $value)) {
+            // dd(1);
+            if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
+              $SelectedSmartDataItemInheritance = 1;
+            } else {
+              $SelectedSmartDataItemInheritance = 0;
+            }
+            // dd($key);
+            StoreOldMultiForEditHelperDestroy($ShowLocation,$ShowDataID."/".$key, $SelectedSmartDataItemInheritance, $value);
+            if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
+              rmdir($ShowLocation.$ShowDataID."/".$key);
+            }
+          } else {
+            if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
+              // dd($value['SelectedSmartDataItem']);
+              unlink($ShowLocation.$ShowDataID."/".$key);
+            }
+          }
+        }
+      }
+    }
+    function StoreOldMultiForEditHelperStore($ShowLocation,$SelectedSmartDataItem,$ShowDataID,$SmartDataItemShowFieldValues) {
+      // dd($SmartDataItemShowFieldValues);
+      foreach($SmartDataItemShowFieldValues as $key => $value) {
+        $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
+        $String_SmartDataName = 'SmartDataName';
+        $String_SmartDataLocationParent = 'SmartDataLocationParent';
+        $String_SmartDataContent = 'SmartDataContent';
+        $String_SmartDataLocation = 'SmartDataLocation';
+        if (
+        $key !== $String_SelectedSmartDataItem
+        && $key !== $String_SmartDataName
+        && $key !== $String_SmartDataLocationParent
+        && $key !== $String_SmartDataContent
+        && $key !== $String_SmartDataLocation
+        )  {
+          $key = SmartDataItemM::g_base64_decode($key);
+          if (!array_key_exists($String_SmartDataContent, $value)){
+            if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
+              $SmartDataName = $value[$String_SmartDataName];
+              $SmartDataArrayLocation = $ShowLocation . $ShowDataID."/".$SmartDataName;
+              $SelectedSmartDataItemInheritance = 1;
+              mkdir($SmartDataArrayLocation);
+            } else {
+              $SmartDataName = $key;
+              $SelectedSmartDataItemInheritance = 0;
+            }
+            StoreOldMultiForEditHelperStore($ShowLocation,$SelectedSmartDataItemInheritance, $ShowDataID."/".$SmartDataName, $value);
+          } else {
+            $SmartDataName = $value[$String_SmartDataName];
+            $content = $value;
+            $SmartDataArrayLocation = $ShowLocation.$ShowDataID."/".$SmartDataName;
+            if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
+              file_put_contents($SmartDataArrayLocation,$value[$String_SmartDataContent]);
+            }
+          }
+        }
+      }
+    }
+    // dd($request);
+    $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+    $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions[$String_SelectedSmartDataItem]));
+    // $SmartDataBaseLocation = SmartDataItemM::ShowBaseLocation();
+    // $ShowDataID = $SmartDataBaseLocation.$SmartDataRelativeLocation;
+    $ShowDataID = $SmartDataRelativeLocation;
+    $String_SmartDataItemShowFieldValues = 'SmartDataItemShowFieldValues';
+    $SmartDataItemShowFieldValues = $request->get($String_SmartDataItemShowFieldValues);
+    $ShowDataLocation = $ShowLocation."/".$ShowDataID;
+    StoreOldMultiForEditHelperDestroy($ShowLocation,null, 0, $SmartDataItemShowFieldValues);
+    $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+    StoreOldMultiForEditHelperStore($ShowLocation, null,null,$SmartDataItemShowFieldValues);
+  }
+
+  // ------------
+  // not to be used end
+  // ------------
+}
+
 
 }
