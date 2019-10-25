@@ -154,11 +154,11 @@ export default class Data extends Component {
       "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
       "form": "data",
     }
-    var UrlSuffix = "";
+    // var UrlSuffix = "";
     this.setState({
       ShowComprDataChanges: {
         "Content": ShowComprDataChangesContent,
-        "UrlSuffix": UrlSuffix
+        // "UrlSuffix": UrlSuffix
       }
     });
   }
@@ -167,10 +167,22 @@ export default class Data extends Component {
   }
 
   SendDataChanges(submitterIdentifier){
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.replace(new RegExp(search, 'g'), replacement);
+    };
     event.preventDefault();
 
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-    eval(submitterIdentifier+"['action']='update'");
+    // eval(submitterIdentifier+"['action']='update'");
+    var ShowComprDataChanges = eval(submitterIdentifier);
+    var UrlSuffix = submitterIdentifier;
+    UrlSuffix = UrlSuffix.replaceAll("'\\]\\['", "/");
+    UrlSuffix = UrlSuffix.replace("ShowDecomDataChanges['", "");
+    UrlSuffix = UrlSuffix.replace("']", "");
+    UrlSuffix = "/"+UrlSuffix;
+
+    alert(JSON.stringify(UrlSuffix, null, 2));
     this.setState({
       ShowDecomDataChanges: ShowDecomDataChanges
     });
