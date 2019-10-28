@@ -66197,11 +66197,11 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.GetAllData();
+      this.CreateDecomDataChanges();
     }
   }, {
-    key: "GetAllData",
-    value: function GetAllData() {
+    key: "CreateDecomDataChanges",
+    value: function CreateDecomDataChanges() {
       var _this2 = this;
 
       String.prototype.replaceAll = function (search, replacement) {
@@ -66217,13 +66217,16 @@ function (_Component) {
       });
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
         var ShowData = response.data;
+        var Attr = _this2.state.Attr;
+        var result = {
+          content: _this2.CreateDecomDataChangesHelper(ShowData.content, Attr)[0]
+        };
 
         _this2.setState({
-          ShowData: response.data,
+          ShowDecomDataChanges: result,
           loading: "loaded"
-        });
-
-        _this2.CreateDecomDataChanges(ShowData); // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+        }); // this.CreateDecomDataChanges(ShowData);
+        // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
         // .then(response => {
         //   this.setState({loading:"loaded"});
         // })
@@ -66296,19 +66299,12 @@ function (_Component) {
       // .catch(error => {
       //   this.setState({loading:"failed"});
       // });
-    }
-  }, {
-    key: "CreateDecomDataChanges",
-    value: function CreateDecomDataChanges(ShowData) {
-      var Attr = this.state.Attr;
-      var result = {
-        content: this.CreateDecomDataChangesHelper(ShowData.content, Attr)[0]
-      };
-      this.setState({
-        ShowDecomDataChanges: result
-      });
-      return result;
-    }
+    } // CreateDecomDataChanges(ShowData)  {
+    //
+    //
+    //   return result;
+    // }
+
   }, {
     key: "CreateDecomDataChangesHelper",
     value: function CreateDecomDataChangesHelper(ShowData, Attr) {
@@ -66373,8 +66369,8 @@ function (_Component) {
       // var str = 'a_b_c';
       // str = str.replace(/_([^_]*)$/,'$1'); //a_bc/a_bc
       // changerIdentifier = str.replace(new RegExp(list[i] + '$'), 'finish');
-
-      alert(JSON.stringify(branch, null, 2)); // // alert(changerIdentifier);
+      // alert(JSON.stringify(branch, null, 2));
+      // // alert(changerIdentifier);
       // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
       // eval(changerIdentifier+"=value");
       // this.setState({
@@ -66482,7 +66478,7 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
         identifier: "ShowDecomDataChanges",
         Attr: this.state.Attr,
-        ShowData: this.state.ShowData.content,
+        ShowDecomDataChanges: this.state.ShowDecomDataChanges.content,
         UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
           return _this3.UpdateDecomDataChanges(changerIdentifier, value);
         },
@@ -66505,21 +66501,21 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
-      ShowData = _ref.ShowData,
+      ShowDecomDataChanges = _ref.ShowDecomDataChanges,
       _UpdateDecomDataChanges = _ref.UpdateDecomDataChanges,
       _UpdateNameDecomDataChanges = _ref.UpdateNameDecomDataChanges,
       _submit = _ref.submit;
-  // var ShowData = Object.values(ShowData);
-  // alert(JSON.stringify(ShowData));
-  // {JSON.stringify(ShowData.content)}
+  // var ShowDecomDataChanges = Object.values(ShowDecomDataChanges);
+  // alert(JSON.stringify(ShowDecomDataChanges));
+  // {JSON.stringify(ShowDecomDataChanges.content)}
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
-  }, typeof ShowData !== 'undefined' && Object.keys(ShowData).map(function (keyName, i) {
+  }, typeof ShowDecomDataChanges !== 'undefined' && Object.keys(ShowDecomDataChanges).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: identifier + "[" + "'content'" + "]['" + keyName + "']"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, _typeof(ShowDecomDataChanges[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66529,7 +66525,7 @@ var DataHelper = function DataHelper(_ref) {
       name: "checkbox",
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      onChange: function onChange(changerIdentifier, value) {
+      onBlur: function onBlur(changerIdentifier, value) {
         _UpdateNameDecomDataChanges(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
       },
       className: "kv-field-container kv-name kv-tog-on-ib",
@@ -66544,12 +66540,12 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[1] + "]",
-      defaultValue: ShowData[keyName].type
-    }), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      defaultValue: ShowDecomDataChanges[keyName].type
+    }), _typeof(ShowDecomDataChanges[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[8] + "]",
-      defaultValue: ShowData[keyName].entity_type
+      defaultValue: ShowDecomDataChanges[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(submitterIdentifier) {
         _submit(identifier + "[" + "'content'" + "]['" + keyName + "']");
@@ -66563,7 +66559,7 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "delete"
-    }, "\xD7"), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    }, "\xD7"), _typeof(ShowDecomDataChanges[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66596,10 +66592,10 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-little-button",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[3] + "]",
       value: "create_file"
-    }, "+"))))), _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+    }, "+"))))), _typeof(ShowDecomDataChanges[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
-      ShowData: ShowData[keyName].content,
+      ShowDecomDataChanges: ShowDecomDataChanges[keyName].content,
       UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
         _UpdateDecomDataChanges(changerIdentifier, value);
       },
@@ -66620,7 +66616,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-field-container kv-content-container kv-di-in",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[2] + "]",
       rows: "8",
-      defaultValue: ShowData[keyName].content
+      defaultValue: ShowDecomDataChanges[keyName].content
     })))));
   }));
 };
