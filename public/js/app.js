@@ -66204,6 +66204,14 @@ function (_Component) {
     value: function GetAllData() {
       var _this2 = this;
 
+      String.prototype.replaceAll = function (search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+      }; // --------
+      // online start
+      // --------
+
+
       this.setState({
         loading: "loading"
       });
@@ -66229,7 +66237,38 @@ function (_Component) {
         _this2.setState({
           loading: "failed"
         });
-      }); // axios.get('/api/show/Group_1')
+      }); // --------
+      // online end
+      // --------
+      // --------
+      // offline start
+      // --------
+      // var ShowData = {
+      //   "content": {
+      //     "_data": {
+      //       "content": {
+      //         "code": {
+      //           "content": {
+      //             "w3css": {
+      //               "content": "123",
+      //               "type": "file"
+      //             }
+      //           },
+      //           "type": "folder"
+      //         }
+      //       },
+      //       "type": "folder"
+      //     }
+      //   }
+      // };
+      // this.setState({
+      //   ShowData: ShowData
+      // });
+      // this.CreateDecomDataChanges(ShowData);
+      // --------
+      // offline end
+      // --------
+      // axios.get('/api/show/Group_1')
       // .then(response => {
       //   this.setState({
       //     ShowData: response,
@@ -66311,34 +66350,44 @@ function (_Component) {
       var DataString = JSON.stringify(ShowDecomDataChanges, null, 2); // alert(DataString);
     }
   }, {
-    key: "CreateComprDataChanges",
-    value: function CreateComprDataChanges() {
+    key: "UpdateNameDecomDataChanges",
+    value: function UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value) {
+      var changerIdentifier = changerIdentifierParent + changerIdentifierChild;
       var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-      var ShowComprDataChangesContent = {
-        "Data": this.state.ShowComprDataChanges,
-        "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
-        "form": "data"
-      }; // var UrlSuffix = "";
+      var SubjectSelector = changerIdentifier;
+      SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
+      SubjectSelector = SubjectSelector.replaceAll("\\']", ""); // SubjectSelector = SubjectSelector.replace("ShowDecomDataChanges['", "");
+      // SubjectSelector = SubjectSelector.replace("']", "");
+      // up till here
+      // eval(changerIdentifier+"['name']=value");
 
+      var branch = eval(changerIdentifier);
+      eval("delete " + SubjectSelector); // eval(changerIdentifierParent+".value=branch");
+      // eval(changerIdentifierParent+"."+value+"=branch");
+      // eval(changerIdentifierParent['value']"=branch");
+
+      eval(changerIdentifierParent + "['" + value + "']=branch");
       this.setState({
-        ShowComprDataChanges: {
-          "Content": ShowComprDataChangesContent // "UrlSuffix": UrlSuffix
+        ShowDecomDataChanges: ShowDecomDataChanges
+      }); // changerIdentifier['name'] = value;
+      // var str = 'a_b_c';
+      // str = str.replace(/_([^_]*)$/,'$1'); //a_bc/a_bc
+      // changerIdentifier = str.replace(new RegExp(list[i] + '$'), 'finish');
 
-        }
-      });
+      alert(JSON.stringify(branch, null, 2)); // // alert(changerIdentifier);
+      // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+      // eval(changerIdentifier+"=value");
+      // this.setState({
+      //   ShowDecomDataChanges: ShowDecomDataChanges
+      // });
+      //
+      // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+      // var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
+      // // alert(DataString);
     }
   }, {
-    key: "CreateComprDataChangesHelper",
-    value: function CreateComprDataChangesHelper() {}
-  }, {
-    key: "SendDataChanges",
-    value: function SendDataChanges(submitterIdentifier) {
-      String.prototype.replaceAll = function (search, replacement) {
-        var target = this;
-        return target.replace(new RegExp(search, 'g'), replacement);
-      };
-
-      event.preventDefault();
+    key: "CreateComprDataChanges",
+    value: function CreateComprDataChanges(submitterIdentifier) {
       var ShowDecomDataChanges = this.state.ShowDecomDataChanges; // eval(submitterIdentifier+"['action']='update'");
 
       var ShowComprDataChanges = eval(submitterIdentifier);
@@ -66347,12 +66396,38 @@ function (_Component) {
       UrlSuffix = UrlSuffix.replace("ShowDecomDataChanges['", "");
       UrlSuffix = UrlSuffix.replace("']", "");
       UrlSuffix = "/" + UrlSuffix;
-      alert(JSON.stringify(UrlSuffix, null, 2));
+      return {
+        "UrlSuffix": UrlSuffix,
+        "Content": ShowComprDataChanges
+      }; // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+      //
+      // var ShowComprDataChangesContent = {
+      //   "Data": this.state.ShowComprDataChanges,
+      //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+      //   "form": "data",
+      // }
+      // // var UrlSuffix = "";
+      // this.setState({
+      //   ShowComprDataChanges: {
+      //     "Content": ShowComprDataChangesContent,
+      //     // "UrlSuffix": UrlSuffix
+      //   }
+      // });
+    }
+  }, {
+    key: "CreateComprDataChangesHelper",
+    value: function CreateComprDataChangesHelper() {}
+  }, {
+    key: "SendDataChanges",
+    value: function SendDataChanges(submitterIdentifier) {
+      event.preventDefault();
+      var ComprDataChanges = this.CreateComprDataChanges(submitterIdentifier);
+      var Content = ComprDataChanges.Content;
+      var UrlSuffix = ComprDataChanges.UrlSuffix;
+      alert(JSON.stringify(ComprDataChanges, null, 2));
       this.setState({
         ShowDecomDataChanges: ShowDecomDataChanges
       });
-      var Content = this.state.ShowComprDataChanges.Content;
-      var UrlSuffix = this.state.ShowComprDataChanges.UrlSuffix;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/store/Group_1' + UrlSuffix, Content).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
@@ -66385,7 +66460,7 @@ function (_Component) {
       //   </div>
       //
       // );
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: "100px",
           textAlign: "center"
@@ -66395,7 +66470,7 @@ function (_Component) {
           fontSize: "100px",
           textAlign: "center"
         }
-      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "\u26A0") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",
         defaultValue: "npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb"
@@ -66411,10 +66486,13 @@ function (_Component) {
         UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
           return _this3.UpdateDecomDataChanges(changerIdentifier, value);
         },
+        UpdateNameDecomDataChanges: function UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value) {
+          return _this3.UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value);
+        },
         submit: function submit(submitterIdentifier) {
           return _this3.SendDataChanges(submitterIdentifier);
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2))));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2))));
     }
   }]);
 
@@ -66429,6 +66507,7 @@ var DataHelper = function DataHelper(_ref) {
       Attr = _ref.Attr,
       ShowData = _ref.ShowData,
       _UpdateDecomDataChanges = _ref.UpdateDecomDataChanges,
+      _UpdateNameDecomDataChanges = _ref.UpdateNameDecomDataChanges,
       _submit = _ref.submit;
   // var ShowData = Object.values(ShowData);
   // alert(JSON.stringify(ShowData));
@@ -66437,7 +66516,7 @@ var DataHelper = function DataHelper(_ref) {
     className: "kv-list-parent"
   }, typeof ShowData !== 'undefined' && Object.keys(ShowData).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: ShowData[keyName].id
+      key: identifier + "[" + "'content'" + "]['" + keyName + "']"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
     }, _typeof(ShowData[keyName].content) == "object" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66451,7 +66530,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       onChange: function onChange(changerIdentifier, value) {
-        UpdateNameDecomDataChanges(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[0] + "']", event.target.value);
+        _UpdateNameDecomDataChanges(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
       },
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
@@ -66466,11 +66545,6 @@ var DataHelper = function DataHelper(_ref) {
       type: "text",
       name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[1] + "]",
       defaultValue: ShowData[keyName].type
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      className: "kv-di-no",
-      type: "text",
-      name: identifier + "[" + "'content'" + "]['" + keyName + "'][" + Attr[4] + "]",
-      defaultValue: ShowData[keyName].id
     }), _typeof(ShowData[keyName].content) == "object" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
@@ -66528,6 +66602,9 @@ var DataHelper = function DataHelper(_ref) {
       ShowData: ShowData[keyName].content,
       UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
         _UpdateDecomDataChanges(changerIdentifier, value);
+      },
+      UpdateNameDecomDataChanges: function UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value) {
+        _UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value);
       },
       submit: function submit(submitterIdentifier) {
         _submit(submitterIdentifier);

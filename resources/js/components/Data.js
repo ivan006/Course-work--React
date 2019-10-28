@@ -29,7 +29,15 @@ export default class Data extends Component {
   }
 
   GetAllData(){
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.replace(new RegExp(search, 'g'), replacement);
+    };
 
+
+    // --------
+    // online start
+    // --------
     this.setState({loading:"loading"});
 
     axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
@@ -52,7 +60,41 @@ export default class Data extends Component {
     }).catch(error => {
       console.log(error);
       this.setState({loading:"failed"});
+
     });
+    // --------
+    // online end
+    // --------
+
+    // --------
+    // offline start
+    // --------
+    // var ShowData = {
+    //   "content": {
+    //     "_data": {
+    //       "content": {
+    //         "code": {
+    //           "content": {
+    //             "w3css": {
+    //               "content": "123",
+    //               "type": "file"
+    //             }
+    //           },
+    //           "type": "folder"
+    //         }
+    //       },
+    //       "type": "folder"
+    //     }
+    //   }
+    // };
+    // this.setState({
+    //   ShowData: ShowData
+    // });
+    // this.CreateDecomDataChanges(ShowData);
+    // --------
+    // offline end
+    // --------
+
 
     // axios.get('/api/show/Group_1')
     // .then(response => {
@@ -146,33 +188,59 @@ export default class Data extends Component {
 
   }
 
-  CreateComprDataChanges(){
+
+  UpdateNameDecomDataChanges (changerIdentifierParent,changerIdentifierChild,value){
+    var changerIdentifier = changerIdentifierParent+changerIdentifierChild;
+
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
 
-    var ShowComprDataChangesContent = {
-      "Data": this.state.ShowComprDataChanges,
-      "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
-      "form": "data",
-    }
-    // var UrlSuffix = "";
+    var SubjectSelector = changerIdentifier;
+    SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
+    SubjectSelector = SubjectSelector.replaceAll("\\']", "");
+    // SubjectSelector = SubjectSelector.replace("ShowDecomDataChanges['", "");
+    // SubjectSelector = SubjectSelector.replace("']", "");
+
+    // up till here
+    // eval(changerIdentifier+"['name']=value");
+
+    var branch = eval(changerIdentifier);
+
+
+    eval("delete "+SubjectSelector);
+
+
+    // eval(changerIdentifierParent+".value=branch");
+    // eval(changerIdentifierParent+"."+value+"=branch");
+    // eval(changerIdentifierParent['value']"=branch");
+
+    eval(changerIdentifierParent+"['"+value+"']=branch");
     this.setState({
-      ShowComprDataChanges: {
-        "Content": ShowComprDataChangesContent,
-        // "UrlSuffix": UrlSuffix
-      }
+      ShowDecomDataChanges: ShowDecomDataChanges
     });
-  }
-  CreateComprDataChangesHelper(){
+
+    // changerIdentifier['name'] = value;
+
+    // var str = 'a_b_c';
+    // str = str.replace(/_([^_]*)$/,'$1'); //a_bc/a_bc
+    // changerIdentifier = str.replace(new RegExp(list[i] + '$'), 'finish');
+
+
+
+    alert(JSON.stringify(branch, null, 2));
+
+    // // alert(changerIdentifier);
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    // eval(changerIdentifier+"=value");
+    // this.setState({
+    //   ShowDecomDataChanges: ShowDecomDataChanges
+    // });
+    //
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    // var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
+    // // alert(DataString);
 
   }
-
-  SendDataChanges(submitterIdentifier){
-    String.prototype.replaceAll = function(search, replacement) {
-      var target = this;
-      return target.replace(new RegExp(search, 'g'), replacement);
-    };
-    event.preventDefault();
-
+  CreateComprDataChanges(submitterIdentifier){
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
     // eval(submitterIdentifier+"['action']='update'");
     var ShowComprDataChanges = eval(submitterIdentifier);
@@ -182,15 +250,45 @@ export default class Data extends Component {
     UrlSuffix = UrlSuffix.replace("']", "");
     UrlSuffix = "/"+UrlSuffix;
 
-    alert(JSON.stringify(UrlSuffix, null, 2));
+    return {
+      "UrlSuffix": UrlSuffix,
+      "Content": ShowComprDataChanges
+    };
+
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    //
+    // var ShowComprDataChangesContent = {
+    //   "Data": this.state.ShowComprDataChanges,
+    //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+    //   "form": "data",
+    // }
+    // // var UrlSuffix = "";
+    // this.setState({
+    //   ShowComprDataChanges: {
+    //     "Content": ShowComprDataChangesContent,
+    //     // "UrlSuffix": UrlSuffix
+    //   }
+    // });
+  }
+  CreateComprDataChangesHelper(){
+
+  }
+
+  SendDataChanges(submitterIdentifier){
+    event.preventDefault();
+
+    var ComprDataChanges = this.CreateComprDataChanges(submitterIdentifier);
+    var Content = ComprDataChanges.Content;
+    var UrlSuffix = ComprDataChanges.UrlSuffix;
+
+
+
+    alert(JSON.stringify(ComprDataChanges, null, 2));
     this.setState({
       ShowDecomDataChanges: ShowDecomDataChanges
     });
 
 
-
-    var Content = this.state.ShowComprDataChanges.Content;
-    var UrlSuffix = this.state.ShowComprDataChanges.UrlSuffix;
     axios.post('/store/Group_1'+UrlSuffix, Content)
     .then(function (response) {
       console.log(response);
@@ -198,6 +296,8 @@ export default class Data extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+
     // axios.post('/store/Group_1', Post)
     // .then(function (response) {
     //   this.GetAllData();
@@ -227,33 +327,40 @@ export default class Data extends Component {
 
     return (
       <div>
-        {this.state.loading == "loading" ?
-          <div style={{fontSize: "100px", textAlign: "center"}}>
-            ⌛
-          </div>
-          : this.state.loading == "failed" ?
-          <div style={{fontSize: "100px", textAlign: "center"}}>
-            ⚠
-          </div>
-          :
-          <form >
+        <div>
+          {this.state.loading == "loading" ?
+            <div style={{fontSize: "100px", textAlign: "center"}}>
+              ⌛
+            </div>
+            : this.state.loading == "failed" ?
+            <div style={{fontSize: "100px", textAlign: "center"}}>
+              ⚠
+            </div>
+            :
+            <div>
+            </div>
+          }
+        </div>
 
-            <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
-            <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
-            <br></br>
-            <h2>JS Data</h2>
-            <DataHelper
-              identifier="ShowDecomDataChanges"
-              Attr={this.state.Attr}
-              ShowData={this.state.ShowData.content}
-              UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
-              submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
-              />
+          <div>
+            <form >
+
+              <input type="hidden" name="_token" defaultValue="npSVkUIOsNL20SlLcSZeGJGBnmGSGE13wJMvXhqb" ></input>
+              <input className="kv-di-no" type="text" name="form" defaultValue="data"></input>
+              <br></br>
+              <h2>JS Data</h2>
+              <DataHelper
+                identifier="ShowDecomDataChanges"
+                Attr={this.state.Attr}
+                ShowData={this.state.ShowData.content}
+                UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
+                UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => this.UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}
+                submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
+                />
+            </form>
             <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
-          </form>
+          </div>
 
-
-        }
       </div>
     );
 
@@ -268,7 +375,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}) => {
+const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateNameDecomDataChanges, submit}) => {
 
   // var ShowData = Object.values(ShowData);
   // alert(JSON.stringify(ShowData));
@@ -280,7 +387,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
     <ul className="kv-list-parent">
       {typeof ShowData !== 'undefined' && Object.keys(ShowData).map((keyName, i) => (
 
-        <li key={ShowData[keyName].id}>
+        <li key={identifier+"["+"'content'"+"]['"+keyName+"']"}>
 
 
           <div className="kv-item-container  kv-di-in ">
@@ -293,14 +400,14 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onChange={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[0]+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[0]+"]"} defaultValue={keyName} ></input>
+              <input  onChange={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[0]+"]"} defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
 
 
             <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[1]+"]"} defaultValue={ShowData[keyName].type} ></input>
-            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[4]+"]"} defaultValue={ShowData[keyName].id} ></input>
+
 
             {typeof ShowData[keyName].content == "object" &&
               <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[8]+"]"} defaultValue={ShowData[keyName].entity_type} ></input>
@@ -340,6 +447,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, submit}
               Attr= {Attr}
               ShowData={ShowData[keyName].content}
               UpdateDecomDataChanges={(changerIdentifier,value) => {UpdateDecomDataChanges(changerIdentifier,value)}}
+              UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => {UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}}
               submit={(submitterIdentifier) => {submit(submitterIdentifier)}}
               />
 
