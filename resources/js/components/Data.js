@@ -166,7 +166,7 @@ export default class Data extends Component {
         result[keyName][Attr[2]] = ShowData[keyName].content;
       }
       result[keyName][Attr[1]] = ShowData[keyName].type;
-      result[keyName][Attr[0]] = keyName;
+      // result[keyName][Attr[0]] = keyName;
       return result;
     }, this);
     return result;
@@ -195,22 +195,27 @@ export default class Data extends Component {
     var SubjectSelector = changerIdentifier;
     SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
     SubjectSelector = SubjectSelector.replaceAll("\\']", "");
+
     // SubjectSelector = SubjectSelector.replace("ShowDecomDataChanges['", "");
     // SubjectSelector = SubjectSelector.replace("']", "");
 
-    // up till here
     // eval(changerIdentifier+"['name']=value");
+
 
     var branch = eval(changerIdentifier);
 
+    // up till here
+    eval(changerIdentifier+"= null");
+    // alert(JSON.stringify(SubjectSelector, null, 2));
+    // eval("delete "+SubjectSelector);
 
-    eval("delete "+SubjectSelector);
 
 
     // eval(changerIdentifierParent+".value=branch");
     // eval(changerIdentifierParent+"."+value+"=branch");
     // eval(changerIdentifierParent['value']"=branch");
 
+    // eval(changerIdentifierParent+"['"+value+"']=1");
     eval(changerIdentifierParent+"['"+value+"']=branch");
     this.setState({
       ShowDecomDataChanges: ShowDecomDataChanges
@@ -390,7 +395,7 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
           <div className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
-            {typeof ShowDecomDataChanges[keyName].content == "object" ?
+            {ShowDecomDataChanges[keyName].type == "folder" ?
               <div className="kv-di-in">📁</div>
               :
               <div className="kv-di-in">📃</div>
@@ -398,39 +403,39 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[0]+"]"} defaultValue={keyName} ></input>
+              <input  onBlur={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
 
 
-            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[1]+"]"} defaultValue={ShowDecomDataChanges[keyName].type} ></input>
+            <input className="kv-di-no" type="text" defaultValue={ShowDecomDataChanges[keyName].type} ></input>
 
 
-            {typeof ShowDecomDataChanges[keyName].content == "object" &&
-              <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[8]+"]"} defaultValue={ShowDecomDataChanges[keyName].entity_type} ></input>
+            {ShowDecomDataChanges[keyName].type == "folder" &&
+              <input className="kv-di-no" type="text" defaultValue={ShowDecomDataChanges[keyName].entity_type} ></input>
             }
 
 
-            <button onClick={(submitterIdentifier) => {submit(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[3]+"]"} value="update">✓</button>
-            <button className="kv-little-button" type="submit" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[3]+"]"} value="delete">×</button>
+            <button onClick={(submitterIdentifier) => {submit(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" value="update">✓</button>
+            <button className="kv-little-button" type="submit" value="delete">×</button>
 
 
 
-            {typeof ShowDecomDataChanges[keyName].content == "object" &&
+            {ShowDecomDataChanges[keyName].type == "folder" &&
               <label className="kv-po-re">
                 <span className="kv-little-button ">+</span>
                 <input className="kv-tog-on-bl-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
                 <div className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
                   <div className="" >
                     <span>📁</span>
-                    <input className="kv-field-container kv-name kv-di-in "  type="text"   name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[6]+"][folder]"}  ></input>
-                    <button type="submit" className="kv-little-button" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[3]+"]"} value="create_folder">+</button>
+                    <input className="kv-field-container kv-name kv-di-in "  type="text"    ></input>
+                    <button type="submit" className="kv-little-button" value="create_folder">+</button>
                   </div>
                   <div className="kv-mar-top-3">
                     <span>📃</span>
-                    <input className="kv-field-container kv-name kv-di-in"  type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[6]+"][file]"} ></input>
-                    <button type="submit" className="kv-little-button" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[3]+"]"} value="create_file">+</button>
+                    <input className="kv-field-container kv-name kv-di-in"  type="text" ></input>
+                    <button type="submit" className="kv-little-button" value="create_file">+</button>
                   </div>
                 </div>
               </label>
@@ -438,7 +443,7 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
 
           </div>
-          {typeof ShowDecomDataChanges[keyName].content == "object" ?
+          {ShowDecomDataChanges[keyName].type == "folder" ?
 
             <DataHelper
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
@@ -453,7 +458,7 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(changerIdentifier,value) => {UpdateDecomDataChanges(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[2]+"]"} rows="8" defaultValue={ShowDecomDataChanges[keyName].content}></textarea>
+                  <textarea onChange={(changerIdentifier,value) => {UpdateDecomDataChanges(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" rows="8" defaultValue={ShowDecomDataChanges[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
