@@ -25,10 +25,10 @@ export default class Data extends Component {
 
   };
   componentDidMount () {
-    this.CreateDecomDataChanges();
+    this.GetAllData();
   }
 
-  CreateDecomDataChanges(){
+  GetAllData(){
     String.prototype.replaceAll = function(search, replacement) {
       var target = this;
       return target.replace(new RegExp(search, 'g'), replacement);
@@ -38,32 +38,30 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    this.setState({loading:"loading"});
-
-    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    .then(response => {
-      var ShowData = response.data;
-      var Attr = this.state.Attr;
-      var result = {content: this.CreateDecomDataChangesHelper(ShowData.content,Attr)[0]};
-      this.setState({
-        ShowDecomDataChanges: result,
-        loading:"loaded"
-      });
-      // this.CreateDecomDataChanges(ShowData);
-
-      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
-      // .then(response => {
-      //   this.setState({loading:"loaded"});
-      // })
-      // .catch(error => {
-      //   this.setState({loading:"failed"});
-      // });
-
-    }).catch(error => {
-      console.log(error);
-      this.setState({loading:"failed"});
-
-    });
+    // this.setState({loading:"loading"});
+    //
+    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    // .then(response => {
+    //   var ShowData = response.data;
+    //   this.setState({
+    //     ShowData: response.data,
+    //     loading:"loaded"
+    //   });
+    //   this.CreateDecomDataChanges(ShowData);
+    //
+    //   // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+    //   // .then(response => {
+    //   //   this.setState({loading:"loaded"});
+    //   // })
+    //   // .catch(error => {
+    //   //   this.setState({loading:"failed"});
+    //   // });
+    //
+    // }).catch(error => {
+    //   console.log(error);
+    //   this.setState({loading:"failed"});
+    //
+    // });
     // --------
     // online end
     // --------
@@ -71,28 +69,28 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    // var ShowData = {
-    //   "content": {
-    //     "_data": {
-    //       "content": {
-    //         "code": {
-    //           "content": {
-    //             "w3css": {
-    //               "content": "123",
-    //               "type": "file"
-    //             }
-    //           },
-    //           "type": "folder"
-    //         }
-    //       },
-    //       "type": "folder"
-    //     }
-    //   }
-    // };
-    // this.setState({
-    //   ShowData: ShowData
-    // });
-    // this.CreateDecomDataChanges(ShowData);
+    var ShowData = {
+      "content": {
+        "_data": {
+          "content": {
+            "code": {
+              "content": {
+                "w3css": {
+                  "content": "123",
+                  "type": "file"
+                }
+              },
+              "type": "folder"
+            }
+          },
+          "type": "folder"
+        }
+      }
+    };
+    this.setState({
+      ShowData: ShowData
+    });
+    this.CreateDecomDataChanges(ShowData);
     // --------
     // offline end
     // --------
@@ -134,11 +132,15 @@ export default class Data extends Component {
 
   }
 
-  // CreateDecomDataChanges(ShowData)  {
-  //
-  //
-  //   return result;
-  // }
+  CreateDecomDataChanges(ShowData)  {
+    var Attr = this.state.Attr;
+    var result = {content: this.CreateDecomDataChangesHelper(ShowData.content,Attr)[0]};
+    this.setState({
+      ShowDecomDataChanges: result
+    });
+
+    return result;
+  }
 
   CreateDecomDataChangesHelper(ShowData, Attr)  {
     var result = Object.keys(ShowData).map(function(keyName, i) {
@@ -166,7 +168,34 @@ export default class Data extends Component {
         result[keyName][Attr[2]] = ShowData[keyName].content;
       }
       result[keyName][Attr[1]] = ShowData[keyName].type;
-      result[keyName][Attr[0]] = keyName;
+      // result[keyName][Attr[0]] = keyName;
+      return result;
+    }, this);
+    return result;
+  }
+
+  CreateData(ShowDecomDataChanges)  {
+    var Attr = this.state.Attr;
+    var result = {content: this.CreateDataHelper(ShowDecomDataChanges.content,Attr)[0]};
+    this.setState({
+      ShowDecomDataChanges: result
+    });
+
+    return result;
+  }
+
+  CreateDataHelper(ShowDecomDataChanges, Attr)  {
+    var result = Object.keys(ShowDecomDataChanges).map(function(keyName, i) {
+      var result = {}
+      result[keyName] = {};
+      if (typeof ShowDecomDataChanges[keyName].content === "object"){
+        result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper( ShowDecomDataChanges[keyName].content,Attr)[0];
+        result[keyName][Attr[6]]= {}
+      } else {
+        result[keyName][Attr[2]] = ShowDecomDataChanges[keyName].content;
+      }
+      result[keyName][Attr[1]] = ShowDecomDataChanges[keyName].type;
+      // result[keyName][Attr[0]] = keyName;
       return result;
     }, this);
     return result;
@@ -178,6 +207,10 @@ export default class Data extends Component {
     eval(changerIdentifier+"=value");
     this.setState({
       ShowDecomDataChanges: ShowDecomDataChanges
+    });
+    var ShowData = CreateData(ShowDecomDataChanges);
+    this.setState({
+      ShowData: ShowData
     });
 
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
@@ -224,7 +257,7 @@ export default class Data extends Component {
 
 
 
-    // alert(JSON.stringify(branch, null, 2));
+    alert(JSON.stringify(branch, null, 2));
 
     // // alert(changerIdentifier);
     // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
@@ -350,13 +383,14 @@ export default class Data extends Component {
               <DataHelper
                 identifier="ShowDecomDataChanges"
                 Attr={this.state.Attr}
-                ShowDecomDataChanges={this.state.ShowDecomDataChanges.content}
+                ShowData={this.state.ShowData.content}
                 UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
                 UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => this.UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}
                 submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
                 />
             </form>
             <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
+            <pre>{JSON.stringify(this.state.ShowData, null, 2) }</pre>
           </div>
 
       </div>
@@ -373,24 +407,24 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChanges, UpdateNameDecomDataChanges, submit}) => {
+const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateNameDecomDataChanges, submit}) => {
 
-  // var ShowDecomDataChanges = Object.values(ShowDecomDataChanges);
-  // alert(JSON.stringify(ShowDecomDataChanges));
-  // {JSON.stringify(ShowDecomDataChanges.content)}
+  // var ShowData = Object.values(ShowData);
+  // alert(JSON.stringify(ShowData));
+  // {JSON.stringify(ShowData.content)}
 
 
 
   return (
     <ul className="kv-list-parent">
-      {typeof ShowDecomDataChanges !== 'undefined' && Object.keys(ShowDecomDataChanges).map((keyName, i) => (
+      {typeof ShowData !== 'undefined' && Object.keys(ShowData).map((keyName, i) => (
 
         <li key={identifier+"["+"'content'"+"]['"+keyName+"']"}>
 
 
           <div className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
-            {typeof ShowDecomDataChanges[keyName].content == "object" ?
+            {typeof ShowData[keyName].content == "object" ?
               <div className="kv-di-in">📁</div>
               :
               <div className="kv-di-in">📃</div>
@@ -398,17 +432,17 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[0]+"]"} defaultValue={keyName} ></input>
+              <input  onChange={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[0]+"]"} defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
 
 
-            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[1]+"]"} defaultValue={ShowDecomDataChanges[keyName].type} ></input>
+            <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[1]+"]"} defaultValue={ShowData[keyName].type} ></input>
 
 
-            {typeof ShowDecomDataChanges[keyName].content == "object" &&
-              <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[8]+"]"} defaultValue={ShowDecomDataChanges[keyName].entity_type} ></input>
+            {typeof ShowData[keyName].content == "object" &&
+              <input className="kv-di-no" type="text" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[8]+"]"} defaultValue={ShowData[keyName].entity_type} ></input>
             }
 
 
@@ -417,7 +451,7 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
 
 
-            {typeof ShowDecomDataChanges[keyName].content == "object" &&
+            {typeof ShowData[keyName].content == "object" &&
               <label className="kv-po-re">
                 <span className="kv-little-button ">+</span>
                 <input className="kv-tog-on-bl-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
@@ -438,12 +472,12 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
 
 
           </div>
-          {typeof ShowDecomDataChanges[keyName].content == "object" ?
+          {typeof ShowData[keyName].content == "object" ?
 
             <DataHelper
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
-              ShowDecomDataChanges={ShowDecomDataChanges[keyName].content}
+              ShowData={ShowData[keyName].content}
               UpdateDecomDataChanges={(changerIdentifier,value) => {UpdateDecomDataChanges(changerIdentifier,value)}}
               UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => {UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}}
               submit={(submitterIdentifier) => {submit(submitterIdentifier)}}
@@ -453,7 +487,7 @@ const DataHelper = ({ identifier,Attr, ShowDecomDataChanges, UpdateDecomDataChan
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(changerIdentifier,value) => {UpdateDecomDataChanges(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[2]+"]"} rows="8" defaultValue={ShowDecomDataChanges[keyName].content}></textarea>
+                  <textarea onChange={(changerIdentifier,value) => {UpdateDecomDataChanges(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in" name={identifier+"["+"'content'"+"]['"+keyName+"']["+Attr[2]+"]"} rows="8" defaultValue={ShowData[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
