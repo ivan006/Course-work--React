@@ -78,6 +78,10 @@ export default class Data extends Component {
                 "w3css": {
                   "content": "123",
                   "type": "file"
+                },
+                "w3cssd": {
+                  "content": "123",
+                  "type": "file"
                 }
               },
               "type": "folder"
