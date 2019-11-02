@@ -66305,27 +66305,31 @@ function (_Component) {
     value: function CreateDecomDataChanges(ShowData) {
       var Attr = this.state.Attr;
       var result = {
-        content: this.CreateDecomDataChangesHelper(ShowData.content, Attr)[0]
+        content: this.CreateDecomDataChangesHelper(ShowData.content, Attr)
       };
       return result;
     }
   }, {
     key: "CreateDecomDataChangesHelper",
     value: function CreateDecomDataChangesHelper(ShowData, Attr) {
-      var result = {};
-      var result = Object.keys(ShowData).map(function (keyName, i) {
+      // var FinalResult = {};
+      // FinalResult[".."] = "..";
+      var result = {}; // var FinalResult = Object.keys(ShowData).map(function(keyName, i) {
+
+      Object.keys(ShowData).forEach(function (keyName) {
         // alert(keyName);
-        result["keyName"] = keyName;
+        // result["keyName"] = keyName;
+        // result["typey"] = ShowData[keyName].type;
         result[keyName] = {}; // result[keyName][Attr[3]] = "update/delete";
         // result[keyName][Attr[0]] = keyName;
         // result[keyName][Attr[4]] = ShowData[keyName].id;
 
-        if (_typeof(ShowData[keyName].content) === "object") {
-          result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr)[0];
-          result[keyName]["typey"] = _typeof(ShowData[keyName].content); // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
+        if (ShowData[keyName].type == "folder") {
+          // if (typeof ShowData[keyName].content === "object"){
+          result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr);
+          result[keyName][Attr[6]] = {}; // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
           // alert(DataString);
-
-          result[keyName][Attr[6]] = {}; // result[keyName][Attr[6]]["folder"] = null;
+          // result[keyName][Attr[6]]["folder"] = null;
           // result[keyName][Attr[6]]["file"] = null;
           // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
           // result[keyName][Attr[6]]["folder"] = 0;
@@ -66333,18 +66337,19 @@ function (_Component) {
           // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
         } else {
           result[keyName][Attr[2]] = ShowData[keyName].content;
-          result[keyName]["typey"] = _typeof(ShowData[keyName].content);
-        } // var DataString = JSON.stringify(result, null, 2);
+          alert(1);
+        }
+
+        result[keyName][Attr[1]] = ShowData[keyName].type; // result[keyName]["typey"] = typeof ShowData[keyName].content;
+        // result[keyName][Attr[0]] = keyName;
+        // var DataString = JSON.stringify(result, null, 2);
         // alert(DataString);
+        // return result;
+      }, this); // });
 
-
-        result[keyName][Attr[1]] = ShowData[keyName].type; // result[keyName][Attr[0]] = keyName;
-
-        return result;
-      }, this);
       var DataString = JSON.stringify(result, null, 2);
       alert(DataString);
-      return result;
+      return result; // return FinalResult;
     }
   }, {
     key: "CreateData",
