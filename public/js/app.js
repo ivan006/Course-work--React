@@ -66312,15 +66312,19 @@ function (_Component) {
   }, {
     key: "CreateDecomDataChangesHelper",
     value: function CreateDecomDataChangesHelper(ShowData, Attr) {
+      var result = {};
       var result = Object.keys(ShowData).map(function (keyName, i) {
         // alert(keyName);
-        var result = {};
+        result["keyName"] = keyName;
         result[keyName] = {}; // result[keyName][Attr[3]] = "update/delete";
         // result[keyName][Attr[0]] = keyName;
         // result[keyName][Attr[4]] = ShowData[keyName].id;
 
         if (_typeof(ShowData[keyName].content) === "object") {
           result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr)[0];
+          result[keyName]["typey"] = _typeof(ShowData[keyName].content); // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
+          // alert(DataString);
+
           result[keyName][Attr[6]] = {}; // result[keyName][Attr[6]]["folder"] = null;
           // result[keyName][Attr[6]]["file"] = null;
           // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
@@ -66329,12 +66333,17 @@ function (_Component) {
           // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
         } else {
           result[keyName][Attr[2]] = ShowData[keyName].content;
-        }
+          result[keyName]["typey"] = _typeof(ShowData[keyName].content);
+        } // var DataString = JSON.stringify(result, null, 2);
+        // alert(DataString);
+
 
         result[keyName][Attr[1]] = ShowData[keyName].type; // result[keyName][Attr[0]] = keyName;
 
         return result;
       }, this);
+      var DataString = JSON.stringify(result, null, 2);
+      alert(DataString);
       return result;
     }
   }, {
@@ -66352,9 +66361,9 @@ function (_Component) {
   }, {
     key: "CreateDataHelper",
     value: function CreateDataHelper(ShowDecomDataChanges, Attr) {
+      var result = {};
       var result = Object.keys(ShowDecomDataChanges).map(function (keyName, i) {
         if (ShowDecomDataChanges[keyName] !== null) {
-          var result = {};
           result[keyName] = {};
 
           if (_typeof(ShowDecomDataChanges[keyName].content) === "object") {
@@ -66378,9 +66387,9 @@ function (_Component) {
         //     alert(keyName);
         // }
 
-      }, this);
-      var DataString = JSON.stringify(result, null, 2);
-      alert(DataString);
+      }, this); // var DataString = JSON.stringify(result, null, 2);
+      // alert(DataString);
+
       return result;
     }
   }, {
@@ -66542,7 +66551,7 @@ function (_Component) {
         submit: function submit(submitterIdentifier) {
           return _this2.SendDataChanges(submitterIdentifier);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowData, null, 2))));
+      })), "ShowDecomDataChanges", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2)), "ShowData", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowData, null, 2))));
     }
   }]);
 

@@ -148,9 +148,13 @@ export default class Data extends Component {
   }
 
   CreateDecomDataChangesHelper(ShowData, Attr)  {
+
+
+    var result = {}
+
     var result = Object.keys(ShowData).map(function(keyName, i) {
       // alert(keyName);
-      var result = {}
+      result["keyName"] = keyName;
       result[keyName] = {};
 
 
@@ -159,7 +163,12 @@ export default class Data extends Component {
       // result[keyName][Attr[0]] = keyName;
       // result[keyName][Attr[4]] = ShowData[keyName].id;
       if (typeof ShowData[keyName].content === "object"){
+
         result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper( ShowData[keyName].content,Attr)[0];
+        result[keyName]["typey"] = typeof ShowData[keyName].content;
+
+        // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
+        // alert(DataString);
 
         result[keyName][Attr[6]]= {}
         // result[keyName][Attr[6]]["folder"] = null;
@@ -171,11 +180,20 @@ export default class Data extends Component {
         // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
       } else {
         result[keyName][Attr[2]] = ShowData[keyName].content;
+        result[keyName]["typey"] = typeof ShowData[keyName].content;
       }
+
+      // var DataString = JSON.stringify(result, null, 2);
+      // alert(DataString);
+
       result[keyName][Attr[1]] = ShowData[keyName].type;
       // result[keyName][Attr[0]] = keyName;
       return result;
     }, this);
+
+    var DataString = JSON.stringify(result, null, 2);
+    alert(DataString);
+
     return result;
   }
 
@@ -193,9 +211,9 @@ export default class Data extends Component {
 
   CreateDataHelper(ShowDecomDataChanges, Attr)  {
 
+    var result = {};
     var result = Object.keys(ShowDecomDataChanges).map(function(keyName, i) {
       if (ShowDecomDataChanges[keyName] !== null) {
-        var result = {};
         result[keyName] = {};
         if (typeof ShowDecomDataChanges[keyName].content === "object"){
           // if (ShowDecomDataChanges[keyName].content !=null) {
@@ -221,8 +239,10 @@ export default class Data extends Component {
       //     alert(keyName);
       // }
     }, this);
-    var DataString = JSON.stringify(result, null, 2);
-    alert(DataString);
+
+    // var DataString = JSON.stringify(result, null, 2);
+    // alert(DataString);
+
     return result;
 
   }
@@ -417,7 +437,9 @@ export default class Data extends Component {
                 submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
                 />
             </form>
+            ShowDecomDataChanges
             <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
+            ShowData
             <pre>{JSON.stringify(this.state.ShowData, null, 2) }</pre>
           </div>
 
