@@ -38,30 +38,33 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    // this.setState({loading:"loading"});
-    //
-    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    // .then(response => {
-    //   var ShowData = response.data;
-    //   this.setState({
-    //     ShowData: response.data,
-    //     loading:"loaded"
-    //   });
-    //   this.CreateDecomDataChanges(ShowData);
-    //
-    //   // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
-    //   // .then(response => {
-    //   //   this.setState({loading:"loaded"});
-    //   // })
-    //   // .catch(error => {
-    //   //   this.setState({loading:"failed"});
-    //   // });
-    //
-    // }).catch(error => {
-    //   console.log(error);
-    //   this.setState({loading:"failed"});
-    //
-    // });
+    this.setState({loading:"loading"});
+
+    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    .then(response => {
+      var ShowData = response.data;
+      var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
+      var loading = "loaded";
+      this.setState({
+        ShowData: ShowData,
+        ShowDecomDataChanges: CreateDecomDataChanges,
+        loading:loading
+      });
+
+
+      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+      // .then(response => {
+      //   this.setState({loading:"loaded"});
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
+
+    }).catch(error => {
+
+      console.log(error);
+      this.setState({loading:"failed"});
+    });
     // --------
     // online end
     // --------
@@ -69,35 +72,37 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    var ShowData = {
-      "content": {
-        "_data": {
-          "content": {
-            "code": {
-              "content": {
-                "w3css": {
-                  "content": "123",
-                  "type": "file"
-                },
-                "w3cssd": {
-                  "content": "123",
-                  "type": "file"
-                }
-              },
-              "type": "folder"
-            }
-          },
-          "type": "folder"
-        }
-      }
-    };
-    this.setState({
-      ShowData: ShowData
-    });
-    var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
-    this.setState({
-      ShowDecomDataChanges: CreateDecomDataChanges
-    });
+    // var ShowData = {
+    //   "content": {
+    //     "_data": {
+    //       "content": {
+    //         "code": {
+    //           "content": {
+    //             "w3css": {
+    //               "content": "123",
+    //               "type": "file"
+    //             },
+    //             "w3cssd": {
+    //               "content": "123",
+    //               "type": "file"
+    //             }
+    //           },
+    //           "type": "folder"
+    //         }
+    //       },
+    //       "type": "folder"
+    //     }
+    //   }
+    // };
+    // var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
+    // var loading = "failed";
+    //
+    // this.setState({
+    //   ShowData: ShowData,
+    //   ShowDecomDataChanges: CreateDecomDataChanges,
+    //   loading:loading
+    // });
+
     // --------
     // offline end
     // --------
@@ -143,83 +148,44 @@ export default class Data extends Component {
     var Attr = this.state.Attr;
     var result = {content: this.CreateDecomDataChangesHelper(ShowData.content,Attr)};
 
-
     return result;
   }
 
   CreateDecomDataChangesHelper(ShowData, Attr)  {
 
-
-    // var FinalResult = {};
-    // FinalResult[".."] = "..";
-
     var result = {};
 
-    // var FinalResult = Object.keys(ShowData).map(function(keyName, i) {
     Object.keys(ShowData).forEach(function(keyName){
 
-
-      // alert(keyName);
-      // result["keyName"] = keyName;
-      // result["typey"] = ShowData[keyName].type;
       result[keyName] = {};
-
 
       // result[keyName][Attr[3]] = "update/delete";
 
-      // result[keyName][Attr[0]] = keyName;
-      // result[keyName][Attr[4]] = ShowData[keyName].id;
       if (ShowData[keyName].type == "folder"){
-      // if (typeof ShowData[keyName].content === "object"){
 
         result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper( ShowData[keyName].content,Attr);
         result[keyName][Attr[6]]= {}
 
-        // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
-        // alert(DataString);
-
         // result[keyName][Attr[6]]["folder"] = null;
         // result[keyName][Attr[6]]["file"] = null;
         // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
-        // result[keyName][Attr[6]]["folder"] = 0;
-        // result[keyName][Attr[6]]["file"] = 0;
 
-        // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
       } else {
         result[keyName][Attr[2]] = ShowData[keyName].content;
-        alert(1)
       }
-
-
       result[keyName][Attr[1]] = ShowData[keyName].type;
-
-      // result[keyName]["typey"] = typeof ShowData[keyName].content;
-
-      // result[keyName][Attr[0]] = keyName;
-
-      // var DataString = JSON.stringify(result, null, 2);
-      // alert(DataString);
-
-      // return result;
-
     }, this);
-    // });
 
-    var DataString = JSON.stringify(result, null, 2);
-    alert(DataString);
+    // var DataString = JSON.stringify(result, null, 2);
+    // alert(DataString);
 
     return result;
-    // return FinalResult;
   }
 
+
   CreateData(ShowDecomDataChanges)  {
-
-
     var Attr = this.state.Attr;
-    var result = {content: this.CreateDataHelper(ShowDecomDataChanges.content,Attr)[0]};
-    // this.setState({
-    //   CreateData: result
-    // });
+    var result = {content: this.CreateDataHelper(ShowDecomDataChanges.content,Attr)};
 
     return result;
   }
@@ -227,40 +193,36 @@ export default class Data extends Component {
   CreateDataHelper(ShowDecomDataChanges, Attr)  {
 
     var result = {};
-    var result = Object.keys(ShowDecomDataChanges).map(function(keyName, i) {
+
+    Object.keys(ShowDecomDataChanges).forEach(function(keyName){
+
+
+      // result[keyName][Attr[3]] = "update/delete";
       if (ShowDecomDataChanges[keyName] !== null) {
         result[keyName] = {};
-        if (typeof ShowDecomDataChanges[keyName].content === "object"){
-          // if (ShowDecomDataChanges[keyName].content !=null) {
-          //
-          // }
 
-          result[keyName][Attr[2]] = this.CreateDataHelper( ShowDecomDataChanges[keyName].content,Attr)[0];
+        if (ShowDecomDataChanges[keyName].type == "folder"){
+
+          result[keyName][Attr[2]] = this.CreateDataHelper( ShowDecomDataChanges[keyName].content,Attr);
           // result[keyName][Attr[6]]= {}
-        } else {
 
-            // if (keyName=="w3cssd") {
-            //   alert(keyName+"<br>"+ShowDecomDataChanges[keyName].content);
-            // }
-          // result[keyName] = null;
+          // result[keyName][Attr[6]]["folder"] = null;
+          // result[keyName][Attr[6]]["file"] = null;
+          // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
+
+        } else {
           result[keyName][Attr[2]] = ShowDecomDataChanges[keyName].content;
         }
         result[keyName][Attr[1]] = ShowDecomDataChanges[keyName].type;
-        // result[keyName][Attr[0]] = keyName;
-        return result;
       }
-      // else {
-      //
-      //     alert(keyName);
-      // }
     }, this);
 
     // var DataString = JSON.stringify(result, null, 2);
     // alert(DataString);
 
     return result;
-
   }
+
 
   UpdateDecomDataChanges (changerIdentifier,value){
     // alert(changerIdentifier);
@@ -295,8 +257,8 @@ export default class Data extends Component {
 
     var branch = eval(changerIdentifier);
 
+    eval(changerIdentifier+"= null");
 
-    // eval(changerIdentifier+"= null");
 
 
     // eval(changerIdentifierParent+".value=branch");
@@ -311,6 +273,10 @@ export default class Data extends Component {
       ShowDecomDataChanges: ShowDecomDataChanges,
       ShowData: ShowData
     });
+
+    // alert(changerIdentifier);
+    // var DataString = JSON.stringify(this.state.ShowDecomDataChanges, null, 2);
+    // alert(DataString);
 
     // changerIdentifier['name'] = value;
 

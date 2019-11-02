@@ -66202,73 +66202,81 @@ function (_Component) {
   }, {
     key: "GetAllData",
     value: function GetAllData() {
+      var _this2 = this;
+
       String.prototype.replaceAll = function (search, replacement) {
         var target = this;
         return target.replace(new RegExp(search, 'g'), replacement);
       }; // --------
       // online start
       // --------
-      // this.setState({loading:"loading"});
-      //
-      // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-      // .then(response => {
-      //   var ShowData = response.data;
-      //   this.setState({
-      //     ShowData: response.data,
-      //     loading:"loaded"
-      //   });
-      //   this.CreateDecomDataChanges(ShowData);
-      //
-      //   // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
-      //   // .then(response => {
-      //   //   this.setState({loading:"loaded"});
-      //   // })
-      //   // .catch(error => {
-      //   //   this.setState({loading:"failed"});
-      //   // });
-      //
-      // }).catch(error => {
-      //   console.log(error);
-      //   this.setState({loading:"failed"});
-      //
-      // });
-      // --------
+
+
+      this.setState({
+        loading: "loading"
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
+        var ShowData = response.data;
+
+        var CreateDecomDataChanges = _this2.CreateDecomDataChanges(ShowData);
+
+        var loading = "loaded";
+
+        _this2.setState({
+          ShowData: ShowData,
+          ShowDecomDataChanges: CreateDecomDataChanges,
+          loading: loading
+        }); // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+        // .then(response => {
+        //   this.setState({loading:"loaded"});
+        // })
+        // .catch(error => {
+        //   this.setState({loading:"failed"});
+        // });
+
+      })["catch"](function (error) {
+        console.log(error);
+
+        _this2.setState({
+          loading: "failed"
+        });
+      }); // --------
       // online end
       // --------
       // --------
       // offline start
       // --------
-
-
-      var ShowData = {
-        "content": {
-          "_data": {
-            "content": {
-              "code": {
-                "content": {
-                  "w3css": {
-                    "content": "123",
-                    "type": "file"
-                  },
-                  "w3cssd": {
-                    "content": "123",
-                    "type": "file"
-                  }
-                },
-                "type": "folder"
-              }
-            },
-            "type": "folder"
-          }
-        }
-      };
-      this.setState({
-        ShowData: ShowData
-      });
-      var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
-      this.setState({
-        ShowDecomDataChanges: CreateDecomDataChanges
-      }); // --------
+      // var ShowData = {
+      //   "content": {
+      //     "_data": {
+      //       "content": {
+      //         "code": {
+      //           "content": {
+      //             "w3css": {
+      //               "content": "123",
+      //               "type": "file"
+      //             },
+      //             "w3cssd": {
+      //               "content": "123",
+      //               "type": "file"
+      //             }
+      //           },
+      //           "type": "folder"
+      //         }
+      //       },
+      //       "type": "folder"
+      //     }
+      //   }
+      // };
+      // var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
+      // var loading = "failed";
+      //
+      // this.setState({
+      //   ShowData: ShowData,
+      //   ShowDecomDataChanges: CreateDecomDataChanges,
+      //   loading:loading
+      // });
+      // --------
       // offline end
       // --------
       // axios.get('/api/show/Group_1')
@@ -66312,86 +66320,54 @@ function (_Component) {
   }, {
     key: "CreateDecomDataChangesHelper",
     value: function CreateDecomDataChangesHelper(ShowData, Attr) {
-      // var FinalResult = {};
-      // FinalResult[".."] = "..";
-      var result = {}; // var FinalResult = Object.keys(ShowData).map(function(keyName, i) {
-
+      var result = {};
       Object.keys(ShowData).forEach(function (keyName) {
-        // alert(keyName);
-        // result["keyName"] = keyName;
-        // result["typey"] = ShowData[keyName].type;
         result[keyName] = {}; // result[keyName][Attr[3]] = "update/delete";
-        // result[keyName][Attr[0]] = keyName;
-        // result[keyName][Attr[4]] = ShowData[keyName].id;
 
         if (ShowData[keyName].type == "folder") {
-          // if (typeof ShowData[keyName].content === "object"){
           result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr);
-          result[keyName][Attr[6]] = {}; // var DataString = JSON.stringify(result[keyName][Attr[2]], null, 2);
-          // alert(DataString);
-          // result[keyName][Attr[6]]["folder"] = null;
+          result[keyName][Attr[6]] = {}; // result[keyName][Attr[6]]["folder"] = null;
           // result[keyName][Attr[6]]["file"] = null;
           // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
-          // result[keyName][Attr[6]]["folder"] = 0;
-          // result[keyName][Attr[6]]["file"] = 0;
-          // result[keyName][Attr[8]] = ShowData[keyName].entity_type;
         } else {
           result[keyName][Attr[2]] = ShowData[keyName].content;
-          alert(1);
         }
 
-        result[keyName][Attr[1]] = ShowData[keyName].type; // result[keyName]["typey"] = typeof ShowData[keyName].content;
-        // result[keyName][Attr[0]] = keyName;
-        // var DataString = JSON.stringify(result, null, 2);
-        // alert(DataString);
-        // return result;
-      }, this); // });
+        result[keyName][Attr[1]] = ShowData[keyName].type;
+      }, this); // var DataString = JSON.stringify(result, null, 2);
+      // alert(DataString);
 
-      var DataString = JSON.stringify(result, null, 2);
-      alert(DataString);
-      return result; // return FinalResult;
+      return result;
     }
   }, {
     key: "CreateData",
     value: function CreateData(ShowDecomDataChanges) {
       var Attr = this.state.Attr;
       var result = {
-        content: this.CreateDataHelper(ShowDecomDataChanges.content, Attr)[0]
-      }; // this.setState({
-      //   CreateData: result
-      // });
-
+        content: this.CreateDataHelper(ShowDecomDataChanges.content, Attr)
+      };
       return result;
     }
   }, {
     key: "CreateDataHelper",
     value: function CreateDataHelper(ShowDecomDataChanges, Attr) {
       var result = {};
-      var result = Object.keys(ShowDecomDataChanges).map(function (keyName, i) {
+      Object.keys(ShowDecomDataChanges).forEach(function (keyName) {
+        // result[keyName][Attr[3]] = "update/delete";
         if (ShowDecomDataChanges[keyName] !== null) {
           result[keyName] = {};
 
-          if (_typeof(ShowDecomDataChanges[keyName].content) === "object") {
-            // if (ShowDecomDataChanges[keyName].content !=null) {
-            //
-            // }
-            result[keyName][Attr[2]] = this.CreateDataHelper(ShowDecomDataChanges[keyName].content, Attr)[0]; // result[keyName][Attr[6]]= {}
+          if (ShowDecomDataChanges[keyName].type == "folder") {
+            result[keyName][Attr[2]] = this.CreateDataHelper(ShowDecomDataChanges[keyName].content, Attr); // result[keyName][Attr[6]]= {}
+            // result[keyName][Attr[6]]["folder"] = null;
+            // result[keyName][Attr[6]]["file"] = null;
+            // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
           } else {
-            // if (keyName=="w3cssd") {
-            //   alert(keyName+"<br>"+ShowDecomDataChanges[keyName].content);
-            // }
-            // result[keyName] = null;
             result[keyName][Attr[2]] = ShowDecomDataChanges[keyName].content;
           }
 
-          result[keyName][Attr[1]] = ShowDecomDataChanges[keyName].type; // result[keyName][Attr[0]] = keyName;
-
-          return result;
-        } // else {
-        //
-        //     alert(keyName);
-        // }
-
+          result[keyName][Attr[1]] = ShowDecomDataChanges[keyName].type;
+        }
       }, this); // var DataString = JSON.stringify(result, null, 2);
       // alert(DataString);
 
@@ -66423,8 +66399,8 @@ function (_Component) {
       // up till here
       // eval(changerIdentifier+"['name']=value");
 
-      var branch = eval(changerIdentifier); // eval(changerIdentifier+"= null");
-      // eval(changerIdentifierParent+".value=branch");
+      var branch = eval(changerIdentifier);
+      eval(changerIdentifier + "= null"); // eval(changerIdentifierParent+".value=branch");
       // eval(changerIdentifierParent+"."+value+"=branch");
       // eval(changerIdentifierParent['value']"=branch");
 
@@ -66433,7 +66409,10 @@ function (_Component) {
       this.setState({
         ShowDecomDataChanges: ShowDecomDataChanges,
         ShowData: ShowData
-      }); // changerIdentifier['name'] = value;
+      }); // alert(changerIdentifier);
+      // var DataString = JSON.stringify(this.state.ShowDecomDataChanges, null, 2);
+      // alert(DataString);
+      // changerIdentifier['name'] = value;
       // var str = 'a_b_c';
       // str = str.replace(/_([^_]*)$/,'$1'); //a_bc/a_bc
       // changerIdentifier = str.replace(new RegExp(list[i] + '$'), 'finish');
@@ -66504,7 +66483,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       // return (
       //   <div>
@@ -66548,13 +66527,13 @@ function (_Component) {
         Attr: this.state.Attr,
         ShowData: this.state.ShowData.content,
         UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
-          return _this2.UpdateDecomDataChanges(changerIdentifier, value);
+          return _this3.UpdateDecomDataChanges(changerIdentifier, value);
         },
         UpdateNameDecomDataChanges: function UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value) {
-          return _this2.UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value);
+          return _this3.UpdateNameDecomDataChanges(changerIdentifierParent, changerIdentifierChild, value);
         },
         submit: function submit(submitterIdentifier) {
-          return _this2.SendDataChanges(submitterIdentifier);
+          return _this3.SendDataChanges(submitterIdentifier);
         }
       })), "ShowDecomDataChanges", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2)), "ShowData", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowData, null, 2))));
     }
