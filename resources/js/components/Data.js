@@ -24,6 +24,7 @@ export default class Data extends Component {
     loading: "loaded",
 
   };
+
   componentDidMount () {
 
     String.prototype.replaceAll = function(search, replacement) {
@@ -354,12 +355,6 @@ export default class Data extends Component {
 
   }
 }
-
-
-
-
-
-
 
 // Recursive component
 const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateName, submit}) => {
