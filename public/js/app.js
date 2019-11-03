@@ -66173,9 +66173,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Data)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      ShowData: [],
-      ShowDecomDataChanges: [],
-      ShowComprDataChanges: [],
+      Data: [],
+      Changes: [],
       Attr: {
         0: 'name',
         1: 'type',
@@ -66198,11 +66197,6 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.GetAllData();
-    }
-  }, {
-    key: "GetAllData",
-    value: function GetAllData() {
       var _this2 = this;
 
       String.prototype.replaceAll = function (search, replacement) {
@@ -66217,15 +66211,15 @@ function (_Component) {
         loading: "loading"
       });
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
-        var ShowData = response.data;
+        var Data = response.data;
 
-        var CreateDecomDataChanges = _this2.CreateDecomDataChanges(ShowData);
+        var Changes = _this2.Changes(Data);
 
         var loading = "loaded";
 
         _this2.setState({
-          ShowData: ShowData,
-          ShowDecomDataChanges: CreateDecomDataChanges,
+          Data: Data,
+          Changes: Changes,
           loading: loading
         });
       })["catch"](function (error) {
@@ -66240,7 +66234,7 @@ function (_Component) {
       // --------
       // offline start
       // --------
-      // var ShowData = {
+      // var Data = {
       //   "content": {
       //     "_data": {
       //       "content": {
@@ -66262,12 +66256,12 @@ function (_Component) {
       //     }
       //   }
       // };
-      // var CreateDecomDataChanges = this.CreateDecomDataChanges(ShowData);
+      // var Changes = this.Changes(Data);
       // var loading = "failed";
       //
       // this.setState({
-      //   ShowData: ShowData,
-      //   ShowDecomDataChanges: CreateDecomDataChanges,
+      //   Data: Data,
+      //   Changes: Changes,
       //   loading:loading
       // });
       // --------
@@ -66275,109 +66269,149 @@ function (_Component) {
       // --------
     }
   }, {
-    key: "CreateDecomDataChanges",
-    value: function CreateDecomDataChanges(ShowData) {
-      var Attr = this.state.Attr;
-      var result = {
-        content: this.CreateDecomDataChangesHelper(ShowData.content, Attr)
-      };
-      return result;
-    }
-  }, {
-    key: "CreateDecomDataChangesHelper",
-    value: function CreateDecomDataChangesHelper(ShowData, Attr) {
-      var result = {};
-      Object.keys(ShowData).forEach(function (keyName) {
-        result[keyName] = {};
-
-        if (ShowData[keyName].type == "folder") {
-          result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper(ShowData[keyName].content, Attr);
-          result[keyName][Attr[6]] = {};
-        } else {
-          result[keyName][Attr[2]] = ShowData[keyName].content;
-        }
-
-        result[keyName][Attr[1]] = ShowData[keyName].type;
-      }, this);
-      return result;
-    }
-  }, {
-    key: "CreateData",
-    value: function CreateData(ShowDecomDataChanges) {
-      var Attr = this.state.Attr;
-      var result = {
-        content: this.CreateDataHelper(ShowDecomDataChanges.content, Attr)
-      };
-      return result;
-    }
-  }, {
-    key: "CreateDataHelper",
-    value: function CreateDataHelper(ShowDecomDataChanges, Attr) {
-      var result = {};
-      Object.keys(ShowDecomDataChanges).forEach(function (keyName) {
-        // result[keyName][Attr[3]] = "update/delete";
-        if (ShowDecomDataChanges[keyName] !== null) {
+    key: "Changes",
+    value: function Changes(Data) {
+      this.ChangesHelper = function (Data, Attr) {
+        var result = {};
+        Object.keys(Data).forEach(function (keyName) {
           result[keyName] = {};
 
-          if (ShowDecomDataChanges[keyName].type == "folder") {
-            result[keyName][Attr[2]] = this.CreateDataHelper(ShowDecomDataChanges[keyName].content, Attr); // result[keyName][Attr[6]]= {}
-            // result[keyName][Attr[6]]["folder"] = null;
-            // result[keyName][Attr[6]]["file"] = null;
-            // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
+          if (Data[keyName].type == "folder") {
+            result[keyName][Attr[2]] = this.ChangesHelper(Data[keyName].content, Attr);
+            result[keyName][Attr[6]] = {};
           } else {
-            result[keyName][Attr[2]] = ShowDecomDataChanges[keyName].content;
+            result[keyName][Attr[2]] = Data[keyName].content;
           }
 
-          result[keyName][Attr[1]] = ShowDecomDataChanges[keyName].type;
-        }
-      }, this);
+          result[keyName][Attr[1]] = Data[keyName].type;
+        }, this);
+        return result;
+      };
+
+      var Attr = this.state.Attr;
+      var result = {
+        content: this.ChangesHelper(Data.content, Attr)
+      };
       return result;
     }
   }, {
-    key: "UpdateDecomDataChanges",
-    value: function UpdateDecomDataChanges(changerIdentifier, value) {
-      var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-      eval(changerIdentifier + "=value");
-      var ShowData = this.CreateData(ShowDecomDataChanges);
+    key: "Data",
+    value: function Data(Changes) {
+      this.DataHelper = function (Changes, Attr) {
+        var result = {};
+        Object.keys(Changes).forEach(function (keyName) {
+          // result[keyName][Attr[3]] = "update/delete";
+          if (Changes[keyName] !== null) {
+            result[keyName] = {};
+
+            if (Changes[keyName].type == "folder") {
+              result[keyName][Attr[2]] = this.DataHelper(Changes[keyName].content, Attr); // result[keyName][Attr[6]]= {}
+              // result[keyName][Attr[6]]["folder"] = null;
+              // result[keyName][Attr[6]]["file"] = null;
+              // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
+            } else {
+              result[keyName][Attr[2]] = Changes[keyName].content;
+            }
+
+            result[keyName][Attr[1]] = Changes[keyName].type;
+          }
+        }, this);
+        return result;
+      };
+
+      var Attr = this.state.Attr;
+      var result = {
+        content: this.DataHelper(Changes.content, Attr)
+      };
+      return result;
+    }
+  }, {
+    key: "ChangeContent",
+    value: function ChangeContent(Identifier, value) {
+      var Changes = this.state.Changes;
+      eval(Identifier + "=value");
+      var Data = this.Data(Changes);
       this.setState({
-        ShowDecomDataChanges: ShowDecomDataChanges,
-        ShowData: ShowData
+        Changes: Changes,
+        Data: Data
       });
     }
   }, {
-    key: "UpdateNameDecomDataChanges",
-    value: function UpdateNameDecomDataChanges(IdentifierStart, IdentifierEnd, value) {
-      var changerIdentifier = IdentifierStart + IdentifierEnd;
-      var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-      var SubjectSelector = changerIdentifier;
+    key: "ChangeName",
+    value: function ChangeName(IdentifierStart, IdentifierEnd, value) {
+      var Identifier = IdentifierStart + IdentifierEnd;
+      var Changes = this.state.Changes;
+      var SubjectSelector = Identifier;
       SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
       SubjectSelector = SubjectSelector.replaceAll("\\']", "");
-      var branch = eval(changerIdentifier);
+      var branch = eval(Identifier);
       var oldname = IdentifierEnd;
       oldname = oldname.replaceAll("\\['", "");
       oldname = oldname.replaceAll("\\']", "");
       var Attr = this.state.Attr;
-      branch[Attr[10]] = oldname; // eval(changerIdentifier+"= null");
+      branch[Attr[10]] = oldname; // eval(Identifier+"= null");
 
-      eval("delete " + changerIdentifier);
+      eval("delete " + Identifier);
       eval(IdentifierStart + "['" + value + "']=branch");
-      var ShowData = this.CreateData(ShowDecomDataChanges);
+      var Data = this.Data(Changes);
       this.setState({
-        ShowDecomDataChanges: ShowDecomDataChanges,
-        ShowData: ShowData
+        Changes: Changes,
+        Data: Data
       });
     }
   }, {
-    key: "SendDataChanges",
-    value: function SendDataChanges(IdentifierStart, IdentifierEnd) {
+    key: "SendChanges",
+    value: function SendChanges(IdentifierStart, IdentifierEnd) {
+      this.SendChangesHelper = function (IdentifierStart, IdentifierEnd) {
+        var Changes = this.state.Changes; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
+
+        var Identifier = IdentifierStart + IdentifierEnd;
+        var branch = eval(Identifier);
+        var UrlMiddle = IdentifierStart;
+        UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
+        UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
+        UrlMiddle = UrlMiddle.replace("Changes", "");
+        var UrlEnd = IdentifierEnd;
+        UrlEnd = UrlEnd.replaceAll("\\['", "/");
+        UrlEnd = UrlEnd.replaceAll("'\\]", "");
+        var Attr = this.state.Attr;
+
+        if (typeof branch[Attr[10]] !== 'undefined') {
+          var OldName = branch[Attr[10]];
+          delete branch[Attr[10]];
+        } else {
+          var OldName = null;
+        }
+
+        return {
+          UrlMiddle: UrlMiddle,
+          UrlEnd: UrlEnd,
+          Content: branch,
+          OldName: OldName
+        }; // var Changes = this.state.Changes;
+        //
+        // var branchContent = {
+        //   "Data": this.state.branch,
+        //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+        //   "form": "data",
+        // }
+        // // var UrlSuffix = "";
+        // this.setState({
+        //   branch: {
+        //     "Content": branchContent,
+        //     // "UrlSuffix": UrlSuffix
+        //   }
+        // });
+      };
+
       event.preventDefault();
       var Identifier = IdentifierStart + IdentifierEnd;
-      var ComprDataChanges = this.CreateComprDataChanges(IdentifierStart, IdentifierEnd);
-      var UrlMiddle = ComprDataChanges.UrlMiddle;
-      var UrlEnd = ComprDataChanges.UrlEnd;
-      var Content = ComprDataChanges.Content; // alert(JSON.stringify(ComprDataChanges, null, 2));
+      var SendChangesHelper = this.SendChangesHelper(IdentifierStart, IdentifierEnd);
+      var UrlMiddle = SendChangesHelper.UrlMiddle;
+      var UrlEnd = SendChangesHelper.UrlEnd;
+      var Content = SendChangesHelper.Content; // alert(JSON.stringify(SendChangesHelper, null, 2));
       // this.setState({
-      //   ShowDecomDataChanges: ShowDecomDataChanges
+      //   Changes: Changes
       // });
 
       var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
@@ -66389,9 +66423,9 @@ function (_Component) {
         console.log(error);
       });
 
-      if (ComprDataChanges.OldName !== null) {
-        var OtherUrlEnd = ComprDataChanges.OldName;
-        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(ComprDataChanges.OldName);
+      if (SendChangesHelper.OldName !== null) {
+        var OtherUrlEnd = SendChangesHelper.OldName;
+        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(SendChangesHelper.OldName);
         // alert(OtherURL);
 
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(OtherURL, []).then(function (response) {
@@ -66400,49 +66434,6 @@ function (_Component) {
           console.log(error);
         });
       }
-    }
-  }, {
-    key: "CreateComprDataChanges",
-    value: function CreateComprDataChanges(IdentifierStart, IdentifierEnd) {
-      var ShowDecomDataChanges = this.state.ShowDecomDataChanges; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
-
-      var Identifier = IdentifierStart + IdentifierEnd;
-      var ShowComprDataChanges = eval(Identifier);
-      var UrlMiddle = IdentifierStart;
-      UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
-      UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
-      UrlMiddle = UrlMiddle.replace("ShowDecomDataChanges", "");
-      var UrlEnd = IdentifierEnd;
-      UrlEnd = UrlEnd.replaceAll("\\['", "/");
-      UrlEnd = UrlEnd.replaceAll("'\\]", "");
-      var Attr = this.state.Attr;
-
-      if (typeof ShowComprDataChanges[Attr[10]] !== 'undefined') {
-        var OldName = ShowComprDataChanges[Attr[10]];
-        delete ShowComprDataChanges[Attr[10]];
-      } else {
-        var OldName = null;
-      }
-
-      return {
-        UrlMiddle: UrlMiddle,
-        UrlEnd: UrlEnd,
-        Content: ShowComprDataChanges,
-        OldName: OldName
-      }; // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-      //
-      // var ShowComprDataChangesContent = {
-      //   "Data": this.state.ShowComprDataChanges,
-      //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
-      //   "form": "data",
-      // }
-      // // var UrlSuffix = "";
-      // this.setState({
-      //   ShowComprDataChanges: {
-      //     "Content": ShowComprDataChangesContent,
-      //     // "UrlSuffix": UrlSuffix
-      //   }
-      // });
     }
   }, {
     key: "render",
@@ -66469,19 +66460,19 @@ function (_Component) {
         name: "form",
         defaultValue: "data"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        identifier: "ShowDecomDataChanges",
+        identifier: "Changes",
         Attr: this.state.Attr,
-        ShowData: this.state.ShowData.content,
-        UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
-          return _this3.UpdateDecomDataChanges(changerIdentifier, value);
+        Data: this.state.Data.content,
+        ChangeContent: function ChangeContent(Identifier, value) {
+          return _this3.ChangeContent(Identifier, value);
         },
-        UpdateNameDecomDataChanges: function UpdateNameDecomDataChanges(IdentifierStart, IdentifierEnd, value) {
-          return _this3.UpdateNameDecomDataChanges(IdentifierStart, IdentifierEnd, value);
+        ChangeName: function ChangeName(IdentifierStart, IdentifierEnd, value) {
+          return _this3.ChangeName(IdentifierStart, IdentifierEnd, value);
         },
         submit: function submit(IdentifierStart, IdentifierEnd) {
-          return _this3.SendDataChanges(IdentifierStart, IdentifierEnd);
+          return _this3.SendChanges(IdentifierStart, IdentifierEnd);
         }
-      })), "ShowDecomDataChanges", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowDecomDataChanges, null, 2)), "ShowData", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.ShowData, null, 2))));
+      })), "Changes", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Changes, null, 2)), "Data", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Data, null, 2))));
     }
   }]);
 
@@ -66494,18 +66485,18 @@ function (_Component) {
 var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
-      ShowData = _ref.ShowData,
-      _UpdateDecomDataChanges = _ref.UpdateDecomDataChanges,
-      _UpdateNameDecomDataChanges = _ref.UpdateNameDecomDataChanges,
+      Data = _ref.Data,
+      _ChangeContent = _ref.ChangeContent,
+      _ChangeName = _ref.ChangeName,
       _submit = _ref.submit;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
-  }, typeof ShowData !== 'undefined' && Object.keys(ShowData).map(function (keyName, i) {
+  }, typeof Data !== 'undefined' && Object.keys(Data).map(function (keyName, i) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: identifier + "[" + "'content'" + "]['" + keyName + "']"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, ShowData[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, Data[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66515,8 +66506,8 @@ var DataHelper = function DataHelper(_ref) {
       name: "checkbox",
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      onBlur: function onBlur(changerIdentifier, value) {
-        _UpdateNameDecomDataChanges(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
+      onBlur: function onBlur(Identifier, value) {
+        _ChangeName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
       },
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
@@ -66528,11 +66519,11 @@ var DataHelper = function DataHelper(_ref) {
     }, "^")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      defaultValue: ShowData[keyName].type
-    }), ShowData[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      defaultValue: Data[keyName].type
+    }), Data[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
-      defaultValue: ShowData[keyName].entity_type
+      defaultValue: Data[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(IdentifierStart, IdentifierEnd) {
         _submit(identifier + "[" + "'content'" + "]", "['" + keyName + "']");
@@ -66544,7 +66535,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-little-button",
       type: "submit",
       value: "delete"
-    }, "\xD7"), ShowData[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    }, "\xD7"), Data[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66573,15 +66564,15 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       className: "kv-little-button",
       value: "create_file"
-    }, "+"))))), ShowData[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+    }, "+"))))), Data[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
-      ShowData: ShowData[keyName].content,
-      UpdateDecomDataChanges: function UpdateDecomDataChanges(changerIdentifier, value) {
-        _UpdateDecomDataChanges(changerIdentifier, value);
+      Data: Data[keyName].content,
+      ChangeContent: function ChangeContent(Identifier, value) {
+        _ChangeContent(Identifier, value);
       },
-      UpdateNameDecomDataChanges: function UpdateNameDecomDataChanges(IdentifierStart, IdentifierEnd, value) {
-        _UpdateNameDecomDataChanges(IdentifierStart, IdentifierEnd, value);
+      ChangeName: function ChangeName(IdentifierStart, IdentifierEnd, value) {
+        _ChangeName(IdentifierStart, IdentifierEnd, value);
       },
       submit: function submit(IdentifierStart, IdentifierEnd) {
         _submit(IdentifierStart, IdentifierEnd);
@@ -66591,12 +66582,12 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-      onChange: function onChange(changerIdentifier, value) {
-        _UpdateDecomDataChanges(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
+      onChange: function onChange(Identifier, value) {
+        _ChangeContent(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       rows: "8",
-      defaultValue: ShowData[keyName].content
+      defaultValue: Data[keyName].content
     })))));
   }));
 };
