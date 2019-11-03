@@ -20,7 +20,6 @@ export default class Data extends Component {
       7: 'url',
       8: 'entity_type',
       9: 'conteent',
-      10: 'oldname',
     },
     loading: "loaded",
 
@@ -51,7 +50,18 @@ export default class Data extends Component {
         ShowDecomDataChanges: CreateDecomDataChanges,
         loading:loading
       });
+
+
+      // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowData)
+      // .then(response => {
+      //   this.setState({loading:"loaded"});
+      // })
+      // .catch(error => {
+      //   this.setState({loading:"failed"});
+      // });
+
     }).catch(error => {
+
       console.log(error);
       this.setState({loading:"failed"});
     });
@@ -98,6 +108,37 @@ export default class Data extends Component {
     // --------
 
 
+    // axios.get('/api/show/Group_1')
+    // .then(response => {
+    //   this.setState({
+    //     ShowData: response,
+    //     loading:"loaded"
+    //   });
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    //   this.setState({loading:"failed"});
+    // });
+
+    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    // .then(response => {
+    //   this.setState({
+    //     ShowData: response,
+    //     loading:"loaded"
+    //   });
+    // })
+    // .catch(error => {
+    //   this.setState({loading:"failed"});
+    // });
+
+
+    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_3.json',this.state.ShowDecomDataChanges)
+    // .then(response => {
+    //   this.setState({loading:"loaded"});
+    // })
+    // .catch(error => {
+    //   this.setState({loading:"failed"});
+    // });
 
 
 
@@ -118,10 +159,16 @@ export default class Data extends Component {
 
       result[keyName] = {};
 
+      // result[keyName][Attr[3]] = "update/delete";
+
       if (ShowData[keyName].type == "folder"){
 
         result[keyName][Attr[2]] = this.CreateDecomDataChangesHelper( ShowData[keyName].content,Attr);
         result[keyName][Attr[6]]= {}
+
+        // result[keyName][Attr[6]]["folder"] = null;
+        // result[keyName][Attr[6]]["file"] = null;
+        // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
 
       } else {
         result[keyName][Attr[2]] = ShowData[keyName].content;
@@ -129,7 +176,8 @@ export default class Data extends Component {
       result[keyName][Attr[1]] = ShowData[keyName].type;
     }, this);
 
-
+    // var DataString = JSON.stringify(result, null, 2);
+    // alert(DataString);
 
     return result;
   }
@@ -169,14 +217,15 @@ export default class Data extends Component {
       }
     }, this);
 
-
+    // var DataString = JSON.stringify(result, null, 2);
+    // alert(DataString);
 
     return result;
   }
 
 
   UpdateDecomDataChanges (changerIdentifier,value){
-
+    // alert(changerIdentifier);
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
     eval(changerIdentifier+"=value");
     var ShowData = this.CreateData(ShowDecomDataChanges);
@@ -185,119 +234,88 @@ export default class Data extends Component {
       ShowData: ShowData
     });
 
-
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    // var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
+    // alert(DataString);
 
   }
 
 
-  UpdateNameDecomDataChanges (IdentifierStart,IdentifierEnd,value){
-    var changerIdentifier = IdentifierStart+IdentifierEnd;
+  UpdateNameDecomDataChanges (changerIdentifierParent,changerIdentifierChild,value){
+    var changerIdentifier = changerIdentifierParent+changerIdentifierChild;
 
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
 
     var SubjectSelector = changerIdentifier;
     SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
     SubjectSelector = SubjectSelector.replaceAll("\\']", "");
+    // SubjectSelector = SubjectSelector.replace("ShowDecomDataChanges['", "");
+    // SubjectSelector = SubjectSelector.replace("']", "");
+
+    // up till here
+    // eval(changerIdentifier+"['name']=value");
+
     var branch = eval(changerIdentifier);
 
-    var oldname = IdentifierEnd;
-    oldname = oldname.replaceAll("\\['", "");
-    oldname = oldname.replaceAll("\\']", "");
+    eval(changerIdentifier+"= null");
 
-    var Attr = this.state.Attr;
-    branch[Attr[10]] = oldname;
 
-    // eval(changerIdentifier+"= null");
-    eval("delete "+changerIdentifier);
-    eval(IdentifierStart+"['"+value+"']=branch");
+
+    // eval(changerIdentifierParent+".value=branch");
+    // eval(changerIdentifierParent+"."+value+"=branch");
+    // eval(changerIdentifierParent['value']"=branch");
+
+    eval(changerIdentifierParent+"['"+value+"']=branch");
+
+
     var ShowData = this.CreateData(ShowDecomDataChanges);
     this.setState({
       ShowDecomDataChanges: ShowDecomDataChanges,
       ShowData: ShowData
     });
 
+    // alert(changerIdentifier);
+    // var DataString = JSON.stringify(this.state.ShowDecomDataChanges, null, 2);
+    // alert(DataString);
 
+    // changerIdentifier['name'] = value;
 
-  }
-
-  SendDataChanges(IdentifierStart,IdentifierEnd){
-    event.preventDefault();
-    var Identifier = IdentifierStart+IdentifierEnd;
-    var ComprDataChanges = this.CreateComprDataChanges(IdentifierStart,IdentifierEnd);
-
-    var UrlMiddle = ComprDataChanges.UrlMiddle;
-    var UrlEnd = ComprDataChanges.UrlEnd;
-    var Content = ComprDataChanges.Content;
+    // var str = 'a_b_c';
+    // str = str.replace(/_([^_]*)$/,'$1'); //a_bc/a_bc
+    // changerIdentifier = str.replace(new RegExp(list[i] + '$'), 'finish');
 
 
 
-    // alert(JSON.stringify(ComprDataChanges, null, 2));
+    // alert(JSON.stringify(branch, null, 2));
 
+    // // alert(changerIdentifier);
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    // eval(changerIdentifier+"=value");
     // this.setState({
     //   ShowDecomDataChanges: ShowDecomDataChanges
     // });
-
-
-    var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
-    var URL = URLPrefix+UrlMiddle+UrlEnd+'.json'
-    // alert(JSON.stringify(Content, null, 2));
-    axios.put(URL, Content)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-    if (ComprDataChanges.OldName !== null) {
-      var  OtherUrlEnd = ComprDataChanges.OldName;
-      var OtherURL = URLPrefix+UrlMiddle+"/"+OtherUrlEnd+'.json';
-
-      // alert(ComprDataChanges.OldName);
-      // alert(OtherURL);
-      axios.put(OtherURL, [])
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-
+    //
+    // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
+    // var DataString = JSON.stringify(ShowDecomDataChanges, null, 2);
+    // // alert(DataString);
 
   }
-
-
-
-  CreateComprDataChanges(IdentifierStart,IdentifierEnd){
+  CreateComprDataChanges(submitterIdentifier){
     var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
-    // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
-    var Identifier = IdentifierStart+IdentifierEnd;
-    
-    var ShowComprDataChanges = eval(Identifier);
+    // eval(submitterIdentifier+"['action']='update'");
+    var ShowComprDataChanges = eval(submitterIdentifier);
+    var UrlSuffix = submitterIdentifier;
+    UrlSuffix = UrlSuffix.replaceAll("'\\]\\['", "/");
+    UrlSuffix = UrlSuffix.replace("ShowDecomDataChanges['", "");
+    UrlSuffix = UrlSuffix.replace("']", "");
+    UrlSuffix = "/"+UrlSuffix;
 
-    var UrlMiddle = IdentifierStart;
-    UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
-    UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
-    UrlMiddle = UrlMiddle.replace("ShowDecomDataChanges", "");
-
-
-    var UrlEnd = IdentifierEnd;
-    UrlEnd = UrlEnd.replaceAll("\\['", "/");
-    UrlEnd = UrlEnd.replaceAll("'\\]", "");
-
-    var Attr = this.state.Attr;
-    if (typeof ShowComprDataChanges[Attr[10]] !== 'undefined') {
-      var OldName = ShowComprDataChanges[Attr[10]]
-      delete ShowComprDataChanges[Attr[10]];
-    } else {
-      var OldName = null
-    }
+    // return {
+    //   "UrlSuffix": UrlSuffix,
+    //   "Content": ShowComprDataChanges
+    // };
     return {
-      UrlMiddle:UrlMiddle,
-      UrlEnd:UrlEnd,
-      Content:ShowComprDataChanges,
-      OldName:OldName
+      [UrlSuffix]:ShowComprDataChanges
     };
 
     // var ShowDecomDataChanges = this.state.ShowDecomDataChanges;
@@ -315,9 +333,72 @@ export default class Data extends Component {
     //   }
     // });
   }
+  CreateComprDataChangesHelper(){
 
+  }
+
+  SendDataChanges(submitterIdentifier){
+    event.preventDefault();
+
+    var ComprDataChanges = this.CreateComprDataChanges(submitterIdentifier);
+
+    // var Content = ComprDataChanges.Content;
+    // var UrlSuffix = ComprDataChanges.UrlSuffix;
+
+    var UrlSuffix = Object.keys(ComprDataChanges)[0];
+    var Content = ComprDataChanges[UrlSuffix];
+
+
+
+    // alert(JSON.stringify(ComprDataChanges, null, 2));
+    // this.setState({
+    //   ShowDecomDataChanges: ShowDecomDataChanges
+    // });
+
+
+    // axios.post('/store/Group_1'+UrlSuffix, Content)
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+
+    // axios.put('https://test-c6f20.firebaseio.com/Reports/Report_1'+UrlSuffix+'.json', Content)
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+
+
+    // axios.post('/store/Group_1', Post)
+    // .then(function (response) {
+    //   this.GetAllData();
+    // });
+  }
 
   render() {
+
+    // return (
+    //   <div>
+    //
+    //     {this.state.loading == "loading" ?
+    //       <div style={{fontSize: "100px", textAlign: "center"}}>
+    //         ⌛
+    //       </div>
+    //       : this.state.loading == "failed" ?
+    //       <div style={{fontSize: "100px", textAlign: "center"}}>
+    //         ⚠
+    //       </div>
+    //       :
+    //       <pre>{JSON.stringify(this.state.ShowDecomDataChanges, null, 2) }</pre>
+    //
+    //     }
+    //   </div>
+    //
+    // );
 
     return (
       <div>
@@ -348,8 +429,8 @@ export default class Data extends Component {
                 Attr={this.state.Attr}
                 ShowData={this.state.ShowData.content}
                 UpdateDecomDataChanges={(changerIdentifier,value) => this.UpdateDecomDataChanges(changerIdentifier,value)}
-                UpdateNameDecomDataChanges={(IdentifierStart,IdentifierEnd,value) => this.UpdateNameDecomDataChanges(IdentifierStart,IdentifierEnd,value)}
-                submit={(IdentifierStart,IdentifierEnd) => this.SendDataChanges(IdentifierStart,IdentifierEnd)}
+                UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => this.UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}
+                submit={(submitterIdentifier) => this.SendDataChanges(submitterIdentifier)}
                 />
             </form>
             ShowDecomDataChanges
@@ -374,6 +455,10 @@ export default class Data extends Component {
 // Recursive component
 const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateNameDecomDataChanges, submit}) => {
 
+  // var ShowData = Object.values(ShowData);
+  // alert(JSON.stringify(ShowData));
+  // {JSON.stringify(ShowData.content)}
+
 
 
   return (
@@ -393,7 +478,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateN
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
+              <input  onChange={(changerIdentifier,value) => {UpdateNameDecomDataChanges(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
@@ -407,7 +492,7 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateN
             }
 
 
-            <button onClick={(IdentifierStart,IdentifierEnd) => {submit(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit"  value="update">✓</button>
+            <button onClick={(submitterIdentifier) => {submit(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit"  value="update">✓</button>
             <button className="kv-little-button" type="submit"  value="delete">×</button>
 
 
@@ -440,8 +525,8 @@ const DataHelper = ({ identifier,Attr, ShowData, UpdateDecomDataChanges, UpdateN
               Attr= {Attr}
               ShowData={ShowData[keyName].content}
               UpdateDecomDataChanges={(changerIdentifier,value) => {UpdateDecomDataChanges(changerIdentifier,value)}}
-              UpdateNameDecomDataChanges={(IdentifierStart,IdentifierEnd,value) => {UpdateNameDecomDataChanges(IdentifierStart,IdentifierEnd,value)}}
-              submit={(IdentifierStart,IdentifierEnd) => {submit(IdentifierStart,IdentifierEnd)}}
+              UpdateNameDecomDataChanges={(changerIdentifierParent,changerIdentifierChild,value) => {UpdateNameDecomDataChanges(changerIdentifierParent,changerIdentifierChild,value)}}
+              submit={(submitterIdentifier) => {submit(submitterIdentifier)}}
               />
 
             :
