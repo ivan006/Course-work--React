@@ -66326,8 +66326,11 @@ function (_Component) {
       return result;
     }
   }, {
-    key: "ChangeContent",
-    value: function ChangeContent(Identifier, value) {
+    key: "ChangeCreate",
+    value: function ChangeCreate(IdentifierStart, IdentifierEnd, value) {}
+  }, {
+    key: "ChangeUpdateContents",
+    value: function ChangeUpdateContents(Identifier, value) {
       var Changes = this.state.Changes;
       eval(Identifier + "=value");
       var Data = this.Data(Changes);
@@ -66337,8 +66340,8 @@ function (_Component) {
       });
     }
   }, {
-    key: "ChangeName",
-    value: function ChangeName(IdentifierStart, IdentifierEnd, value) {
+    key: "ChangeUpdateName",
+    value: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
       var Identifier = IdentifierStart + IdentifierEnd;
       var Changes = this.state.Changes;
       var SubjectSelector = Identifier;
@@ -66359,6 +66362,9 @@ function (_Component) {
         Data: Data
       });
     }
+  }, {
+    key: "ChangeDelete",
+    value: function ChangeDelete(IdentifierStart, IdentifierEnd, value) {}
   }, {
     key: "SendChanges",
     value: function SendChanges(IdentifierStart, IdentifierEnd) {
@@ -66463,11 +66469,11 @@ function (_Component) {
         identifier: "Changes",
         Attr: this.state.Attr,
         Data: this.state.Data.content,
-        ChangeContent: function ChangeContent(Identifier, value) {
-          return _this3.ChangeContent(Identifier, value);
+        ChangeUpdateContents: function ChangeUpdateContents(Identifier, value) {
+          return _this3.ChangeUpdateContents(Identifier, value);
         },
-        ChangeName: function ChangeName(IdentifierStart, IdentifierEnd, value) {
-          return _this3.ChangeName(IdentifierStart, IdentifierEnd, value);
+        ChangeUpdateName: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
+          return _this3.ChangeUpdateName(IdentifierStart, IdentifierEnd, value);
         },
         submit: function submit(IdentifierStart, IdentifierEnd) {
           return _this3.SendChanges(IdentifierStart, IdentifierEnd);
@@ -66486,8 +66492,8 @@ var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
       Data = _ref.Data,
-      _ChangeContent = _ref.ChangeContent,
-      _ChangeName = _ref.ChangeName,
+      _ChangeUpdateContents = _ref.ChangeUpdateContents,
+      _ChangeUpdateName = _ref.ChangeUpdateName,
       _submit = _ref.submit;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
@@ -66507,7 +66513,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       onBlur: function onBlur(Identifier, value) {
-        _ChangeName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
+        _ChangeUpdateName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
       },
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
@@ -66568,11 +66574,11 @@ var DataHelper = function DataHelper(_ref) {
       identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
       Data: Data[keyName].content,
-      ChangeContent: function ChangeContent(Identifier, value) {
-        _ChangeContent(Identifier, value);
+      ChangeUpdateContents: function ChangeUpdateContents(Identifier, value) {
+        _ChangeUpdateContents(Identifier, value);
       },
-      ChangeName: function ChangeName(IdentifierStart, IdentifierEnd, value) {
-        _ChangeName(IdentifierStart, IdentifierEnd, value);
+      ChangeUpdateName: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
+        _ChangeUpdateName(IdentifierStart, IdentifierEnd, value);
       },
       submit: function submit(IdentifierStart, IdentifierEnd) {
         _submit(IdentifierStart, IdentifierEnd);
@@ -66583,7 +66589,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       onChange: function onChange(Identifier, value) {
-        _ChangeContent(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
+        _ChangeUpdateContents(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       rows: "8",

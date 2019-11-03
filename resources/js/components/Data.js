@@ -167,7 +167,10 @@ export default class Data extends Component {
     return result;
   }
 
-  ChangeContent(Identifier,value){
+  ChangeCreate(IdentifierStart,IdentifierEnd,value){
+  }
+
+  ChangeUpdateContents(Identifier,value){
 
     var Changes = this.state.Changes;
     eval(Identifier+"=value");
@@ -178,7 +181,7 @@ export default class Data extends Component {
     });
   }
 
-  ChangeName(IdentifierStart,IdentifierEnd,value){
+  ChangeUpdateName(IdentifierStart,IdentifierEnd,value){
     var Identifier = IdentifierStart+IdentifierEnd;
 
     var Changes = this.state.Changes;
@@ -206,6 +209,9 @@ export default class Data extends Component {
 
 
 
+  }
+
+  ChangeDelete(IdentifierStart,IdentifierEnd,value){
   }
 
   SendChanges(IdentifierStart,IdentifierEnd){
@@ -331,8 +337,8 @@ export default class Data extends Component {
                 identifier="Changes"
                 Attr={this.state.Attr}
                 Data={this.state.Data.content}
-                ChangeContent={(Identifier,value) => this.ChangeContent(Identifier,value)}
-                ChangeName={(IdentifierStart,IdentifierEnd,value) => this.ChangeName(IdentifierStart,IdentifierEnd,value)}
+                ChangeUpdateContents={(Identifier,value) => this.ChangeUpdateContents(Identifier,value)}
+                ChangeUpdateName={(IdentifierStart,IdentifierEnd,value) => this.ChangeUpdateName(IdentifierStart,IdentifierEnd,value)}
                 submit={(IdentifierStart,IdentifierEnd) => this.SendChanges(IdentifierStart,IdentifierEnd)}
                 />
             </form>
@@ -356,7 +362,7 @@ export default class Data extends Component {
 
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, Data, ChangeContent, ChangeName, submit}) => {
+const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateName, submit}) => {
 
 
 
@@ -377,7 +383,7 @@ const DataHelper = ({ identifier,Attr, Data, ChangeContent, ChangeName, submit})
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(Identifier,value) => {ChangeName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
+              <input  onBlur={(Identifier,value) => {ChangeUpdateName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
@@ -423,8 +429,8 @@ const DataHelper = ({ identifier,Attr, Data, ChangeContent, ChangeName, submit})
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
               Data={Data[keyName].content}
-              ChangeContent={(Identifier,value) => {ChangeContent(Identifier,value)}}
-              ChangeName={(IdentifierStart,IdentifierEnd,value) => {ChangeName(IdentifierStart,IdentifierEnd,value)}}
+              ChangeUpdateContents={(Identifier,value) => {ChangeUpdateContents(Identifier,value)}}
+              ChangeUpdateName={(IdentifierStart,IdentifierEnd,value) => {ChangeUpdateName(IdentifierStart,IdentifierEnd,value)}}
               submit={(IdentifierStart,IdentifierEnd) => {submit(IdentifierStart,IdentifierEnd)}}
               />
 
@@ -432,7 +438,7 @@ const DataHelper = ({ identifier,Attr, Data, ChangeContent, ChangeName, submit})
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(Identifier,value) => {ChangeContent(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
+                  <textarea onChange={(Identifier,value) => {ChangeUpdateContents(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
