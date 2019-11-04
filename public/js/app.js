@@ -66174,7 +66174,6 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       Data: [],
-      Changes: [],
       Attr: {
         0: 'name',
         1: 'type',
@@ -66197,7 +66196,38 @@ function (_Component) {
   _createClass(Data, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
+      this.Read();
+    }
+  }, {
+    key: "Create",
+    value: function Create(IdentifierStart, IdentifierEnd, value) {}
+  }, {
+    key: "Read",
+    value: function Read() {
+      this.ReadHelper1 = function (Data) {
+        this.ReadHelper2 = function (Data, Attr) {
+          var result = {};
+          Object.keys(Data).forEach(function (keyName) {
+            result[keyName] = {};
+
+            if (Data[keyName].type == "folder") {
+              result[keyName][Attr[2]] = this.ReadHelper2(Data[keyName].content, Attr);
+              result[keyName][Attr[6]] = {};
+            } else {
+              result[keyName][Attr[2]] = Data[keyName].content;
+            }
+
+            result[keyName][Attr[1]] = Data[keyName].type;
+          }, this);
+          return result;
+        };
+
+        var Attr = this.state.Attr;
+        var result = {
+          content: this.ReadHelper2(Data.content, Attr)
+        };
+        return result;
+      };
 
       String.prototype.replaceAll = function (search, replacement) {
         var target = this;
@@ -66205,145 +66235,79 @@ function (_Component) {
       }; // --------
       // online start
       // --------
-
-
-      this.setState({
-        loading: "loading"
-      });
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
-        var Data = response.data;
-
-        var Changes = _this2.Changes(Data);
-
-        var loading = "loaded";
-
-        _this2.setState({
-          Data: Data,
-          Changes: Changes,
-          loading: loading
-        });
-      })["catch"](function (error) {
-        console.log(error);
-
-        _this2.setState({
-          loading: "failed"
-        });
-      }); // --------
+      // this.setState({loading:"loading"});
+      //
+      // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+      // .then(response => {
+      //   var Data = response.data;
+      //   var Data = this.ReadHelper1(Data);
+      //   var loading = "loaded";
+      //   this.setState({
+      //     Data: Data,
+      //     Data: Data,
+      //     loading:loading
+      //   });
+      // }).catch(error => {
+      //   console.log(error);
+      //   this.setState({loading:"failed"});
+      // });
+      // --------
       // online end
       // --------
       // --------
       // offline start
       // --------
-      // var Data = {
-      //   "content": {
-      //     "_data": {
-      //       "content": {
-      //         "code": {
-      //           "content": {
-      //             "w3css": {
-      //               "content": "123",
-      //               "type": "file"
-      //             },
-      //             "w3cssd": {
-      //               "content": "123",
-      //               "type": "file"
-      //             }
-      //           },
-      //           "type": "folder"
-      //         }
-      //       },
-      //       "type": "folder"
-      //     }
-      //   }
-      // };
-      // var Changes = this.Changes(Data);
-      // var loading = "failed";
-      //
-      // this.setState({
-      //   Data: Data,
-      //   Changes: Changes,
-      //   loading:loading
-      // });
-      // --------
+
+
+      var Data = {
+        "content": {
+          "_data": {
+            "content": {
+              "code": {
+                "content": {
+                  "w3css": {
+                    "content": "123",
+                    "type": "file"
+                  },
+                  "w3cssd": {
+                    "content": "123",
+                    "type": "file"
+                  }
+                },
+                "type": "folder"
+              }
+            },
+            "type": "folder"
+          }
+        }
+      };
+      var Data = this.ReadHelper1(Data);
+      var loading = "failed";
+      this.setState({
+        // Data: Data,
+        Data: Data,
+        loading: loading
+      }); // --------
       // offline end
       // --------
     }
   }, {
-    key: "Changes",
-    value: function Changes(Data) {
-      this.ChangesHelper = function (Data, Attr) {
-        var result = {};
-        Object.keys(Data).forEach(function (keyName) {
-          result[keyName] = {};
+    key: "UpdateHelperContents",
+    value: function UpdateHelperContents(Identifier, value) {
+      var Data = this.state.Data;
+      eval(Identifier + "=value"); // alert(Identifier);
+      // var Data = this.Read(Data);
 
-          if (Data[keyName].type == "folder") {
-            result[keyName][Attr[2]] = this.ChangesHelper(Data[keyName].content, Attr);
-            result[keyName][Attr[6]] = {};
-          } else {
-            result[keyName][Attr[2]] = Data[keyName].content;
-          }
-
-          result[keyName][Attr[1]] = Data[keyName].type;
-        }, this);
-        return result;
-      };
-
-      var Attr = this.state.Attr;
-      var result = {
-        content: this.ChangesHelper(Data.content, Attr)
-      };
-      return result;
-    }
-  }, {
-    key: "Data",
-    value: function Data(Changes) {
-      this.DataHelper = function (Changes, Attr) {
-        var result = {};
-        Object.keys(Changes).forEach(function (keyName) {
-          // result[keyName][Attr[3]] = "update/delete";
-          if (Changes[keyName] !== null) {
-            result[keyName] = {};
-
-            if (Changes[keyName].type == "folder") {
-              result[keyName][Attr[2]] = this.DataHelper(Changes[keyName].content, Attr); // result[keyName][Attr[6]]= {}
-              // result[keyName][Attr[6]]["folder"] = null;
-              // result[keyName][Attr[6]]["file"] = null;
-              // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
-            } else {
-              result[keyName][Attr[2]] = Changes[keyName].content;
-            }
-
-            result[keyName][Attr[1]] = Changes[keyName].type;
-          }
-        }, this);
-        return result;
-      };
-
-      var Attr = this.state.Attr;
-      var result = {
-        content: this.DataHelper(Changes.content, Attr)
-      };
-      return result;
-    }
-  }, {
-    key: "ChangeCreate",
-    value: function ChangeCreate(IdentifierStart, IdentifierEnd, value) {}
-  }, {
-    key: "ChangeUpdateContents",
-    value: function ChangeUpdateContents(Identifier, value) {
-      var Changes = this.state.Changes;
-      eval(Identifier + "=value");
-      var Data = this.Data(Changes);
       this.setState({
-        Changes: Changes,
+        // Data: Data,
         Data: Data
       });
     }
   }, {
-    key: "ChangeUpdateName",
-    value: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
+    key: "UpdateHelperName",
+    value: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
       var Identifier = IdentifierStart + IdentifierEnd;
-      var Changes = this.state.Changes;
+      var Data = this.state.Data;
       var SubjectSelector = Identifier;
       SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
       SubjectSelector = SubjectSelector.replaceAll("\\']", "");
@@ -66355,28 +66319,25 @@ function (_Component) {
       branch[Attr[10]] = oldname; // eval(Identifier+"= null");
 
       eval("delete " + Identifier);
-      eval(IdentifierStart + "['" + value + "']=branch");
-      var Data = this.Data(Changes);
+      eval(IdentifierStart + "['" + value + "']=branch"); // var Data = this.Read(Data);
+
       this.setState({
-        Changes: Changes,
+        // Data: Data,
         Data: Data
       });
     }
   }, {
-    key: "ChangeDelete",
-    value: function ChangeDelete(IdentifierStart, IdentifierEnd, value) {}
-  }, {
-    key: "SendChanges",
-    value: function SendChanges(IdentifierStart, IdentifierEnd) {
-      this.SendChangesHelper = function (IdentifierStart, IdentifierEnd) {
-        var Changes = this.state.Changes; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
+    key: "Update",
+    value: function Update(IdentifierStart, IdentifierEnd) {
+      this.SendReadHelper2 = function (IdentifierStart, IdentifierEnd) {
+        var Data = this.state.Data; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
 
         var Identifier = IdentifierStart + IdentifierEnd;
         var branch = eval(Identifier);
         var UrlMiddle = IdentifierStart;
         UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
         UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
-        UrlMiddle = UrlMiddle.replace("Changes", "");
+        UrlMiddle = UrlMiddle.replace("Data", "");
         var UrlEnd = IdentifierEnd;
         UrlEnd = UrlEnd.replaceAll("\\['", "/");
         UrlEnd = UrlEnd.replaceAll("'\\]", "");
@@ -66394,7 +66355,7 @@ function (_Component) {
           UrlEnd: UrlEnd,
           Content: branch,
           OldName: OldName
-        }; // var Changes = this.state.Changes;
+        }; // var Data = this.state.Data;
         //
         // var branchContent = {
         //   "Data": this.state.branch,
@@ -66412,12 +66373,12 @@ function (_Component) {
 
       event.preventDefault();
       var Identifier = IdentifierStart + IdentifierEnd;
-      var SendChangesHelper = this.SendChangesHelper(IdentifierStart, IdentifierEnd);
-      var UrlMiddle = SendChangesHelper.UrlMiddle;
-      var UrlEnd = SendChangesHelper.UrlEnd;
-      var Content = SendChangesHelper.Content; // alert(JSON.stringify(SendChangesHelper, null, 2));
+      var SendReadHelper2 = this.SendReadHelper2(IdentifierStart, IdentifierEnd);
+      var UrlMiddle = SendReadHelper2.UrlMiddle;
+      var UrlEnd = SendReadHelper2.UrlEnd;
+      var Content = SendReadHelper2.Content; // alert(JSON.stringify(SendReadHelper2, null, 2));
       // this.setState({
-      //   Changes: Changes
+      //   Data: Data
       // });
 
       var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
@@ -66429,9 +66390,9 @@ function (_Component) {
         console.log(error);
       });
 
-      if (SendChangesHelper.OldName !== null) {
-        var OtherUrlEnd = SendChangesHelper.OldName;
-        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(SendChangesHelper.OldName);
+      if (SendReadHelper2.OldName !== null) {
+        var OtherUrlEnd = SendReadHelper2.OldName;
+        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(SendReadHelper2.OldName);
         // alert(OtherURL);
 
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(OtherURL, []).then(function (response) {
@@ -66442,9 +66403,12 @@ function (_Component) {
       }
     }
   }, {
+    key: "Delete",
+    value: function Delete(IdentifierStart, IdentifierEnd, value) {}
+  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
@@ -66466,19 +66430,19 @@ function (_Component) {
         name: "form",
         defaultValue: "data"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "JS Data"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
-        identifier: "Changes",
+        identifier: "Data",
         Attr: this.state.Attr,
         Data: this.state.Data.content,
-        ChangeUpdateContents: function ChangeUpdateContents(Identifier, value) {
-          return _this3.ChangeUpdateContents(Identifier, value);
+        UpdateHelperContents: function UpdateHelperContents(Identifier, value) {
+          return _this2.UpdateHelperContents(Identifier, value);
         },
-        ChangeUpdateName: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
-          return _this3.ChangeUpdateName(IdentifierStart, IdentifierEnd, value);
+        UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
+          return _this2.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
         },
         submit: function submit(IdentifierStart, IdentifierEnd) {
-          return _this3.SendChanges(IdentifierStart, IdentifierEnd);
+          return _this2.Update(IdentifierStart, IdentifierEnd);
         }
-      })), "Changes", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Changes, null, 2)), "Data", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Data, null, 2))));
+      })), "Data", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Data, null, 2))));
     }
   }]);
 
@@ -66492,8 +66456,8 @@ var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
       Data = _ref.Data,
-      _ChangeUpdateContents = _ref.ChangeUpdateContents,
-      _ChangeUpdateName = _ref.ChangeUpdateName,
+      _UpdateHelperContents = _ref.UpdateHelperContents,
+      _UpdateHelperName = _ref.UpdateHelperName,
       _submit = _ref.submit;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
@@ -66513,7 +66477,7 @@ var DataHelper = function DataHelper(_ref) {
       defaultValue: "value"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       onBlur: function onBlur(Identifier, value) {
-        _ChangeUpdateName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
+        _UpdateHelperName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value);
       },
       className: "kv-field-container kv-name kv-tog-on-ib",
       type: "text",
@@ -66574,11 +66538,11 @@ var DataHelper = function DataHelper(_ref) {
       identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
       Data: Data[keyName].content,
-      ChangeUpdateContents: function ChangeUpdateContents(Identifier, value) {
-        _ChangeUpdateContents(Identifier, value);
+      UpdateHelperContents: function UpdateHelperContents(Identifier, value) {
+        _UpdateHelperContents(Identifier, value);
       },
-      ChangeUpdateName: function ChangeUpdateName(IdentifierStart, IdentifierEnd, value) {
-        _ChangeUpdateName(IdentifierStart, IdentifierEnd, value);
+      UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
+        _UpdateHelperName(IdentifierStart, IdentifierEnd, value);
       },
       submit: function submit(IdentifierStart, IdentifierEnd) {
         _submit(IdentifierStart, IdentifierEnd);
@@ -66589,7 +66553,7 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-item-container "
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       onChange: function onChange(Identifier, value) {
-        _ChangeUpdateContents(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
+        _UpdateHelperContents(identifier + "[" + "'content'" + "]['" + keyName + "']['" + Attr[2] + "']", event.target.value);
       },
       className: "kv-field-container kv-content-container kv-di-in",
       rows: "8",

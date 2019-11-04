@@ -7,7 +7,6 @@ import axios from 'axios';
 export default class Data extends Component {
   state = {
     Data: [],
-    Changes: [],
     Attr: {
       0: 'name',
       1: 'type',
@@ -25,7 +24,43 @@ export default class Data extends Component {
 
   };
 
-  componentDidMount () {
+  componentDidMount (){
+    this.Read();
+  }
+
+  Create(IdentifierStart,IdentifierEnd,value){
+  }
+
+  Read(){
+    this.ReadHelper1 = function(Data)  {
+      this.ReadHelper2 = function(Data, Attr)  {
+
+        var result = {};
+
+        Object.keys(Data).forEach(function(keyName){
+
+          result[keyName] = {};
+
+          if (Data[keyName].type == "folder"){
+
+            result[keyName][Attr[2]] = this.ReadHelper2( Data[keyName].content,Attr);
+            result[keyName][Attr[6]]= {}
+
+          } else {
+            result[keyName][Attr[2]] = Data[keyName].content;
+          }
+          result[keyName][Attr[1]] = Data[keyName].type;
+        }, this);
+
+
+
+        return result;
+      }
+      var Attr = this.state.Attr;
+      var result = {content: this.ReadHelper2(Data.content,Attr)};
+
+      return result;
+    }
 
     String.prototype.replaceAll = function(search, replacement) {
       var target = this;
@@ -36,22 +71,22 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    this.setState({loading:"loading"});
-
-    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    .then(response => {
-      var Data = response.data;
-      var Changes = this.Changes(Data);
-      var loading = "loaded";
-      this.setState({
-        Data: Data,
-        Changes: Changes,
-        loading:loading
-      });
-    }).catch(error => {
-      console.log(error);
-      this.setState({loading:"failed"});
-    });
+    // this.setState({loading:"loading"});
+    //
+    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    // .then(response => {
+    //   var Data = response.data;
+    //   var Data = this.ReadHelper1(Data);
+    //   var loading = "loaded";
+    //   this.setState({
+    //     Data: Data,
+    //     Data: Data,
+    //     loading:loading
+    //   });
+    // }).catch(error => {
+    //   console.log(error);
+    //   this.setState({loading:"failed"});
+    // });
     // --------
     // online end
     // --------
@@ -59,36 +94,36 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    // var Data = {
-    //   "content": {
-    //     "_data": {
-    //       "content": {
-    //         "code": {
-    //           "content": {
-    //             "w3css": {
-    //               "content": "123",
-    //               "type": "file"
-    //             },
-    //             "w3cssd": {
-    //               "content": "123",
-    //               "type": "file"
-    //             }
-    //           },
-    //           "type": "folder"
-    //         }
-    //       },
-    //       "type": "folder"
-    //     }
-    //   }
-    // };
-    // var Changes = this.Changes(Data);
-    // var loading = "failed";
-    //
-    // this.setState({
-    //   Data: Data,
-    //   Changes: Changes,
-    //   loading:loading
-    // });
+    var Data = {
+      "content": {
+        "_data": {
+          "content": {
+            "code": {
+              "content": {
+                "w3css": {
+                  "content": "123",
+                  "type": "file"
+                },
+                "w3cssd": {
+                  "content": "123",
+                  "type": "file"
+                }
+              },
+              "type": "folder"
+            }
+          },
+          "type": "folder"
+        }
+      }
+    };
+    var Data = this.ReadHelper1(Data);
+    var loading = "failed";
+
+    this.setState({
+      // Data: Data,
+      Data: Data,
+      loading:loading
+    });
 
     // --------
     // offline end
@@ -100,92 +135,22 @@ export default class Data extends Component {
 
   }
 
-  Changes(Data)  {
-    this.ChangesHelper = function(Data, Attr)  {
+  UpdateHelperContents(Identifier,value){
 
-      var result = {};
-
-      Object.keys(Data).forEach(function(keyName){
-
-        result[keyName] = {};
-
-        if (Data[keyName].type == "folder"){
-
-          result[keyName][Attr[2]] = this.ChangesHelper( Data[keyName].content,Attr);
-          result[keyName][Attr[6]]= {}
-
-        } else {
-          result[keyName][Attr[2]] = Data[keyName].content;
-        }
-        result[keyName][Attr[1]] = Data[keyName].type;
-      }, this);
-
-
-
-      return result;
-    }
-    var Attr = this.state.Attr;
-    var result = {content: this.ChangesHelper(Data.content,Attr)};
-
-    return result;
-  }
-
-  Data(Changes)  {
-    this.DataHelper = function(Changes, Attr)  {
-
-      var result = {};
-
-      Object.keys(Changes).forEach(function(keyName){
-
-
-        // result[keyName][Attr[3]] = "update/delete";
-        if (Changes[keyName] !== null) {
-          result[keyName] = {};
-
-          if (Changes[keyName].type == "folder"){
-
-            result[keyName][Attr[2]] = this.DataHelper( Changes[keyName].content,Attr);
-            // result[keyName][Attr[6]]= {}
-
-            // result[keyName][Attr[6]]["folder"] = null;
-            // result[keyName][Attr[6]]["file"] = null;
-            // result[keyName][Attr[3]] = "create_folder"+"/"+"create_file";
-
-          } else {
-            result[keyName][Attr[2]] = Changes[keyName].content;
-          }
-          result[keyName][Attr[1]] = Changes[keyName].type;
-        }
-      }, this);
-
-
-
-      return result;
-    }
-    var Attr = this.state.Attr;
-    var result = {content: this.DataHelper(Changes.content,Attr)};
-
-    return result;
-  }
-
-  ChangeCreate(IdentifierStart,IdentifierEnd,value){
-  }
-
-  ChangeUpdateContents(Identifier,value){
-
-    var Changes = this.state.Changes;
+    var Data = this.state.Data;
     eval(Identifier+"=value");
-    var Data = this.Data(Changes);
+    // alert(Identifier);
+    // var Data = this.Read(Data);
     this.setState({
-      Changes: Changes,
+      // Data: Data,
       Data: Data
     });
   }
 
-  ChangeUpdateName(IdentifierStart,IdentifierEnd,value){
+  UpdateHelperName(IdentifierStart,IdentifierEnd,value){
     var Identifier = IdentifierStart+IdentifierEnd;
 
-    var Changes = this.state.Changes;
+    var Data = this.state.Data;
 
     var SubjectSelector = Identifier;
     SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
@@ -202,9 +167,9 @@ export default class Data extends Component {
     // eval(Identifier+"= null");
     eval("delete "+Identifier);
     eval(IdentifierStart+"['"+value+"']=branch");
-    var Data = this.Data(Changes);
+    // var Data = this.Read(Data);
     this.setState({
-      Changes: Changes,
+      // Data: Data,
       Data: Data
     });
 
@@ -212,12 +177,9 @@ export default class Data extends Component {
 
   }
 
-  ChangeDelete(IdentifierStart,IdentifierEnd,value){
-  }
-
-  SendChanges(IdentifierStart,IdentifierEnd){
-    this.SendChangesHelper = function(IdentifierStart,IdentifierEnd){
-      var Changes = this.state.Changes;
+  Update(IdentifierStart,IdentifierEnd){
+    this.SendReadHelper2 = function(IdentifierStart,IdentifierEnd){
+      var Data = this.state.Data;
       // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
       var Identifier = IdentifierStart+IdentifierEnd;
 
@@ -226,7 +188,7 @@ export default class Data extends Component {
       var UrlMiddle = IdentifierStart;
       UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
       UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
-      UrlMiddle = UrlMiddle.replace("Changes", "");
+      UrlMiddle = UrlMiddle.replace("Data", "");
 
 
       var UrlEnd = IdentifierEnd;
@@ -247,7 +209,7 @@ export default class Data extends Component {
         OldName:OldName
       };
 
-      // var Changes = this.state.Changes;
+      // var Data = this.state.Data;
       //
       // var branchContent = {
       //   "Data": this.state.branch,
@@ -264,18 +226,18 @@ export default class Data extends Component {
     }
     event.preventDefault();
     var Identifier = IdentifierStart+IdentifierEnd;
-    var SendChangesHelper = this.SendChangesHelper(IdentifierStart,IdentifierEnd);
+    var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
 
-    var UrlMiddle = SendChangesHelper.UrlMiddle;
-    var UrlEnd = SendChangesHelper.UrlEnd;
-    var Content = SendChangesHelper.Content;
+    var UrlMiddle = SendReadHelper2.UrlMiddle;
+    var UrlEnd = SendReadHelper2.UrlEnd;
+    var Content = SendReadHelper2.Content;
 
 
 
-    // alert(JSON.stringify(SendChangesHelper, null, 2));
+    // alert(JSON.stringify(SendReadHelper2, null, 2));
 
     // this.setState({
-    //   Changes: Changes
+    //   Data: Data
     // });
 
 
@@ -290,11 +252,11 @@ export default class Data extends Component {
       console.log(error);
     });
 
-    if (SendChangesHelper.OldName !== null) {
-      var  OtherUrlEnd = SendChangesHelper.OldName;
+    if (SendReadHelper2.OldName !== null) {
+      var  OtherUrlEnd = SendReadHelper2.OldName;
       var OtherURL = URLPrefix+UrlMiddle+"/"+OtherUrlEnd+'.json';
 
-      // alert(SendChangesHelper.OldName);
+      // alert(SendReadHelper2.OldName);
       // alert(OtherURL);
       axios.put(OtherURL, [])
       .then(function (response) {
@@ -306,6 +268,9 @@ export default class Data extends Component {
     }
 
 
+  }
+
+  Delete(IdentifierStart,IdentifierEnd,value){
   }
 
   render() {
@@ -335,16 +300,14 @@ export default class Data extends Component {
               <br></br>
               <h2>JS Data</h2>
               <DataHelper
-                identifier="Changes"
+                identifier="Data"
                 Attr={this.state.Attr}
                 Data={this.state.Data.content}
-                ChangeUpdateContents={(Identifier,value) => this.ChangeUpdateContents(Identifier,value)}
-                ChangeUpdateName={(IdentifierStart,IdentifierEnd,value) => this.ChangeUpdateName(IdentifierStart,IdentifierEnd,value)}
-                submit={(IdentifierStart,IdentifierEnd) => this.SendChanges(IdentifierStart,IdentifierEnd)}
+                UpdateHelperContents={(Identifier,value) => this.UpdateHelperContents(Identifier,value)}
+                UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => this.UpdateHelperName(IdentifierStart,IdentifierEnd,value)}
+                submit={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
                 />
             </form>
-            Changes
-            <pre>{JSON.stringify(this.state.Changes, null, 2) }</pre>
             Data
             <pre>{JSON.stringify(this.state.Data, null, 2) }</pre>
           </div>
@@ -357,7 +320,7 @@ export default class Data extends Component {
 }
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateName, submit}) => {
+const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperName, submit}) => {
 
 
 
@@ -378,7 +341,7 @@ const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateN
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(Identifier,value) => {ChangeUpdateName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
+              <input  onBlur={(Identifier,value) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
@@ -424,8 +387,8 @@ const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateN
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
               Data={Data[keyName].content}
-              ChangeUpdateContents={(Identifier,value) => {ChangeUpdateContents(Identifier,value)}}
-              ChangeUpdateName={(IdentifierStart,IdentifierEnd,value) => {ChangeUpdateName(IdentifierStart,IdentifierEnd,value)}}
+              UpdateHelperContents={(Identifier,value) => {UpdateHelperContents(Identifier,value)}}
+              UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => {UpdateHelperName(IdentifierStart,IdentifierEnd,value)}}
               submit={(IdentifierStart,IdentifierEnd) => {submit(IdentifierStart,IdentifierEnd)}}
               />
 
@@ -433,7 +396,7 @@ const DataHelper = ({ identifier,Attr, Data, ChangeUpdateContents, ChangeUpdateN
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(Identifier,value) => {ChangeUpdateContents(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
+                  <textarea onChange={(Identifier,value) => {UpdateHelperContents(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
                 </div>
               </li>
             </ul>
