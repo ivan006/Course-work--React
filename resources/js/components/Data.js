@@ -178,12 +178,15 @@ export default class Data extends Component {
   }
 
   Update(IdentifierStart,IdentifierEnd){
-    this.SendReadHelper2 = function(IdentifierStart,IdentifierEnd){
+    event.preventDefault();
+    var Identifier = IdentifierStart+IdentifierEnd;
+    // var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
+    // this.SendReadHelper2 = function(IdentifierStart,IdentifierEnd){
       var Data = this.state.Data;
       // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
-      var Identifier = IdentifierStart+IdentifierEnd;
+      // var Identifier = IdentifierStart+IdentifierEnd;
 
-      var branch = eval(Identifier);
+      var Content = eval(Identifier);
 
       var UrlMiddle = IdentifierStart;
       UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
@@ -196,41 +199,39 @@ export default class Data extends Component {
       UrlEnd = UrlEnd.replaceAll("'\\]", "");
 
       var Attr = this.state.Attr;
-      if (typeof branch[Attr[10]] !== 'undefined') {
-        var OldName = branch[Attr[10]]
-        delete branch[Attr[10]];
+      if (typeof Content[Attr[10]] !== 'undefined') {
+        var OldName = Content[Attr[10]]
+        delete Content[Attr[10]];
       } else {
         var OldName = null
       }
-      return {
-        UrlMiddle:UrlMiddle,
-        UrlEnd:UrlEnd,
-        Content:branch,
-        OldName:OldName
-      };
+      // return {
+      //   UrlMiddle:UrlMiddle,
+      //   UrlEnd:UrlEnd,
+      //   Content:Content,
+      //   OldName:OldName
+      // };
 
       // var Data = this.state.Data;
       //
-      // var branchContent = {
-      //   "Data": this.state.branch,
+      // var ContentContent = {
+      //   "Data": this.state.Content,
       //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
       //   "form": "data",
       // }
       // // var UrlSuffix = "";
       // this.setState({
-      //   branch: {
-      //     "Content": branchContent,
+      //   Content: {
+      //     "Content": ContentContent,
       //     // "UrlSuffix": UrlSuffix
       //   }
       // });
-    }
-    event.preventDefault();
-    var Identifier = IdentifierStart+IdentifierEnd;
-    var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
+    // }
 
-    var UrlMiddle = SendReadHelper2.UrlMiddle;
-    var UrlEnd = SendReadHelper2.UrlEnd;
-    var Content = SendReadHelper2.Content;
+
+    // var UrlMiddle = SendReadHelper2.UrlMiddle;
+    // var UrlEnd = SendReadHelper2.UrlEnd;
+    // var Content = SendReadHelper2.Content;
 
 
 
@@ -252,11 +253,11 @@ export default class Data extends Component {
       console.log(error);
     });
 
-    if (SendReadHelper2.OldName !== null) {
-      var  OtherUrlEnd = SendReadHelper2.OldName;
+    if (OldName !== null) {
+      var  OtherUrlEnd = OldName;
       var OtherURL = URLPrefix+UrlMiddle+"/"+OtherUrlEnd+'.json';
 
-      // alert(SendReadHelper2.OldName);
+      // alert(OldName);
       // alert(OtherURL);
       axios.put(OtherURL, [])
       .then(function (response) {
@@ -270,7 +271,26 @@ export default class Data extends Component {
 
   }
 
-  Delete(IdentifierStart,IdentifierEnd,value){
+  Delete(Identifier){
+    event.preventDefault();
+
+    var UrlEnd = Identifier;
+    UrlEnd = UrlEnd.replaceAll("\\['", "/");
+    UrlEnd = UrlEnd.replaceAll("'\\]", "");
+    UrlEnd = UrlEnd.replace("Data", "");
+
+    var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
+    var URL = URLPrefix+UrlEnd+'.json'
+    alert(JSON.stringify(URL, null, 2));
+
+    // axios.put(URL, [])
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+
   }
 
   render() {
@@ -305,6 +325,7 @@ export default class Data extends Component {
                 Data={this.state.Data.content}
                 UpdateHelperContents={(Identifier,value) => this.UpdateHelperContents(Identifier,value)}
                 UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => this.UpdateHelperName(IdentifierStart,IdentifierEnd,value)}
+                Delete={(Identifier) => this.Delete(Identifier)}
                 submit={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
                 />
             </form>
@@ -320,7 +341,7 @@ export default class Data extends Component {
 }
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperName, submit}) => {
+const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperName,Delete, submit}) => {
 
 
 
@@ -356,7 +377,7 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
 
 
             <button onClick={(IdentifierStart,IdentifierEnd) => {submit(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit"  value="update">✓</button>
-            <button className="kv-little-button" type="submit"  value="delete">×</button>
+            <button onClick={(Identifier) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit"  value="delete">×</button>
 
 
 
@@ -389,6 +410,7 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
               Data={Data[keyName].content}
               UpdateHelperContents={(Identifier,value) => {UpdateHelperContents(Identifier,value)}}
               UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => {UpdateHelperName(IdentifierStart,IdentifierEnd,value)}}
+              Delete={(Identifier) => {Delete(Identifier)}}
               submit={(IdentifierStart,IdentifierEnd) => {submit(IdentifierStart,IdentifierEnd)}}
               />
 

@@ -66329,57 +66329,57 @@ function (_Component) {
   }, {
     key: "Update",
     value: function Update(IdentifierStart, IdentifierEnd) {
-      this.SendReadHelper2 = function (IdentifierStart, IdentifierEnd) {
-        var Data = this.state.Data; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
-
-        var Identifier = IdentifierStart + IdentifierEnd;
-        var branch = eval(Identifier);
-        var UrlMiddle = IdentifierStart;
-        UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
-        UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
-        UrlMiddle = UrlMiddle.replace("Data", "");
-        var UrlEnd = IdentifierEnd;
-        UrlEnd = UrlEnd.replaceAll("\\['", "/");
-        UrlEnd = UrlEnd.replaceAll("'\\]", "");
-        var Attr = this.state.Attr;
-
-        if (typeof branch[Attr[10]] !== 'undefined') {
-          var OldName = branch[Attr[10]];
-          delete branch[Attr[10]];
-        } else {
-          var OldName = null;
-        }
-
-        return {
-          UrlMiddle: UrlMiddle,
-          UrlEnd: UrlEnd,
-          Content: branch,
-          OldName: OldName
-        }; // var Data = this.state.Data;
-        //
-        // var branchContent = {
-        //   "Data": this.state.branch,
-        //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
-        //   "form": "data",
-        // }
-        // // var UrlSuffix = "";
-        // this.setState({
-        //   branch: {
-        //     "Content": branchContent,
-        //     // "UrlSuffix": UrlSuffix
-        //   }
-        // });
-      };
-
       event.preventDefault();
-      var Identifier = IdentifierStart + IdentifierEnd;
-      var SendReadHelper2 = this.SendReadHelper2(IdentifierStart, IdentifierEnd);
-      var UrlMiddle = SendReadHelper2.UrlMiddle;
-      var UrlEnd = SendReadHelper2.UrlEnd;
-      var Content = SendReadHelper2.Content; // alert(JSON.stringify(SendReadHelper2, null, 2));
+      var Identifier = IdentifierStart + IdentifierEnd; // var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
+      // this.SendReadHelper2 = function(IdentifierStart,IdentifierEnd){
+
+      var Data = this.state.Data; // eval(IdentifierStart,IdentifierEnd+"['action']='update'");
+      // var Identifier = IdentifierStart+IdentifierEnd;
+
+      var Content = eval(Identifier);
+      var UrlMiddle = IdentifierStart;
+      UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
+      UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
+      UrlMiddle = UrlMiddle.replace("Data", "");
+      var UrlEnd = IdentifierEnd;
+      UrlEnd = UrlEnd.replaceAll("\\['", "/");
+      UrlEnd = UrlEnd.replaceAll("'\\]", "");
+      var Attr = this.state.Attr;
+
+      if (typeof Content[Attr[10]] !== 'undefined') {
+        var OldName = Content[Attr[10]];
+        delete Content[Attr[10]];
+      } else {
+        var OldName = null;
+      } // return {
+      //   UrlMiddle:UrlMiddle,
+      //   UrlEnd:UrlEnd,
+      //   Content:Content,
+      //   OldName:OldName
+      // };
+      // var Data = this.state.Data;
+      //
+      // var ContentContent = {
+      //   "Data": this.state.Content,
+      //   "_token": "vcO9EvF6wZK0xEafB9Za7b43gO3Yhg56Lr6kB19D",
+      //   "form": "data",
+      // }
+      // // var UrlSuffix = "";
+      // this.setState({
+      //   Content: {
+      //     "Content": ContentContent,
+      //     // "UrlSuffix": UrlSuffix
+      //   }
+      // });
+      // }
+      // var UrlMiddle = SendReadHelper2.UrlMiddle;
+      // var UrlEnd = SendReadHelper2.UrlEnd;
+      // var Content = SendReadHelper2.Content;
+      // alert(JSON.stringify(SendReadHelper2, null, 2));
       // this.setState({
       //   Data: Data
       // });
+
 
       var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
       var URL = URLPrefix + UrlMiddle + UrlEnd + '.json'; // alert(JSON.stringify(Content, null, 2));
@@ -66390,9 +66390,9 @@ function (_Component) {
         console.log(error);
       });
 
-      if (SendReadHelper2.OldName !== null) {
-        var OtherUrlEnd = SendReadHelper2.OldName;
-        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(SendReadHelper2.OldName);
+      if (OldName !== null) {
+        var OtherUrlEnd = OldName;
+        var OtherURL = URLPrefix + UrlMiddle + "/" + OtherUrlEnd + '.json'; // alert(OldName);
         // alert(OtherURL);
 
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(OtherURL, []).then(function (response) {
@@ -66404,7 +66404,22 @@ function (_Component) {
     }
   }, {
     key: "Delete",
-    value: function Delete(IdentifierStart, IdentifierEnd, value) {}
+    value: function Delete(Identifier) {
+      event.preventDefault();
+      var UrlEnd = Identifier;
+      UrlEnd = UrlEnd.replaceAll("\\['", "/");
+      UrlEnd = UrlEnd.replaceAll("'\\]", "");
+      UrlEnd = UrlEnd.replace("Data", "");
+      var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
+      var URL = URLPrefix + UrlEnd + '.json';
+      alert(JSON.stringify(URL, null, 2)); // axios.put(URL, [])
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -66439,6 +66454,9 @@ function (_Component) {
         UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
           return _this2.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
         },
+        Delete: function Delete(Identifier) {
+          return _this2.Delete(Identifier);
+        },
         submit: function submit(IdentifierStart, IdentifierEnd) {
           return _this2.Update(IdentifierStart, IdentifierEnd);
         }
@@ -66458,6 +66476,7 @@ var DataHelper = function DataHelper(_ref) {
       Data = _ref.Data,
       _UpdateHelperContents = _ref.UpdateHelperContents,
       _UpdateHelperName = _ref.UpdateHelperName,
+      _Delete = _ref.Delete,
       _submit = _ref.submit;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
@@ -66502,6 +66521,9 @@ var DataHelper = function DataHelper(_ref) {
       type: "submit",
       value: "update"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick(Identifier) {
+        _Delete(identifier + "[" + "'content'" + "]['" + keyName + "']");
+      },
       className: "kv-little-button",
       type: "submit",
       value: "delete"
@@ -66543,6 +66565,9 @@ var DataHelper = function DataHelper(_ref) {
       },
       UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
         _UpdateHelperName(IdentifierStart, IdentifierEnd, value);
+      },
+      Delete: function Delete(Identifier) {
+        _Delete(Identifier);
       },
       submit: function submit(IdentifierStart, IdentifierEnd) {
         _submit(IdentifierStart, IdentifierEnd);
