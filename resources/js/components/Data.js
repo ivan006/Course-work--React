@@ -43,11 +43,17 @@ export default class Data extends Component {
 
           if (Data[keyName].type == "folder"){
 
-            result[keyName][Attr[2]] = this.ReadHelper2( Data[keyName].content,Attr);
-            result[keyName][Attr[6]]= {}
+            if (typeof Data[keyName].content !== "undefined") {
+
+              result[keyName][Attr[2]] = this.ReadHelper2( Data[keyName].content,Attr);
+              result[keyName][Attr[6]]= {}
+            }
 
           } else {
-            result[keyName][Attr[2]] = Data[keyName].content;
+            if (typeof Data[keyName].content !== "undefined") {
+
+              result[keyName][Attr[2]] = Data[keyName].content;
+            }
           }
           result[keyName][Attr[1]] = Data[keyName].type;
         }, this);
@@ -71,22 +77,22 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    // this.setState({loading:"loading"});
-    //
-    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    // .then(response => {
-    //   var Data = response.data;
-    //   var Data = this.ReadHelper1(Data);
-    //   var loading = "loaded";
-    //   this.setState({
-    //     Data: Data,
-    //     Data: Data,
-    //     loading:loading
-    //   });
-    // }).catch(error => {
-    //   console.log(error);
-    //   this.setState({loading:"failed"});
-    // });
+    this.setState({loading:"loading"});
+
+    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    .then(response => {
+      var Data = response.data;
+      var Data = this.ReadHelper1(Data);
+      var loading = "loaded";
+      this.setState({
+        // Data: Data,
+        Data: Data,
+        loading:loading
+      });
+    }).catch(error => {
+      console.log(error);
+      this.setState({loading:"failed"});
+    });
     // --------
     // online end
     // --------
@@ -94,36 +100,36 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    var Data = {
-      "content": {
-        "_data": {
-          "content": {
-            "code": {
-              "content": {
-                "w3css": {
-                  "content": "123",
-                  "type": "file"
-                },
-                "w3cssd": {
-                  "content": "123",
-                  "type": "file"
-                }
-              },
-              "type": "folder"
-            }
-          },
-          "type": "folder"
-        }
-      }
-    };
-    var Data = this.ReadHelper1(Data);
-    var loading = "failed";
-
-    this.setState({
-      // Data: Data,
-      Data: Data,
-      loading:loading
-    });
+    // var Data = {
+    //   "content": {
+    //     "_data": {
+    //       "content": {
+    //         "code": {
+    //           "content": {
+    //             "w3css": {
+    //               "content": "123",
+    //               "type": "file"
+    //             },
+    //             "w3cssd": {
+    //               "content": "123",
+    //               "type": "file"
+    //             }
+    //           },
+    //           "type": "folder"
+    //         }
+    //       },
+    //       "type": "folder"
+    //     }
+    //   }
+    // };
+    // var Data = this.ReadHelper1(Data);
+    // var loading = "failed";
+    //
+    // this.setState({
+    //   // Data: Data,
+    //   Data: Data,
+    //   loading:loading
+    // });
 
     // --------
     // offline end
@@ -281,15 +287,18 @@ export default class Data extends Component {
 
     var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
     var URL = URLPrefix+UrlEnd+'.json'
-    alert(JSON.stringify(URL, null, 2));
+    // alert(JSON.stringify(URL, null, 2));
 
-    // axios.put(URL, [])
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
+    axios.put(URL, [])
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    this.Read();
+
+
 
   }
 
