@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import axios from 'axios';
-import FileUpload from './FileUpload';
+// import FileUpload from './FileUpload';
 import Data from './Data';
 
 export default class App extends Component {

@@ -441,28 +441,21 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
         <li key={identifier+"["+"'content'"+"]['"+keyName+"']"}>
 
 
-          <div className="kv-item-container  kv-di-in ">
+          <span className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
             {Data[keyName].type == Attr[6] ?
-              <div className="kv-di-in">📁</div>
+              <span className="kv-di-in">📁</span>
               :
-              <div className="kv-di-in">📃</div>
+              <span className="kv-di-in">📃</span>
             }
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
               <input onBlur={(Identifier,value) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
-              <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
+              <span className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</span>
               <span className="kv-little-button ">^</span>
             </label>
 
-
-            <input className="kv-di-no" type="text"  defaultValue={Data[keyName].type} ></input>
-
-
-            {Data[keyName].type == Attr[6] &&
-              <input className="kv-di-no" type="text"  defaultValue={Data[keyName].entity_type} ></input>
-            }
 
 
             <button onClick={(IdentifierStart,IdentifierEnd) => {Update(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit" >✓</button>
@@ -474,23 +467,23 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
               <label className="kv-po-re">
                 <span className="kv-little-button ">+</span>
                 <input className="kv-tog-on-bl-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-                <div className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
-                  <div className="" >
+                <span className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
+                  <span className="kv-di-bl" >
                     <span>📁</span>
                     <input onBlur={(Identifier,value,type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[6])}} className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
                     <button onClick={(IdentifierStart, IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6])}} type="submit" className="kv-little-button" >+</button>
-                  </div>
-                  <div className="kv-mar-top-3">
+                  </span>
+                  <span className="kv-mar-top-3 kv-di-bl">
                     <span>📃</span>
                     <input onBlur={(Identifier,value, type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[9])}} className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
                     <button onClick={(IdentifierStart,IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9])}} type="submit" className="kv-little-button" >+</button>
-                  </div>
-                </div>
+                  </span>
+                </span>
               </label>
             }
 
 
-          </div>
+          </span>
           {Data[keyName].type == Attr[6] ?
 
             <DataHelper
