@@ -14,10 +14,10 @@ export default class Data extends Component {
       3: 'action',
       4: 'id',
       5: 'subtype',
-      6: 'add',
+      6: 'folder',
       7: 'url',
       8: 'entity_type',
-      9: 'conteent',
+      9: 'file',
       10: 'oldname',
     },
     loading: "loaded",
@@ -28,7 +28,85 @@ export default class Data extends Component {
     this.Read();
   }
 
-  Create(IdentifierStart,IdentifierEnd,value){
+
+
+  CreateHelperName(IdentifierStart,IdentifierEnd,value,type){
+    var Identifier = IdentifierStart+IdentifierEnd;
+
+    var Data = this.state.Data;
+
+    var SubjectSelector = Identifier;
+    SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
+    SubjectSelector = SubjectSelector.replaceAll("\\']", "");
+    var branch = eval(Identifier);
+
+    var oldname = IdentifierEnd;
+    oldname = oldname.replaceAll("\\['", "");
+    oldname = oldname.replaceAll("\\']", "");
+
+
+    // var Attr = this.state.Attr;
+    branch[type] = value;
+
+
+
+    // eval("delete "+Identifier);
+    // eval(IdentifierStart+"['"+value+"']=branch");
+
+    this.setState({
+      Data: Data
+    });
+
+
+
+  }
+
+  Create(IdentifierStart,IdentifierEnd, type){
+    event.preventDefault();
+    var Identifier = IdentifierStart+IdentifierEnd;
+
+    var Data = this.state.Data;
+
+    var Content = eval(Identifier);
+
+    var Attr = this.state.Attr;
+    var thing = eval("Content."+type);
+    // alert(JSON.stringify(name, null, 2));
+    Content[Attr[2]][[thing]] = {
+      "type": type
+    };
+
+    var UrlMiddle = IdentifierStart;
+    UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
+    UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
+    UrlMiddle = UrlMiddle.replace("Data", "");
+
+    var UrlEnd = IdentifierEnd;
+    UrlEnd = UrlEnd.replaceAll("\\['", "/");
+    UrlEnd = UrlEnd.replaceAll("'\\]", "");
+
+    // alert(UrlEnd);
+
+    // var Attr = this.state.Attr;
+    // if (typeof Content[Attr[10]] !== 'undefined') {
+    //   var OldName = Content[Attr[10]]
+    //   delete Content[Attr[10]];
+    // } else {
+    //   var OldName = null
+    // }
+
+    var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
+    var URL = URLPrefix+UrlMiddle+UrlEnd+'.json'
+    // alert(JSON.stringify(Content, null, 2));
+    console.log(Content)
+    axios.put(URL, Content)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   Read(){
@@ -41,12 +119,12 @@ export default class Data extends Component {
 
           result[keyName] = {};
 
-          if (Data[keyName].type == "folder"){
+          if (Data[keyName].type == Attr[6]){
 
             if (typeof Data[keyName].content !== "undefined") {
 
               result[keyName][Attr[2]] = this.ReadHelper2( Data[keyName].content,Attr);
-              result[keyName][Attr[6]]= {}
+              // result[keyName][Attr[6]]= {}
             }
 
           } else {
@@ -77,22 +155,22 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    this.setState({loading:"loading"});
-
-    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    .then(response => {
-      var Data = response.data;
-      var Data = this.ReadHelper1(Data);
-      var loading = "loaded";
-      this.setState({
-        // Data: Data,
-        Data: Data,
-        loading:loading
-      });
-    }).catch(error => {
-      console.log(error);
-      this.setState({loading:"failed"});
-    });
+    // this.setState({loading:"loading"});
+    //
+    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    // .then(response => {
+    //   var Data = response.data;
+    //   var Data = this.ReadHelper1(Data);
+    //   var loading = "loaded";
+    //   this.setState({
+    //     // Data: Data,
+    //     Data: Data,
+    //     loading:loading
+    //   });
+    // }).catch(error => {
+    //   console.log(error);
+    //   this.setState({loading:"failed"});
+    // });
     // --------
     // online end
     // --------
@@ -100,36 +178,36 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    // var Data = {
-    //   "content": {
-    //     "_data": {
-    //       "content": {
-    //         "code": {
-    //           "content": {
-    //             "w3css": {
-    //               "content": "123",
-    //               "type": "file"
-    //             },
-    //             "w3cssd": {
-    //               "content": "123",
-    //               "type": "file"
-    //             }
-    //           },
-    //           "type": "folder"
-    //         }
-    //       },
-    //       "type": "folder"
-    //     }
-    //   }
-    // };
-    // var Data = this.ReadHelper1(Data);
-    // var loading = "failed";
-    //
-    // this.setState({
-    //   // Data: Data,
-    //   Data: Data,
-    //   loading:loading
-    // });
+    var Data = {
+      "content": {
+        "_data": {
+          "content": {
+            "code": {
+              "content": {
+                "w3css": {
+                  "content": "123",
+                  "type": "file"
+                },
+                "w3cssd": {
+                  "content": "123",
+                  "type": "file"
+                }
+              },
+              "type": "folder"
+            }
+          },
+          "type": "folder"
+        }
+      }
+    };
+    var Data = this.ReadHelper1(Data);
+    var loading = "failed";
+
+    this.setState({
+      // Data: Data,
+      Data: Data,
+      loading:loading
+    });
 
     // --------
     // offline end
@@ -332,10 +410,12 @@ export default class Data extends Component {
                 identifier="Data"
                 Attr={this.state.Attr}
                 Data={this.state.Data.content}
+                Create={(IdentifierStart,IdentifierEnd, type) => this.Create(IdentifierStart,IdentifierEnd, type)}
+                CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => this.CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
                 UpdateHelperContents={(Identifier,value) => this.UpdateHelperContents(Identifier,value)}
                 UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => this.UpdateHelperName(IdentifierStart,IdentifierEnd,value)}
                 Delete={(Identifier) => this.Delete(Identifier)}
-                submit={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
+                Update={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
                 />
             </form>
             Data
@@ -350,7 +430,7 @@ export default class Data extends Component {
 }
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperName,Delete, submit}) => {
+const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHelperContents, UpdateHelperName,Delete, Update}) => {
 
 
 
@@ -363,7 +443,7 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
 
           <div className="kv-item-container  kv-di-in ">
             {/* Base Casfe */}
-            {Data[keyName].type == "folder" ?
+            {Data[keyName].type == Attr[6] ?
               <div className="kv-di-in">📁</div>
               :
               <div className="kv-di-in">📃</div>
@@ -371,7 +451,7 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input  onBlur={(Identifier,value) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
+              <input onBlur={(Identifier,value) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
               <div className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</div>
               <span className="kv-little-button ">^</span>
             </label>
@@ -380,30 +460,30 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
             <input className="kv-di-no" type="text"  defaultValue={Data[keyName].type} ></input>
 
 
-            {Data[keyName].type == "folder" &&
+            {Data[keyName].type == Attr[6] &&
               <input className="kv-di-no" type="text"  defaultValue={Data[keyName].entity_type} ></input>
             }
 
 
-            <button onClick={(IdentifierStart,IdentifierEnd) => {submit(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit"  value="update">✓</button>
-            <button onClick={(Identifier) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit"  value="delete">×</button>
+            <button onClick={(IdentifierStart,IdentifierEnd) => {Update(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit" >✓</button>
+            <button onClick={(Identifier) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" >×</button>
 
 
 
-            {Data[keyName].type == "folder" &&
+            {Data[keyName].type == Attr[6] &&
               <label className="kv-po-re">
                 <span className="kv-little-button ">+</span>
                 <input className="kv-tog-on-bl-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
                 <div className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
                   <div className="" >
                     <span>📁</span>
-                    <input className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
-                    <button type="submit" className="kv-little-button"  value="create_folder">+</button>
+                    <input onBlur={(Identifier,value,type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[6])}} className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
+                    <button onClick={(IdentifierStart, IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6])}} type="submit" className="kv-little-button" >+</button>
                   </div>
                   <div className="kv-mar-top-3">
                     <span>📃</span>
-                    <input className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
-                    <button type="submit" className="kv-little-button"  value="create_file">+</button>
+                    <input onBlur={(Identifier,value, type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[9])}} className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
+                    <button onClick={(IdentifierStart,IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9])}} type="submit" className="kv-little-button" >+</button>
                   </div>
                 </div>
               </label>
@@ -411,16 +491,18 @@ const DataHelper = ({ identifier,Attr, Data, UpdateHelperContents, UpdateHelperN
 
 
           </div>
-          {Data[keyName].type == "folder" ?
+          {Data[keyName].type == Attr[6] ?
 
             <DataHelper
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
               Data={Data[keyName].content}
+              Create={(IdentifierStart,IdentifierEnd, type) => {Create(IdentifierStart,IdentifierEnd, type)}}
+              CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
               UpdateHelperContents={(Identifier,value) => {UpdateHelperContents(Identifier,value)}}
               UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => {UpdateHelperName(IdentifierStart,IdentifierEnd,value)}}
               Delete={(Identifier) => {Delete(Identifier)}}
-              submit={(IdentifierStart,IdentifierEnd) => {submit(IdentifierStart,IdentifierEnd)}}
+              Update={(IdentifierStart,IdentifierEnd) => {Update(IdentifierStart,IdentifierEnd)}}
               />
 
             :

@@ -66181,10 +66181,10 @@ function (_Component) {
         3: 'action',
         4: 'id',
         5: 'subtype',
-        6: 'add',
+        6: 'folder',
         7: 'url',
         8: 'entity_type',
-        9: 'conteent',
+        9: 'file',
         10: 'oldname'
       },
       loading: "loaded"
@@ -66199,23 +66199,75 @@ function (_Component) {
       this.Read();
     }
   }, {
+    key: "CreateHelperName",
+    value: function CreateHelperName(IdentifierStart, IdentifierEnd, value, type) {
+      var Identifier = IdentifierStart + IdentifierEnd;
+      var Data = this.state.Data;
+      var SubjectSelector = Identifier;
+      SubjectSelector = SubjectSelector.replaceAll("\\['", ".");
+      SubjectSelector = SubjectSelector.replaceAll("\\']", "");
+      var branch = eval(Identifier);
+      var oldname = IdentifierEnd;
+      oldname = oldname.replaceAll("\\['", "");
+      oldname = oldname.replaceAll("\\']", ""); // var Attr = this.state.Attr;
+
+      branch[type] = value; // eval("delete "+Identifier);
+      // eval(IdentifierStart+"['"+value+"']=branch");
+
+      this.setState({
+        Data: Data
+      });
+    }
+  }, {
     key: "Create",
-    value: function Create(IdentifierStart, IdentifierEnd, value) {}
+    value: function Create(IdentifierStart, IdentifierEnd, type) {
+      event.preventDefault();
+      var Identifier = IdentifierStart + IdentifierEnd;
+      var Data = this.state.Data;
+      var Content = eval(Identifier);
+      var Attr = this.state.Attr;
+      var thing = eval("Content." + type); // alert(JSON.stringify(name, null, 2));
+
+      Content[Attr[2]][[thing]] = {
+        "type": type
+      };
+      var UrlMiddle = IdentifierStart;
+      UrlMiddle = UrlMiddle.replaceAll("\\['", "/");
+      UrlMiddle = UrlMiddle.replaceAll("'\\]", "");
+      UrlMiddle = UrlMiddle.replace("Data", "");
+      var UrlEnd = IdentifierEnd;
+      UrlEnd = UrlEnd.replaceAll("\\['", "/");
+      UrlEnd = UrlEnd.replaceAll("'\\]", ""); // alert(UrlEnd);
+      // var Attr = this.state.Attr;
+      // if (typeof Content[Attr[10]] !== 'undefined') {
+      //   var OldName = Content[Attr[10]]
+      //   delete Content[Attr[10]];
+      // } else {
+      //   var OldName = null
+      // }
+
+      var URLPrefix = 'https://test-c6f20.firebaseio.com/Reports/Report_1';
+      var URL = URLPrefix + UrlMiddle + UrlEnd + '.json'; // alert(JSON.stringify(Content, null, 2));
+
+      console.log(Content);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(URL, Content).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }, {
     key: "Read",
     value: function Read() {
-      var _this2 = this;
-
       this.ReadHelper1 = function (Data) {
         this.ReadHelper2 = function (Data, Attr) {
           var result = {};
           Object.keys(Data).forEach(function (keyName) {
             result[keyName] = {};
 
-            if (Data[keyName].type == "folder") {
+            if (Data[keyName].type == Attr[6]) {
               if (typeof Data[keyName].content !== "undefined") {
-                result[keyName][Attr[2]] = this.ReadHelper2(Data[keyName].content, Attr);
-                result[keyName][Attr[6]] = {};
+                result[keyName][Attr[2]] = this.ReadHelper2(Data[keyName].content, Attr); // result[keyName][Attr[6]]= {}
               }
             } else {
               if (typeof Data[keyName].content !== "undefined") {
@@ -66241,66 +66293,59 @@ function (_Component) {
       }; // --------
       // online start
       // --------
-
-
-      this.setState({
-        loading: "loading"
-      });
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
-        var Data = response.data;
-
-        var Data = _this2.ReadHelper1(Data);
-
-        var loading = "loaded";
-
-        _this2.setState({
-          // Data: Data,
-          Data: Data,
-          loading: loading
-        });
-      })["catch"](function (error) {
-        console.log(error);
-
-        _this2.setState({
-          loading: "failed"
-        });
-      }); // --------
+      // this.setState({loading:"loading"});
+      //
+      // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+      // .then(response => {
+      //   var Data = response.data;
+      //   var Data = this.ReadHelper1(Data);
+      //   var loading = "loaded";
+      //   this.setState({
+      //     // Data: Data,
+      //     Data: Data,
+      //     loading:loading
+      //   });
+      // }).catch(error => {
+      //   console.log(error);
+      //   this.setState({loading:"failed"});
+      // });
+      // --------
       // online end
       // --------
       // --------
       // offline start
       // --------
-      // var Data = {
-      //   "content": {
-      //     "_data": {
-      //       "content": {
-      //         "code": {
-      //           "content": {
-      //             "w3css": {
-      //               "content": "123",
-      //               "type": "file"
-      //             },
-      //             "w3cssd": {
-      //               "content": "123",
-      //               "type": "file"
-      //             }
-      //           },
-      //           "type": "folder"
-      //         }
-      //       },
-      //       "type": "folder"
-      //     }
-      //   }
-      // };
-      // var Data = this.ReadHelper1(Data);
-      // var loading = "failed";
-      //
-      // this.setState({
-      //   // Data: Data,
-      //   Data: Data,
-      //   loading:loading
-      // });
-      // --------
+
+
+      var Data = {
+        "content": {
+          "_data": {
+            "content": {
+              "code": {
+                "content": {
+                  "w3css": {
+                    "content": "123",
+                    "type": "file"
+                  },
+                  "w3cssd": {
+                    "content": "123",
+                    "type": "file"
+                  }
+                },
+                "type": "folder"
+              }
+            },
+            "type": "folder"
+          }
+        }
+      };
+      var Data = this.ReadHelper1(Data);
+      var loading = "failed";
+      this.setState({
+        // Data: Data,
+        Data: Data,
+        loading: loading
+      }); // --------
       // offline end
       // --------
     }
@@ -66436,7 +66481,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
@@ -66461,17 +66506,23 @@ function (_Component) {
         identifier: "Data",
         Attr: this.state.Attr,
         Data: this.state.Data.content,
+        Create: function Create(IdentifierStart, IdentifierEnd, type) {
+          return _this2.Create(IdentifierStart, IdentifierEnd, type);
+        },
+        CreateHelperName: function CreateHelperName(IdentifierStart, IdentifierEnd, value, type) {
+          return _this2.CreateHelperName(IdentifierStart, IdentifierEnd, value, type);
+        },
         UpdateHelperContents: function UpdateHelperContents(Identifier, value) {
-          return _this3.UpdateHelperContents(Identifier, value);
+          return _this2.UpdateHelperContents(Identifier, value);
         },
         UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
-          return _this3.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
+          return _this2.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
         },
         Delete: function Delete(Identifier) {
-          return _this3.Delete(Identifier);
+          return _this2.Delete(Identifier);
         },
-        submit: function submit(IdentifierStart, IdentifierEnd) {
-          return _this3.Update(IdentifierStart, IdentifierEnd);
+        Update: function Update(IdentifierStart, IdentifierEnd) {
+          return _this2.Update(IdentifierStart, IdentifierEnd);
         }
       })), "Data", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Data, null, 2))));
     }
@@ -66487,10 +66538,12 @@ var DataHelper = function DataHelper(_ref) {
   var identifier = _ref.identifier,
       Attr = _ref.Attr,
       Data = _ref.Data,
+      _Create = _ref.Create,
+      _CreateHelperName = _ref.CreateHelperName,
       _UpdateHelperContents = _ref.UpdateHelperContents,
       _UpdateHelperName = _ref.UpdateHelperName,
       _Delete = _ref.Delete,
-      _submit = _ref.submit;
+      _Update = _ref.Update;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "kv-list-parent"
   }, typeof Data !== 'undefined' && Object.keys(Data).map(function (keyName, i) {
@@ -66498,7 +66551,7 @@ var DataHelper = function DataHelper(_ref) {
       key: identifier + "[" + "'content'" + "]['" + keyName + "']"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-item-container  kv-di-in "
-    }, Data[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, Data[keyName].type == Attr[6] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
     }, "\uD83D\uDCC1") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-di-in"
@@ -66522,25 +66575,23 @@ var DataHelper = function DataHelper(_ref) {
       className: "kv-di-no",
       type: "text",
       defaultValue: Data[keyName].type
-    }), Data[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }), Data[keyName].type == Attr[6] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "kv-di-no",
       type: "text",
       defaultValue: Data[keyName].entity_type
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(IdentifierStart, IdentifierEnd) {
-        _submit(identifier + "[" + "'content'" + "]", "['" + keyName + "']");
+        _Update(identifier + "[" + "'content'" + "]", "['" + keyName + "']");
       },
       className: "kv-little-button",
-      type: "submit",
-      value: "update"
+      type: "submit"
     }, "\u2713"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: function onClick(Identifier) {
         _Delete(identifier + "[" + "'content'" + "]['" + keyName + "']");
       },
       className: "kv-little-button",
-      type: "submit",
-      value: "delete"
-    }, "\xD7"), Data[keyName].type == "folder" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      type: "submit"
+    }, "\xD7"), Data[keyName].type == Attr[6] && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       className: "kv-po-re"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "kv-little-button "
@@ -66554,25 +66605,41 @@ var DataHelper = function DataHelper(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: ""
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      onBlur: function onBlur(Identifier, value, type) {
+        _CreateHelperName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value, Attr[6]);
+      },
       className: "kv-field-container kv-name kv-di-in ",
       type: "text"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick(IdentifierStart, IdentifierEnd, type) {
+        _Create(identifier + "[" + "'content'" + "]", "['" + keyName + "']", Attr[6]);
+      },
       type: "submit",
-      className: "kv-little-button",
-      value: "create_folder"
+      className: "kv-little-button"
     }, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "kv-mar-top-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uD83D\uDCC3"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      onBlur: function onBlur(Identifier, value, type) {
+        _CreateHelperName(identifier + "[" + "'content'" + "]", "['" + keyName + "']", event.target.value, Attr[9]);
+      },
       className: "kv-field-container kv-name kv-di-in",
       type: "text"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick(IdentifierStart, IdentifierEnd, type) {
+        _Create(identifier + "[" + "'content'" + "]", "['" + keyName + "']", Attr[9]);
+      },
       type: "submit",
-      className: "kv-little-button",
-      value: "create_file"
-    }, "+"))))), Data[keyName].type == "folder" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
+      className: "kv-little-button"
+    }, "+"))))), Data[keyName].type == Attr[6] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DataHelper, {
       identifier: identifier + "[" + "'content'" + "]['" + keyName + "']",
       Attr: Attr,
       Data: Data[keyName].content,
+      Create: function Create(IdentifierStart, IdentifierEnd, type) {
+        _Create(IdentifierStart, IdentifierEnd, type);
+      },
+      CreateHelperName: function CreateHelperName(IdentifierStart, IdentifierEnd, value, type) {
+        return _CreateHelperName(IdentifierStart, IdentifierEnd, value, type);
+      },
       UpdateHelperContents: function UpdateHelperContents(Identifier, value) {
         _UpdateHelperContents(Identifier, value);
       },
@@ -66582,8 +66649,8 @@ var DataHelper = function DataHelper(_ref) {
       Delete: function Delete(Identifier) {
         _Delete(Identifier);
       },
-      submit: function submit(IdentifierStart, IdentifierEnd) {
-        _submit(IdentifierStart, IdentifierEnd);
+      Update: function Update(IdentifierStart, IdentifierEnd) {
+        _Update(IdentifierStart, IdentifierEnd);
       }
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "kv-list-parent"
