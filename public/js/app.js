@@ -66258,6 +66258,8 @@ function (_Component) {
   }, {
     key: "Read",
     value: function Read() {
+      var _this2 = this;
+
       this.ReadHelper1 = function (Data) {
         this.ReadHelper2 = function (Data, Attr) {
           var result = {};
@@ -66292,59 +66294,66 @@ function (_Component) {
       }; // --------
       // online start
       // --------
-      // this.setState({loading:"loading"});
-      //
-      // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-      // .then(response => {
-      //   var Data = response.data;
-      //   var Data = this.ReadHelper1(Data);
-      //   var loading = "loaded";
-      //   this.setState({
-      //     // Data: Data,
-      //     Data: Data,
-      //     loading:loading
-      //   });
-      // }).catch(error => {
-      //   console.log(error);
-      //   this.setState({loading:"failed"});
-      // });
-      // --------
+
+
+      this.setState({
+        loading: "loading"
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json').then(function (response) {
+        var Data = response.data;
+
+        var Data = _this2.ReadHelper1(Data);
+
+        var loading = "loaded";
+
+        _this2.setState({
+          // Data: Data,
+          Data: Data,
+          loading: loading
+        });
+      })["catch"](function (error) {
+        console.log(error);
+
+        _this2.setState({
+          loading: "failed"
+        });
+      }); // --------
       // online end
       // --------
       // --------
       // offline start
       // --------
-
-
-      var Data = {
-        "content": {
-          "_data": {
-            "content": {
-              "code": {
-                "content": {
-                  "w3css": {
-                    "content": "123",
-                    "type": "file"
-                  },
-                  "w3cssd": {
-                    "content": "123",
-                    "type": "file"
-                  }
-                },
-                "type": "folder"
-              }
-            },
-            "type": "folder"
-          }
-        }
-      };
-      var Data = this.ReadHelper1(Data);
-      var loading = "failed";
-      this.setState({
-        // Data: Data,
-        Data: Data,
-        loading: loading
-      }); // --------
+      // var Data = {
+      //   "content": {
+      //     "_data": {
+      //       "content": {
+      //         "code": {
+      //           "content": {
+      //             "w3css": {
+      //               "content": "123",
+      //               "type": "file"
+      //             },
+      //             "w3cssd": {
+      //               "content": "123",
+      //               "type": "file"
+      //             }
+      //           },
+      //           "type": "folder"
+      //         }
+      //       },
+      //       "type": "folder"
+      //     }
+      //   }
+      // };
+      // var Data = this.ReadHelper1(Data);
+      // var loading = "failed";
+      //
+      // this.setState({
+      //   // Data: Data,
+      //   Data: Data,
+      //   loading:loading
+      // });
+      // --------
       // offline end
       // --------
     }
@@ -66480,7 +66489,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.loading == "loading" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
@@ -66506,22 +66515,22 @@ function (_Component) {
         Attr: this.state.Attr,
         Data: this.state.Data.content,
         Create: function Create(IdentifierStart, IdentifierEnd, type) {
-          return _this2.Create(IdentifierStart, IdentifierEnd, type);
+          return _this3.Create(IdentifierStart, IdentifierEnd, type);
         },
         CreateHelperName: function CreateHelperName(IdentifierStart, IdentifierEnd, value, type) {
-          return _this2.CreateHelperName(IdentifierStart, IdentifierEnd, value, type);
+          return _this3.CreateHelperName(IdentifierStart, IdentifierEnd, value, type);
         },
         UpdateHelperContents: function UpdateHelperContents(Identifier, value) {
-          return _this2.UpdateHelperContents(Identifier, value);
+          return _this3.UpdateHelperContents(Identifier, value);
         },
         UpdateHelperName: function UpdateHelperName(IdentifierStart, IdentifierEnd, value) {
-          return _this2.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
+          return _this3.UpdateHelperName(IdentifierStart, IdentifierEnd, value);
         },
         Delete: function Delete(Identifier) {
-          return _this2.Delete(Identifier);
+          return _this3.Delete(Identifier);
         },
         Update: function Update(IdentifierStart, IdentifierEnd) {
-          return _this2.Update(IdentifierStart, IdentifierEnd);
+          return _this3.Update(IdentifierStart, IdentifierEnd);
         }
       })), "Data", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(this.state.Data, null, 2))));
     }
